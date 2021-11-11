@@ -22,11 +22,19 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.aliyun.datax</groupId>
+            <groupId>com.alibaba.datax</groupId>
             <artifactId>datax-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/libs/datax-core-0.0.1-SNAPSHOT.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.datax</groupId>
+            <artifactId>datax-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/libs/datax-common-0.0.1-SNAPSHOT.jar</systemPath>
         </dependency>
 
         <dependency>
