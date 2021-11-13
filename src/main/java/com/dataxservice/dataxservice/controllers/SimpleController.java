@@ -10,7 +10,7 @@ import com.alibaba.datax.core.Engine;
 @RestController
 public class SimpleController {
 
-    @RequestMapping(value = "/t", method = RequestMethod.GET)
+    @RequestMapping(value = "/simple", method = RequestMethod.GET)
     public String hello() {
         System.out.println("--->>");
         System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");

@@ -1,0 +1,53 @@
+{
+  "job": {
+    "content": [{
+
+      "reader": {
+        "name": "mysqlreader",
+        "parameter": {
+          "username": "root",
+          "password": "admin4321.COM",
+          "column": ["pk_col_a","col_name","col_value"],
+          "splitPk": "pk_col_a",
+          "connection": [{
+            "table": [
+              "table_for_t"
+            ],
+            "jdbcUrl": [
+              "jdbc:mysql://192.168.226.128:3306/db_cts?useUnicode=true&characterEncoding=utf8"
+            ]
+          }]
+        }
+      },
+      "writer": {
+        "name": "mysqlwriter",
+        "parameter": {
+          "writeMode": "insert",
+          "username": "root",
+          "password": "admin8888.COM",
+          "column": [
+            "*"
+          ],
+          "session": [
+            "set session sql_mode='ANSI'"
+          ],
+          "preSql": [
+            "truncate diag_8"
+          ],
+          "connection": [{
+            "jdbcUrl": "jdbc:mysql://192.168.226.128:3388/imp_test?useUnicode=true&characterEncoding=utf8",
+            "table": [
+              "diag_8"
+            ]
+          }]
+        }
+
+      }
+    }],
+    "setting": {
+      "speed": {
+        "channel": 5
+      }
+    }
+  }
+}
