@@ -1,5 +1,6 @@
 package com.dataxservice.dataxservice.controllers;
 
+import com.dataxservice.dataxservice.cores.Worker;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,18 +29,27 @@ public class SimpleController {
 
     @RequestMapping(value = "/mysql", method = RequestMethod.GET)
     public String mysql() {
-        System.out.println("--->>");
-        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
-//        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
-        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
+//        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
+////        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
+//        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
 
-//
-        try {
-            Engine.entry(datxArgs);   //从这里启动
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        return "Hello world";
+        long startTime = System.currentTimeMillis();
+//        try {
+//            Engine.entry(datxArgs);   //从这里启动
+//        } catch (Throwable e) {
+//            e.printStackTrace();
+//        }
+
+        Thread thread1 = new Thread(new Worker());
+        thread1.start();
+
+        System.out.println("---???????>>>>");
+
+        long endTime = System.currentTimeMillis();
+
+        float seconds = (endTime - startTime) / 1000F;
+
+        return "Hello worldeeeee ---------------"+seconds;
     }
 
 
@@ -51,6 +61,8 @@ public class SimpleController {
         String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
 
 //
+
+
         try {
             Engine.entry(datxArgs);   //从这里启动
         } catch (Throwable e) {
