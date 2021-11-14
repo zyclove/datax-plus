@@ -2,3 +2,8 @@ server:
   port: 8080
   servlet:
     context-path: /dataxs
+
+logging:
+  pattern:
+  file:
+    path: /opt/local/logs/
