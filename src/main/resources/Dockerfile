@@ -1,56 +1,16 @@
-env.BUILD_VERSION      = null
-env.CURRENT_STAGE      = null
-env.FAILED_REASON      = null
-env.CURRENT_BRANCH     = null
+FROM registry.cn-hangzhou.aliyuncs.com/nox60/datax-base:0.0.1
 
+MAINTAINER nox60@hotmail.com
 
-node {
-    //Pull Repo
-    stage ('Check out'){
-        print "Current branch is ${env.CURRENT_BRANCH}"
+#环境变量设置
+ENV LANG="zh_CN.UTF-8"
+# ENV JAVA_OPTS=" -server -Xms2048m -Xmx2048m -Xmn256m -Xss1m -Djava.security.egd=file:/dev/./urandom "
+ENV JAVA_OPTS=" -server -Djava.security.egd=file:/dev/./urandom "
+ENV TZ=Asia/Shanghai LANG="C.UTF-8"
+ENV JWT_AUTH_OPEN=true
 
-        try{
-            git  url: "https://gitee.com/nox/DataX.git", branch: "master"
-        }catch(e){
-            env.CURRENT_STAGE = '拉取GIT代码'
-            env.FAILED_REASON = e
-            // failedNotification()
-            throw e
-        }
-    }
+#添加jar包
+ADD ./*.jar /opt/
 
-    //Build Code
-    //构建程序
-    stage ('Build'){
-        try{
-            docker.image('registry.cn-shenzhen.aliyuncs.com/nox60/maven-public:3.5.3').inside('-v /opt/local/maven/m2:/root/.m2 --entrypoint "" ') {
-                sh 'mvn -U clean package assembly:assembly -Dmaven.test.skip=true -pl !oscarwriter'
-            }
-        } catch(e){
-            env.CURRENT_STAGE = '编译代码'
-            env.FAILED_REASON = e
-            throw e
-        }
-    }
-
-
-    stage ('Build docker image and push to registry'){
-        def dockerImageCore = null
-        try{
-            sh 'cp /usr/share/zoneinfo/Asia/Shanghai .'
-            sh 'cp target/datax.tar.gz .'
-            sh 'echo "FROM openjdk:8u312-jdk-slim">Dockerfile'
-            sh 'echo "ADD datax.tar.gz /opt/local/">>Dockerfile'
-            dockerImageCore = docker.build("registry.cn-hangzhou.aliyuncs.com/nox60/datax-base")
-            docker.withRegistry("https://registry.cn-hangzhou.aliyuncs.com","aliyun-nox60-cd") {
-                            dockerImageCore.push('0.0.1')
-            }
-        }catch(e){
-            env.CURRENT_STAGE = '打包镜像 & 推送到仓库'
-            env.FAILED_REASON = e
-            throw e
-        }
-    }
-
-
-}
+#容器启动时内部运行的命令
+ENTRYPOINT ["sh","-c","java $JAVA_OPTS  -Dfile.encoding=utf-8 -jar /opt/*.jar"]
