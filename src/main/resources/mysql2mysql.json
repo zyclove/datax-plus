@@ -14,7 +14,7 @@
               "table_for_t"
             ],
             "jdbcUrl": [
-              "jdbc:mysql://192.168.226.128:3306/db_cts?useUnicode=true&characterEncoding=utf8"
+              "jdbc:mysql://192.168.88.131:3306/db_cts?useUnicode=true&characterEncoding=utf8"
             ]
           }]
         }
@@ -35,7 +35,7 @@
             "truncate diag_8"
           ],
           "connection": [{
-            "jdbcUrl": "jdbc:mysql://192.168.226.128:3388/imp_test?useUnicode=true&characterEncoding=utf8",
+            "jdbcUrl": "jdbc:mysql://192.168.88.131:3388/imp_test?useUnicode=true&characterEncoding=utf8",
             "table": [
               "diag_8"
             ]
