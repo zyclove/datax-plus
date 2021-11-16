@@ -16,6 +16,7 @@ public class SimpleController {
 
 
 //        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
+        String tempDir = System.getProperty("tempfile.dir");
         String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\stream2stream.json", "-mode", "standalone", "-jobid", "-1"};
 //
         try {
@@ -34,6 +35,8 @@ public class SimpleController {
 ////        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
 //        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
 
+        String tempDir = System.getProperty("tempfile.dir");
+
         long startTime = System.currentTimeMillis();
 //        try {
 //            Engine.entry(datxArgs);   //从这里启动
@@ -41,7 +44,11 @@ public class SimpleController {
 //            e.printStackTrace();
 //        }
 
-        Thread thread1 = new Thread(new Worker());
+        Worker worker = new Worker();
+        worker.setJsonFileName("mysql2mysql.json");
+
+        Thread thread1 = new Thread(worker);
+
         thread1.start();
 
         System.out.println("---???????>>>>");
