@@ -36,7 +36,6 @@ public class SimpleController {
 //        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
 
         String tempDir = System.getProperty("tempfile.dir");
-
         long startTime = System.currentTimeMillis();
 //        try {
 //            Engine.entry(datxArgs);   //从这里启动
