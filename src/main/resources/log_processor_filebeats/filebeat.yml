@@ -1,0 +1,9 @@
+filebeat.prospectors:
+  - input_type: log
+    paths:
+      - /opt/local/logs/*.log
+output.redis:
+  hosts: ["192.168.88.131"]
+  port: 6379
+  password: "123456"
+  key: "fb-test"
