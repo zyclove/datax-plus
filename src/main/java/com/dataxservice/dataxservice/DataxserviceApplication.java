@@ -6,7 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DataxserviceApplication {
 
+//    static String DATAX_PATH = "";
+
     public static void main(String[] args) {
+//        DATAX_PATH = System.getenv("DATAX_PATH");
         SpringApplication.run(DataxserviceApplication.class, args);
     }
 

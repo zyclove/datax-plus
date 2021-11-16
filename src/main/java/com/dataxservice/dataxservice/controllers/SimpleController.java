@@ -13,8 +13,9 @@ public class SimpleController {
 
     @RequestMapping(value = "/simple", method = RequestMethod.GET)
     public String hello() {
-        System.out.println("--->>");
-        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
+
+
+//        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
         String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\stream2stream.json", "-mode", "standalone", "-jobid", "-1"};
 //
         try {
