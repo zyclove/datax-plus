@@ -7,7 +7,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
-public class DataxserviceApplication implements CommandLineRunner {
+public class DataxserviceApplication {
+ //   public class DataxserviceApplication implements CommandLineRunner {
 
 //    static String DATAX_PATH = "";
 
@@ -16,9 +17,12 @@ public class DataxserviceApplication implements CommandLineRunner {
         SpringApplication.run(DataxserviceApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        System.out.println(">>>>>>>>>>>>>>>>>服务启动执行");
-    }
+//    @Override
+//    public void run(String... args) throws Exception {
+//        while(true){
+//            System.out.println(">>>>>>>>>>>>>>>>>服务启动执行");
+//            Thread.sleep(4000);
+//        }
+//    }
 
 }
