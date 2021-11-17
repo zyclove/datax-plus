@@ -29,25 +29,15 @@ public final class RedisUtils {
      */
 
     public boolean expire(String key, long time) {
-
         try {
-
             if (time > 0) {
-
                 redisTemplate.expire(key, time, TimeUnit.SECONDS);
-
             }
-
             return true;
-
         } catch (Exception e) {
-
             e.printStackTrace();
-
             return false;
-
         }
-
     }
 
     /**
