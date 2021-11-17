@@ -24,8 +24,8 @@ public class SimpleController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
-        Object ooo = redisUtils.popData("loging-test");
-        System.out.println(ooo);
+//        Object ooo = redisUtils.popData("loging-test");
+//        System.out.println(ooo);
         return "Hello world";
     }
 
