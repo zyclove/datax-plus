@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public final class RedisUtils {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
 
     // =============================common============================
@@ -78,19 +79,14 @@ public final class RedisUtils {
      */
 
     @SuppressWarnings("unchecked")
-
     public void del(String... key) {
 
         if (key != null && key.length > 0) {
 
             if (key.length == 1) {
-
                 redisTemplate.delete(key[0]);
-
             } else {
-
-                redisTemplate.delete(CollectionUtils.arrayToList(key));
-
+                redisTemplate.delete((Collection<String>) CollectionUtils.arrayToList(key));
             }
 
         }
