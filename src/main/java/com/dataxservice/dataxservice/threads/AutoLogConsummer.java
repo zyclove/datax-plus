@@ -18,16 +18,16 @@ public class AutoLogConsummer {
     @Autowired
     private RedisUtils redisUtils;
 
-    @Async
-    @PostConstruct
-    public void consumeLogs(){
-        while (true){
-            java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.popData("loging-test");
-            if (null == object) {
-                continue;
-            } else {
-                System.out.println(">>> + "+object.get("message"));
-            }
-        }
-    }
+//    @Async
+//    @PostConstruct
+//    public void consumeLogs(){
+//        while (true){
+//            java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.popData("loging-test");
+//            if (null == object) {
+//                continue;
+//            } else {
+//                System.out.println(">>> + "+object.get("message"));
+//            }
+//        }
+//    }
 }
