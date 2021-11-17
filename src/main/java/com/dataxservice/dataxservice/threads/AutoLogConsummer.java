@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.LinkedHashMap;
 
+
+//https://blog.csdn.net/qq_31145141/article/details/103864600
+
 @Component
 @Order(value = 1)
 public class AutoLogConsummer  implements CommandLineRunner {
