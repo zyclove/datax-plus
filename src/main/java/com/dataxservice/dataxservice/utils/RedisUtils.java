@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public final class RedisUtils {
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate redisTemplate;
 
 
     // =============================common============================
@@ -73,15 +73,10 @@ public final class RedisUtils {
     public boolean hasKey(String key) {
 
         try {
-
             return redisTemplate.hasKey(key);
-
         } catch (Exception e) {
-
             e.printStackTrace();
-
             return false;
-
         }
 
     }
