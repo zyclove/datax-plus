@@ -1,15 +1,35 @@
 package com.dataxservice.dataxservice.controllers;
 
 import com.dataxservice.dataxservice.cores.Worker;
+import com.dataxservice.dataxservice.utils.RedisUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.datax.core.Engine;
 
+import javax.annotation.Resource;
 
 
 @RestController
 public class SimpleController {
+
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private RedisUtils redisUtils;
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test() {
+        Object ooo = redisUtils.popData("loging-test");
+        Object oooe = redisUtils.get("abc");
+        Object et3 = redisTemplate.opsForValue().get("kkkseee");
+        System.out.println(ooo);
+        return "Hello world";
+    }
 
     @RequestMapping(value = "/simple", method = RequestMethod.GET)
     public String hello() {
@@ -89,4 +109,6 @@ public class SimpleController {
             e.printStackTrace();
         }
     }
+
+
 }
