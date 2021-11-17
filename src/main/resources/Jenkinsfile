@@ -42,7 +42,7 @@ node {
             sh 'cp src/main/resources/Dockerfile .'
             dockerImageCore = docker.build("registry.cn-hangzhou.aliyuncs.com/nox60/datax-plus")
             docker.withRegistry("https://registry.cn-hangzhou.aliyuncs.com","aliyun-nox60-cd") {
-                            dockerImageCore.push('0.0.7')
+                            dockerImageCore.push('0.0.8')
             }
         }catch(e){
             env.CURRENT_STAGE = '打包镜像 & 推送到仓库'
