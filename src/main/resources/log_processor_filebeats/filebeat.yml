@@ -1,5 +1,9 @@
 filebeat.inputs:
   - type: log
+    multiline:
+      pattern: '^\-'
+      negate: true
+      match: after
     paths:
       - /opt/local/logs/*.log
 output.redis:
