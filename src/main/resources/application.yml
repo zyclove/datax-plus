@@ -5,6 +5,7 @@ server:
 
 logging:
   pattern:
+    dateformat: "-[yyyy-MM-dd HH:mm:ss.S]"
   file:
     path: /opt/local/logs/
 spring:
