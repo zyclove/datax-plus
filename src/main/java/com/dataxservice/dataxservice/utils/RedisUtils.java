@@ -595,7 +595,7 @@ public class RedisUtils {
     }
 
     /**
-     * 出队列
+     * 右出队列
      *
      * @param key   键
      * @return 值
@@ -610,7 +610,22 @@ public class RedisUtils {
     }
 
     /**
-     * 出队列
+     * 右入队列
+     *
+     * @param key   键
+     * @return 值
+     */
+    public Object rPushData(String key, String value) {
+        try {
+            return redisTemplate.opsForList().rightPush(key, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 左出队列
      *
      * @param key   键
      * @return 值

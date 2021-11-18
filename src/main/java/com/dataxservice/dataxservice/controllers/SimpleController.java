@@ -5,6 +5,7 @@ import com.dataxservice.dataxservice.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,8 @@ import com.alibaba.datax.core.Engine;
 
 import javax.annotation.Resource;
 import java.util.LinkedHashMap;
+import java.util.Random;
+import java.util.UUID;
 
 
 @RestController
@@ -50,8 +53,8 @@ public class SimpleController {
 
     // https://www.jianshu.com/p/bb9189ec523e
 
-    @RequestMapping(value = "/mysql", method = RequestMethod.GET)
-    public String mysql() {
+    @RequestMapping(value = "/mysql/{jobId}", method = RequestMethod.GET)
+    public String mysql(@PathVariable long jobId) {
 //        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
 ////        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
 //        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
@@ -66,6 +69,7 @@ public class SimpleController {
 
         Worker worker = new Worker();
         worker.setJsonFileName("mysql2mysql.json");
+        worker.setJobId(jobId);
 
         Thread thread1 = new Thread(worker);
 
@@ -86,7 +90,7 @@ public class SimpleController {
         System.out.println("--->>");
         System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
 //        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
-        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
+        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "dx-plusj-"+ UUID.randomUUID()};
 
 //
 
