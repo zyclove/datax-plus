@@ -27,7 +27,7 @@ public class AutoLogConsummer implements CommandLineRunner {
     @Override
     @Async
     public void run(String... args) throws Exception {
-        if (System.getProperty("never.process.log") == null || System.getProperty("never.process.log").toString().equals("1")) {
+        if (System.getProperty("never.process.log") == null || !System.getProperty("never.process.log").toString().equals("1")) {
             while (true) {
                 java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
                 if (null == object) {
