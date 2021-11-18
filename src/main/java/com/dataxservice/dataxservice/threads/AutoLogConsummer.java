@@ -36,8 +36,8 @@ public class AutoLogConsummer implements CommandLineRunner {
                     // System.out.println(">>> + " + object.get("message"));
                     // 将日志解析并放入相应的消息队列
                     if (object.get("message") != null && object.get("message").toString().indexOf("[job-") > 0) {
-
-                        // redisUtils.rPushData();
+                        String jobId = this.getJobIdFromLog(object.get("message").toString());
+                        redisUtils.rPushData(jobId, object.get("message").toString());
                     }
                 }
             }

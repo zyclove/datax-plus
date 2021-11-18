@@ -31,7 +31,46 @@ public class SimpleController {
 //        Object ooo = redisUtils.popData("loging-test");
 //        System.out.println(ooo);
         java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
-        System.out.println(object);
+        // System.out.println(object);
+
+
+        return "Hello world";
+    }
+
+    @RequestMapping(value = "/testReadLog/{logId}", method = RequestMethod.GET)
+    public String testReadLog(@PathVariable String logId) {
+//        Object ooo = redisUtils.popData("loging-test");
+//        System.out.println(ooo);
+//        java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
+//        System.out.println(object);
+
+        java.util.LinkedHashMap loginfo;
+        do {
+            loginfo = (LinkedHashMap) redisUtils.lPopData(logId);
+            System.out.println(loginfo.get("message"));
+        } while (loginfo == null);
+
+        System.out.println("read");
+
+//        while (String testf = redisUtils.lPopData(logId) != null){
+//
+//        }
+
+//        if (System.getProperty("never.process.log") == null || !System.getProperty("never.process.log").toString().equals("1")) {
+//            while (true) {
+//                java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
+//                if (null == object) {
+//                    continue;
+//                } else {
+//                    // System.out.println(">>> + " + object.get("message"));
+//                    // 将日志解析并放入相应的消息队列
+//                    if (object.get("message") != null && object.get("message").toString().indexOf("[job-") > 0) {
+//                        String jobId = this.getJobIdFromLog(object.get("message").toString());
+//                        redisUtils.rPushData(jobId, object.get("message").toString());
+//                    }
+//                }
+//            }
+//        }
         return "Hello world";
     }
 
@@ -81,7 +120,7 @@ public class SimpleController {
 
         float seconds = (endTime - startTime) / 1000F;
 
-        return "Hello worldeeeee ---------------"+seconds;
+        return "Hello worldeeeee ---------------" + seconds;
     }
 
 
@@ -90,7 +129,7 @@ public class SimpleController {
         System.out.println("--->>");
         System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
 //        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
-        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "dx-plusj-"+ UUID.randomUUID()};
+        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "dx-plusj-" + UUID.randomUUID()};
 
 //
 
