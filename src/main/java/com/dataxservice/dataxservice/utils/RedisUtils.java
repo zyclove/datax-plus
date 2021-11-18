@@ -600,9 +600,24 @@ public class RedisUtils {
      * @param key   键
      * @return 值
      */
-    public Object popData(String key) {
+    public Object rPopData(String key) {
         try {
             return redisTemplate.opsForList().rightPop(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 出队列
+     *
+     * @param key   键
+     * @return 值
+     */
+    public Object lPopData(String key) {
+        try {
+            return redisTemplate.opsForList().leftPop(key);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
