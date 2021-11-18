@@ -27,13 +27,13 @@ public class AutoLogConsummer  implements CommandLineRunner {
     @Override
     @Async
     public void run(String... args) throws Exception {
-        while (true){
-            java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.popData("loging-test");
-            if (null == object) {
-                continue;
-            } else {
-                System.out.println(">>> + "+object.get("message"));
-            }
-        }
+//        while (true){
+//            java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.popData("loging-test");
+//            if (null == object) {
+//                continue;
+//            } else {
+//                System.out.println(">>> + "+object.get("message"));
+//            }
+//        }
     }
 }
