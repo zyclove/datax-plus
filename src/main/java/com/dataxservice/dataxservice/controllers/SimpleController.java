@@ -44,10 +44,10 @@ public class SimpleController {
 //        java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
 //        System.out.println(object);
 
-        java.util.LinkedHashMap loginfo;
+        String loginfo;
         do {
-            loginfo = (LinkedHashMap) redisUtils.lPopData("["+logId+"]");
-            System.out.println(loginfo.get("message"));
+            loginfo = redisUtils.lPopData("["+logId+"]").toString();
+            System.out.println(loginfo);
         } while (loginfo == null);
 
         System.out.println("read");
