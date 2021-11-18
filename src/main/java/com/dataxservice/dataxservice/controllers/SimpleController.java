@@ -46,7 +46,7 @@ public class SimpleController {
 
         java.util.LinkedHashMap loginfo;
         do {
-            loginfo = (LinkedHashMap) redisUtils.lPopData(logId);
+            loginfo = (LinkedHashMap) redisUtils.lPopData("["+logId+"]");
             System.out.println(loginfo.get("message"));
         } while (loginfo == null);
 
