@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.datax.core.Engine;
 
 import javax.annotation.Resource;
+import java.util.LinkedHashMap;
 
 
 @RestController
@@ -26,6 +27,8 @@ public class SimpleController {
     public String test() {
 //        Object ooo = redisUtils.popData("loging-test");
 //        System.out.println(ooo);
+        java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
+        System.out.println(object);
         return "Hello world";
     }
 
