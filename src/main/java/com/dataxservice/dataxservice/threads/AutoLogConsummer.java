@@ -19,7 +19,7 @@ import java.util.LinkedHashMap;
 
 @Component
 @Order(value = 1)
-public class AutoLogConsummer  implements CommandLineRunner {
+public class AutoLogConsummer implements CommandLineRunner {
 
     @Autowired
     private RedisUtils redisUtils;
@@ -27,12 +27,14 @@ public class AutoLogConsummer  implements CommandLineRunner {
     @Override
     @Async
     public void run(String... args) throws Exception {
-        while (true){
-            java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
-            if (null == object) {
-                continue;
-            } else {
-                System.out.println(">>> + "+object.get("message"));
+        if (System.getProperty("never.process.log") != null && System.getProperty("never.process.log").toString().equals("1")) {
+            while (true) {
+                java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
+                if (null == object) {
+                    continue;
+                } else {
+                    System.out.println(">>> + " + object.get("message"));
+                }
             }
         }
     }
