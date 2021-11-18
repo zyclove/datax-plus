@@ -39,38 +39,12 @@ public class SimpleController {
 
     @RequestMapping(value = "/testReadLog/{logId}", method = RequestMethod.GET)
     public String testReadLog(@PathVariable String logId) {
-//        Object ooo = redisUtils.popData("loging-test");
-//        System.out.println(ooo);
-//        java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
-//        System.out.println(object);
-
         String loginfo;
         do {
             loginfo = redisUtils.lPopData("["+logId+"]").toString();
             System.out.println(loginfo);
         } while (loginfo == null);
-
         System.out.println("read");
-
-//        while (String testf = redisUtils.lPopData(logId) != null){
-//
-//        }
-
-//        if (System.getProperty("never.process.log") == null || !System.getProperty("never.process.log").toString().equals("1")) {
-//            while (true) {
-//                java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
-//                if (null == object) {
-//                    continue;
-//                } else {
-//                    // System.out.println(">>> + " + object.get("message"));
-//                    // 将日志解析并放入相应的消息队列
-//                    if (object.get("message") != null && object.get("message").toString().indexOf("[job-") > 0) {
-//                        String jobId = this.getJobIdFromLog(object.get("message").toString());
-//                        redisUtils.rPushData(jobId, object.get("message").toString());
-//                    }
-//                }
-//            }
-//        }
         return "Hello world";
     }
 
