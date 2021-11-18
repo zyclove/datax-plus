@@ -27,24 +27,23 @@ public class AutoLogConsummer implements CommandLineRunner {
     @Override
     @Async
     public void run(String... args) throws Exception {
-        if (System.getProperty("never.process.log") == null || !System.getProperty("never.process.log").toString().equals("1")) {
-            while (true) {
-                java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
-                if (null == object) {
-                    continue;
-                } else {
-                    // System.out.println(">>> + " + object.get("message"));
-                    // 将日志解析并放入相应的消息队列
-                    if (object.get("message") != null && object.get("message").toString().indexOf("[job-") > 0) {
-                        String jobId = this.getJobIdFromLog(object.get("message").toString());
-                        redisUtils.rPushData(jobId, object.get("message").toString());
-                    }
+        while (true) {
+            java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
+            if (null == object) {
+                continue;
+            } else {
+                // System.out.println(">>> + " + object.get("message"));
+                // 将日志解析并放入相应的消息队列
+                if (object.get("message") != null && object.get("message").toString().indexOf("[job-") > 0) {
+                    String jobId = this.getJobIdFromLog(object.get("message").toString());
+                    redisUtils.rPushData(jobId, object.get("message").toString());
                 }
             }
         }
+
     }
 
-    private  String getJobIdFromLog(String logBody) {
+    private String getJobIdFromLog(String logBody) {
         if (logBody != null) {
             String a = logBody.substring(logBody.indexOf("[job-"), logBody.length());
             a = a.substring(0, a.indexOf("]") + 1);
