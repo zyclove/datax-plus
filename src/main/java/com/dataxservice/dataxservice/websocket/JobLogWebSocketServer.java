@@ -44,8 +44,6 @@ public class JobLogWebSocketServer {
         SendMessage(session, "eeeeeeeeeeeeee6666eeeeee");
         SendMessage(session, "eeeeeeeeeeee7777eeeeeeee");
         SendMessage(session, "连接成功");
-
-
     }
 
     /**

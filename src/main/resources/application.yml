@@ -16,3 +16,10 @@ spring:
     port: 6379
     # Redis服务器连接密码（默认为空）
     password: 123456
+
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://${MYSQL_HOST:172.16.56.80}:${MYSQL_PORT:3306}/datax-plus?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:1234}
