@@ -2,8 +2,6 @@ package com.dataxservice.dataxservice.cores;
 
 import com.alibaba.datax.core.Engine;
 
-import java.io.File;
-import java.util.UUID;
 
 public class Worker implements Runnable {
 
