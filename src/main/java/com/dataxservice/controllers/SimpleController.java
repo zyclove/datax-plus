@@ -96,6 +96,39 @@ public class SimpleController {
     }
 
 
+
+    @RequestMapping(value = "/jobSubmit/{jobId}", method = RequestMethod.POST)
+    public String jobSubmit(@PathVariable long jobId) {
+//        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
+////        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
+//        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
+
+        String tempDir = System.getProperty("tempfile.dir");
+        long startTime = System.currentTimeMillis();
+//        try {
+//            Engine.entry(datxArgs);   //从这里启动
+//        } catch (Throwable e) {
+//            e.printStackTrace();
+//        }
+
+        Worker worker = new Worker();
+        worker.setJsonFileName("mysql2mysql.json");
+        worker.setJobId(jobId);
+
+        Thread thread1 = new Thread(worker);
+
+        thread1.start();
+
+        System.out.println("---???????>>>>");
+
+        long endTime = System.currentTimeMillis();
+
+        float seconds = (endTime - startTime) / 1000F;
+
+        return "Hello worldeeeee ---------------" + seconds;
+    }
+
+
     @RequestMapping(value = "/oracle", method = RequestMethod.GET)
     public String oracle() {
         System.out.println("--->>");

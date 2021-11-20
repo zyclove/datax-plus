@@ -3,19 +3,19 @@ server:
   servlet:
     context-path: /dataxs
 
-logging:
-  pattern:
-    dateformat: "-[yyyy-MM-dd HH:mm:ss.S]"
-  file:
-    path: /opt/local/logs/
-spring:
-  redis:
-    # Redis服务器地址
-    host: 192.168.16.80
-    # Redis服务器连接端口
-    port: 6379
-    # Redis服务器连接密码（默认为空）
-    password: 123456
+      logging:
+        pattern:
+          dateformat: "-[yyyy-MM-dd HH:mm:ss.S]"
+        file:
+          path: /opt/local/logs/
+      spring:
+        redis:
+          # Redis服务器地址
+          host: 192.168.16.80
+          # Redis服务器连接端口
+          port: 6379
+          # Redis服务器连接密码（默认为空）
+          password: 123456
 
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
