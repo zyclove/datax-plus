@@ -6,10 +6,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
-public class DataxserviceApplication {
+public class DataXServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DataxserviceApplication.class, args);
+        SpringApplication.run(DataXServiceApplication.class, args);
     }
 
 }
