@@ -26,11 +26,7 @@ public class SimpleController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
-//        Object ooo = redisUtils.popData("loging-test");
-//        System.out.println(ooo);
         java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
-        // System.out.println(object);
-
 
         return "Hello world";
     }
@@ -66,17 +62,8 @@ public class SimpleController {
 
     @RequestMapping(value = "/mysql/{jobId}", method = RequestMethod.GET)
     public String mysql(@PathVariable long jobId) {
-//        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
-////        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
-//        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
-
         String tempDir = System.getProperty("tempfile.dir");
         long startTime = System.currentTimeMillis();
-//        try {
-//            Engine.entry(datxArgs);   //从这里启动
-//        } catch (Throwable e) {
-//            e.printStackTrace();
-//        }
 
         Worker worker = new Worker();
         worker.setJsonFileName("mysql2mysql.json");
@@ -133,11 +120,7 @@ public class SimpleController {
     public String oracle() {
         System.out.println("--->>");
         System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
-//        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
         String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "dx-plusj-" + UUID.randomUUID()};
-
-//
-
 
         try {
             Engine.entry(datxArgs);   //从这里启动
@@ -151,7 +134,6 @@ public class SimpleController {
         System.out.println("--->>");
         System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
         String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\stream2stream.json", "-mode", "standalone", "-jobid", "-1"};
-//
         try {
             Engine.entry(datxArgs);   //从这里启动
         } catch (Throwable e) {
