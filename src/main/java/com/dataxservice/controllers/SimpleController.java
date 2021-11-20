@@ -1,9 +1,8 @@
-package com.dataxservice.dataxservice.controllers;
+package com.dataxservice.controllers;
 
-import com.dataxservice.dataxservice.cores.Worker;
-import com.dataxservice.dataxservice.utils.RedisUtils;
+import com.dataxservice.cores.Worker;
+import com.dataxservice.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +12,6 @@ import com.alibaba.datax.core.Engine;
 
 import javax.annotation.Resource;
 import java.util.LinkedHashMap;
-import java.util.Random;
 import java.util.UUID;
 
 

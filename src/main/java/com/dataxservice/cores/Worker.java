@@ -1,4 +1,4 @@
-package com.dataxservice.dataxservice.cores;
+package com.dataxservice.cores;
 
 import com.alibaba.datax.core.Engine;
 
