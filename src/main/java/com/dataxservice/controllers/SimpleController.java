@@ -115,21 +115,6 @@ public class SimpleController {
         return "Hello worldeeeee ---------------" + seconds;
     }
 
-
-    @RequestMapping(value = "/oracle", method = RequestMethod.GET)
-    public String oracle() {
-        System.out.println("--->>");
-        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
-        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "dx-plusj-" + UUID.randomUUID()};
-
-        try {
-            Engine.entry(datxArgs);   //从这里启动
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        return "Hello world";
-    }
-
     public static void main(String args[]) {
         System.out.println("--->>");
         System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
