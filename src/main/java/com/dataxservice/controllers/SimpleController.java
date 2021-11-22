@@ -1,6 +1,7 @@
 package com.dataxservice.controllers;
 
 import com.dataxservice.cores.Worker;
+import com.dataxservice.services.JobLogsService;
 import com.dataxservice.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,11 +25,14 @@ public class SimpleController {
     @Autowired
     private RedisUtils redisUtils;
 
+    @Autowired
+    private JobLogsService jobLogsService;
+
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
         java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
 
-        return "Hello world";
+        return String.valueOf(jobLogsService.simpleCount());
     }
 
     @RequestMapping(value = "/testReadLog/{logId}", method = RequestMethod.GET)
