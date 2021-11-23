@@ -4,4 +4,18 @@
     <select id="testCount" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM tb_job_logs a
     </select>
+
+    <insert id="addJobLog" parameterType="com.dataxservice.models.JobLog" useGeneratedKeys="true" keyProperty="jobLog.logRowId">
+		INSERT INTO
+		tb_job_log (
+                job_id,
+                log_id,
+                log_body
+		)
+		VALUES (
+				#{jobLog.jobId},
+				#{jobLog.logId},
+				#{jobLog.logBody}
+		)
+	</insert>
 </mapper>
