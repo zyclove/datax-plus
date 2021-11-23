@@ -4,7 +4,7 @@ CREATE database datax_service;
 
 USE datax_service;
 
-DROP TABLE IF EXISTS tb_job;
+DROP TABLE IF EXISTS tb_data_job;
 CREATE TABLE tb_data_job (
     `data_job_id` INT NOT NULL AUTO_INCREMENT,
     `data_job_name` VARCHAR(100) DEFAULT '',
