@@ -1,12 +1,12 @@
 package com.dataxservice.dao;
 
-import com.dataxservice.models.JobLog;
+import com.dataxservice.models.DataJobLog;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
-public interface JobLogDao {
+public interface DataJobLogDao {
     int testCount();
 
-    int addLog(@Param("jobLog") JobLog jobLog);
+    int addDataJobLog(@Param("dataJobLog") DataJobLog dataJobLog);
 }

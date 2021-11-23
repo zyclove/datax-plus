@@ -1,8 +1,8 @@
 package com.dataxservice.models;
 
-public class JobLog {
+public class DataJobLog {
     private int logRowId;
-    private Job job;
+    private DataJob dataJob;
     private int logId;
     private String logBody = "";
 
@@ -14,12 +14,12 @@ public class JobLog {
         this.logRowId = logRowId;
     }
 
-    public Job getJob() {
-        return job;
+    public DataJob getDataJob() {
+        return dataJob;
     }
 
-    public void setJob(Job job) {
-        this.job = job;
+    public void setDataJob(DataJob dataJob) {
+        this.dataJob = dataJob;
     }
 
     public int getLogId() {

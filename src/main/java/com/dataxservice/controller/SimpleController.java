@@ -2,13 +2,16 @@ package com.dataxservice.controller;
 
 import com.dataxservice.core.Worker;
 import com.dataxservice.service.JobLogService;
+import com.dataxservice.service.JobService;
 import com.dataxservice.util.RedisUtil;
+import com.dataxservice.models.
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.alibaba.datax.core.Engine;
 
 import javax.annotation.Resource;
@@ -26,6 +29,9 @@ public class SimpleController {
 
     @Autowired
     private JobLogService jobLogsService;
+
+    @Autowired
+    private JobService jobService;
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
@@ -101,15 +107,18 @@ public class SimpleController {
 //            e.printStackTrace();
 //        }
 
+        //Generate Job record
+    //    Job job =  new Job();
+       // jobService
+
         Worker worker = new Worker();
         worker.setJsonFileName("mysql2mysql.json");
         worker.setJobId(jobId);
 
+
+
         Thread thread1 = new Thread(worker);
-
         thread1.start();
-
-        System.out.println("---???????>>>>");
 
         long endTime = System.currentTimeMillis();
 

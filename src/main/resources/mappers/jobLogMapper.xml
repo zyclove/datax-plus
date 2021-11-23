@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dataxservice.dao.JobLogDao">
+<mapper namespace="com.dataxservice.dao.DataJobLogDao">
     <select id="testCount" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM tb_job_logs a
     </select>
 
-    <insert id="addJobLog" parameterType="com.dataxservice.models.JobLog" useGeneratedKeys="true" keyProperty="jobLog.logRowId">
+    <insert id="addJobLog" parameterType="com.dataxservice.models.DataJobLog" useGeneratedKeys="true" keyProperty="jobLog.logRowId">
 		INSERT INTO
 		tb_job_log (
                 job_id,
