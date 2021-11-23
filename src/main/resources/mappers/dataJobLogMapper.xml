@@ -23,10 +23,10 @@
         SELECT IFNULL(MAX(log_id), 0) FROM tb_data_job_log
 		<where>
 			<if test=" dataJobLog.dataJob.dataJobId > 0 ">
-				AND job_id = #{dataJobLog.dataJob.dataJobId}
+				AND data_job_id = #{dataJobLog.dataJob.dataJobId}
 			</if>
 		</where>
-		GROUP BY job_id
+		GROUP BY data_job_id
     </select>
 
 </mapper>
