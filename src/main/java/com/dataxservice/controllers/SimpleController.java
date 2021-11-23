@@ -1,8 +1,8 @@
 package com.dataxservice.controllers;
 
 import com.dataxservice.cores.Worker;
-import com.dataxservice.services.JobLogsService;
-import com.dataxservice.utils.RedisUtils;
+import com.dataxservice.service.JobLogService;
+import com.dataxservice.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +13,6 @@ import com.alibaba.datax.core.Engine;
 
 import javax.annotation.Resource;
 import java.util.LinkedHashMap;
-import java.util.UUID;
 
 
 @RestController
@@ -23,14 +22,14 @@ public class SimpleController {
     private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
-    private RedisUtils redisUtils;
+    private RedisUtil redisUtil;
 
     @Autowired
-    private JobLogsService jobLogsService;
+    private JobLogService jobLogsService;
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
-        java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
+        java.util.LinkedHashMap object = (LinkedHashMap) redisUtil.lPopData("loging-test");
 
         return String.valueOf(jobLogsService.simpleCount());
     }
@@ -39,7 +38,7 @@ public class SimpleController {
     public String testReadLog(@PathVariable String logId) {
         String loginfo;
         do {
-            loginfo = redisUtils.lPopData("["+logId+"]").toString();
+            loginfo = redisUtil.lPopData("["+logId+"]").toString();
             System.out.println(loginfo);
         } while (loginfo == null);
         System.out.println("read");

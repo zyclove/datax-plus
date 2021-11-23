@@ -1,13 +1,13 @@
-package com.dataxservice.services.impls;
+package com.dataxservice.service.impl;
 
 import com.dataxservice.daos.JobLogDao;
-import com.dataxservice.services.JobLogsService;
+import com.dataxservice.service.JobLogService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 @Service("jobLogsService")
-public class JobLogsServiceImpl implements JobLogsService {
+public class JobLogServiceImpl implements JobLogService {
     @Resource
     private JobLogDao jobLogDao;
 

@@ -1,6 +1,6 @@
-package com.dataxservice.threads;
+package com.dataxservice.thread;
 
-import com.dataxservice.utils.RedisUtils;
+import com.dataxservice.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -17,13 +17,13 @@ import java.util.LinkedHashMap;
 public class AutoLogConsummer implements CommandLineRunner {
 
     @Autowired
-    private RedisUtils redisUtils;
+    private RedisUtil redisUtil;
 
     @Override
     @Async
     public void run(String... args) throws Exception {
         while (true) {
-            java.util.LinkedHashMap object = (LinkedHashMap) redisUtils.lPopData("loging-test");
+            java.util.LinkedHashMap object = (LinkedHashMap) redisUtil.lPopData("loging-test");
             if (null == object) {
                 continue;
             } else {
@@ -31,7 +31,7 @@ public class AutoLogConsummer implements CommandLineRunner {
                 // 将日志解析并放入相应的消息队列
                 if (object.get("message") != null && object.get("message").toString().indexOf("[job-") > 0) {
                     String jobId = this.getJobIdFromLog(object.get("message").toString());
-                    redisUtils.rPushData(jobId, object.get("message").toString());
+                    redisUtil.rPushData(jobId, object.get("message").toString());
                 }
             }
         }
