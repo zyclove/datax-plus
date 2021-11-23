@@ -1,5 +1,8 @@
 package com.dataxservice.dao;
 
-public interface JobDao {
+import com.dataxservice.models.Job;
+import org.apache.ibatis.annotations.Param;
 
+public interface JobDao {
+    int addJob(@Param("job") Job job);
 }

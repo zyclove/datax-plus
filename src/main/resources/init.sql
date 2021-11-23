@@ -7,7 +7,7 @@ USE datax_service;
 DROP TABLE IF EXISTS tb_job;
 CREATE TABLE tb_job (
     `job_id` INT NOT NULL AUTO_INCREMENT,
-    `job_name` VARCHAR(100),
+    `job_name` VARCHAR(100) DEFAULT '',
     `create_time` datetime NOT NULL DEFAULT NOW(),
     PRIMARY KEY(`job_id`)
 )DEFAULT CHARSET=utf8;
