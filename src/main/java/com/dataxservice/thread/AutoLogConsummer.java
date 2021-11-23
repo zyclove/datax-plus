@@ -33,7 +33,6 @@ public class AutoLogConsummer implements CommandLineRunner {
             if (null == object) {
                 continue;
             } else {
-                // System.out.println(">>> + " + object.get("message"));
                 // 将日志解析并放入相应的消息队列
                 if (object.get("message") != null && object.get("message").toString().indexOf("[job-") > 0) {
                     String jobId = this.getJobIdFromLog(object.get("message").toString());
@@ -47,12 +46,9 @@ public class AutoLogConsummer implements CommandLineRunner {
                     // --------------------
                     int biggestLogId = dataJobLogService.retrieveBiggestLogIdByJobId(dataJobLog);
                     dataJobLog.setLogId(biggestLogId+1);
-                    dataJobLog.setLogBody(object.get("message").toString());
-
+                    //Write log into database
+                    dataJobLog.setLogBody(object.get("message").toString().replaceFirst("-",""));
                     dataJobLogService.addDataJobLog(dataJobLog);
-
-
-                    // redisUtil.rPushData(jobId, object.get("message").toString());
                 }
             }
         }

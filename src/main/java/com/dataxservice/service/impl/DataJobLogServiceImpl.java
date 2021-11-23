@@ -6,6 +6,7 @@ import com.dataxservice.service.DataJobLogService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service("dataJobLogService")
 public class DataJobLogServiceImpl implements DataJobLogService {
@@ -25,5 +26,10 @@ public class DataJobLogServiceImpl implements DataJobLogService {
     @Override
     public int addDataJobLog(DataJobLog dataJobLog) {
         return dataJobLogDao.addDataJobLog(dataJobLog);
+    }
+
+    @Override
+    public List<DataJobLog> retrieveLogsBiggerThanSpecifiedLogId(DataJobLog dataJobLog) {
+        return dataJobLogDao.retrieveLogsBiggerThanSpecifiedLogId(dataJobLog);
     }
 }
