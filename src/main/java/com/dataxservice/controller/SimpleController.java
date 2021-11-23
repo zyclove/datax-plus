@@ -93,8 +93,8 @@ public class SimpleController {
 
 
 
-    @RequestMapping(value = "/jobSubmit/{jobId}", method = RequestMethod.POST)
-    public String jobSubmit(@PathVariable long jobId) {
+    @RequestMapping(value = "/jobSubmit", method = RequestMethod.GET)
+    public String jobSubmit() {
 //        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
 ////        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
 //        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
