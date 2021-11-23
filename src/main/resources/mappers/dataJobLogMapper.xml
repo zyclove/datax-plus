@@ -26,7 +26,6 @@
 				AND data_job_id = #{dataJobLog.dataJob.dataJobId}
 			</if>
 		</where>
-		GROUP BY data_job_id
     </select>
 
 </mapper>
