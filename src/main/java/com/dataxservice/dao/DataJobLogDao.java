@@ -8,5 +8,7 @@ import org.apache.ibatis.annotations.Param;
 public interface DataJobLogDao {
     int testCount();
 
+    int retrieveBiggestLogIdByJobId(@Param("dataJobLog") DataJobLog dataJobLog);
+    
     int addDataJobLog(@Param("dataJobLog") DataJobLog dataJobLog);
 }

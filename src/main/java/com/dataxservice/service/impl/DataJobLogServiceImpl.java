@@ -1,6 +1,7 @@
 package com.dataxservice.service.impl;
 
 import com.dataxservice.dao.DataJobLogDao;
+import com.dataxservice.models.DataJobLog;
 import com.dataxservice.service.DataJobLogService;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +15,15 @@ public class DataJobLogServiceImpl implements DataJobLogService {
     @Override
     public int simpleCount() {
         return dataJobLogDao.testCount();
+    }
+
+    @Override
+    public int retrieveBiggestLogIdByJobId(DataJobLog dataJobLog) {
+        return dataJobLogDao.retrieveBiggestLogIdByJobId(dataJobLog);
+    }
+
+    @Override
+    public int addDataJobLog(DataJobLog dataJobLog) {
+        return dataJobLogDao.addDataJobLog(dataJobLog);
     }
 }

@@ -5,17 +5,28 @@
         SELECT COUNT(*) FROM tb_job_logs a
     </select>
 
-    <insert id="addJobLog" parameterType="com.dataxservice.models.DataJobLog" useGeneratedKeys="true" keyProperty="jobLog.logRowId">
+    <insert id="addJobLog" parameterType="com.dataxservice.models.DataJobLog" useGeneratedKeys="true" keyProperty="dataJobLog.logRowId">
 		INSERT INTO
-		tb_job_log (
-                job_id,
+		tb_data_job_log (
+                data_job_id,
                 log_id,
                 log_body
 		)
 		VALUES (
-				#{jobLog.jobId},
-				#{jobLog.logId},
-				#{jobLog.logBody}
+				#{dataJobLog.dataJob.dataJobId},
+				#{dataJobLog.logId},
+				#{dataJobLog.logBody}
 		)
 	</insert>
+
+	<select id="retrieveBiggestLogIdByJobId" resultType="java.lang.Integer">
+        SELECT IFNULL(MAX(log_id), 0) FROM tb_data_job_log
+		<where>
+			<if test=" dataJobLog.dataJob.dataJobId > 0 ">
+				AND job_id = #{dataJobLog.dataJob.dataJobId}
+			</if>
+		</where>
+		GROUP BY job_id
+    </select>
+
 </mapper>
