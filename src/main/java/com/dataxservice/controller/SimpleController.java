@@ -1,6 +1,6 @@
-package com.dataxservice.controllers;
+package com.dataxservice.controller;
 
-import com.dataxservice.cores.Worker;
+import com.dataxservice.core.Worker;
 import com.dataxservice.service.JobLogService;
 import com.dataxservice.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;

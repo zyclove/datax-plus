@@ -1,4 +1,4 @@
-package com.dataxservice.daos;
+package com.dataxservice.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,4 +1,4 @@
-package com.dataxservice.configs;
+package com.dataxservice.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

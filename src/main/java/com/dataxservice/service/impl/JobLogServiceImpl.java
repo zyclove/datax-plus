@@ -1,6 +1,6 @@
 package com.dataxservice.service.impl;
 
-import com.dataxservice.daos.JobLogDao;
+import com.dataxservice.dao.JobLogDao;
 import com.dataxservice.service.JobLogService;
 import org.springframework.stereotype.Service;
 
