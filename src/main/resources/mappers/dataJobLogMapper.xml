@@ -5,7 +5,7 @@
         SELECT COUNT(*) FROM tb_job_logs a
     </select>
 
-    <insert id="addJobLog" parameterType="com.dataxservice.models.DataJobLog" useGeneratedKeys="true" keyProperty="dataJobLog.logRowId">
+    <insert id="addDataJobLog" parameterType="com.dataxservice.models.DataJobLog" useGeneratedKeys="true" keyProperty="dataJobLog.logRowId">
 		INSERT INTO
 		tb_data_job_log (
                 data_job_id,

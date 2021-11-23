@@ -17,7 +17,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class JobLogWebSocketServer {
     @PostConstruct
     public void init() {
-        System.out.println("websocket 加载");
+        // System.out.println("websocket 加载");
+        log.info("websocket 服务启动");
     }
 
     private static Logger log = LoggerFactory.getLogger(JobLogWebSocketServer.class);
