@@ -1,18 +1,18 @@
 package com.dataxservice.service.impl;
 
 import com.dataxservice.dao.DataJobLogDao;
-import com.dataxservice.service.JobLogService;
+import com.dataxservice.service.DataJobLogService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-@Service("jobLogService")
-public class JobLogServiceImpl implements JobLogService {
+@Service("dataJobLogService")
+public class DataJobLogServiceImpl implements DataJobLogService {
     @Resource
-    private DataJobLogDao jobLogDao;
+    private DataJobLogDao dataJobLogDao;
 
     @Override
     public int simpleCount() {
-        return jobLogDao.testCount();
+        return dataJobLogDao.testCount();
     }
 }

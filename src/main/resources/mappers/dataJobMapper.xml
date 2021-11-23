@@ -5,13 +5,13 @@
         SELECT COUNT(*) FROM tb_job_log a
     </select>
 
-    <insert id="addJob" parameterType="com.dataxservice.models.DataJob" useGeneratedKeys="true" keyProperty="job.jobId">
+    <insert id="addDataJob" parameterType="com.dataxservice.models.DataJob" useGeneratedKeys="true" keyProperty="dataJob.dataJobId">
 		INSERT INTO
-		tb_job (
-            job_name
+		tb_data_job (
+            data_job_name
 		)
 		VALUES (
-            #{job.jobName}
+            #{dataJob.dataJobName}
 		)
 	</insert>
 </mapper>

@@ -1,6 +1,6 @@
 package com.dataxservice.service;
 
 
-public interface JobLogService {
+public interface DataJobLogService {
     public int simpleCount();
 }

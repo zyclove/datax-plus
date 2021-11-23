@@ -1,7 +1,8 @@
 package com.dataxservice.controller;
 
 import com.dataxservice.core.Worker;
-import com.dataxservice.service.JobLogService;
+import com.dataxservice.service.DataJobService;
+import com.dataxservice.service.DataJobLogService;
 import com.dataxservice.service.JobService;
 import com.dataxservice.util.RedisUtil;
 import com.dataxservice.models.
@@ -28,10 +29,10 @@ public class SimpleController {
     private RedisUtil redisUtil;
 
     @Autowired
-    private JobLogService jobLogsService;
+    private DataJobLogService jobLogsService;
 
     @Autowired
-    private JobService jobService;
+    private DataJobService dataJobService;
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
@@ -109,6 +110,9 @@ public class SimpleController {
 
         //Generate Job record
     //    Job job =  new Job();
+        DataJob dataJob = new DataJob();
+        dataJob.setDataJobName("");
+        dataJobService.addDataJob(dataJob);
        // jobService
 
         Worker worker = new Worker();
