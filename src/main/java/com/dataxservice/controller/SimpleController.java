@@ -1,11 +1,10 @@
 package com.dataxservice.controller;
 
 import com.dataxservice.core.Worker;
+import com.dataxservice.models.DataJob;
 import com.dataxservice.service.DataJobService;
 import com.dataxservice.service.DataJobLogService;
-import com.dataxservice.service.JobService;
 import com.dataxservice.util.RedisUtil;
-import com.dataxservice.models.
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -117,9 +116,7 @@ public class SimpleController {
 
         Worker worker = new Worker();
         worker.setJsonFileName("mysql2mysql.json");
-        worker.setJobId(jobId);
-
-
+        worker.setJobId(dataJob.getDataJobId());
 
         Thread thread1 = new Thread(worker);
         thread1.start();
