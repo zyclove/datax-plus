@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dataxservice.dao.DataJobLogDao">
+<mapper namespace="com.dataxservice.dao.DataJobDao">
     <select id="testCount" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM tb_job_log a
     </select>
