@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS tb_data_job;
 CREATE TABLE tb_data_job (
     `data_job_id` INT NOT NULL AUTO_INCREMENT,
     `data_job_name` VARCHAR(100) DEFAULT '',
+    `status` TINYINT,
     `create_time` datetime NOT NULL DEFAULT NOW(),
     PRIMARY KEY(`data_job_id`)
 )DEFAULT CHARSET=utf8;

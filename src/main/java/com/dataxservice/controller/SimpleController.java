@@ -112,9 +112,13 @@ public class SimpleController {
         Map<String, Object> container = (Map<String, Object>)core.get("container");
         Map<String, Object> job = (Map<String, Object>)container.get("job");
         String id = job.get("id").toString();
+
         LOG.info("The hook result ID is : "+id);
 
         LOG.info("HOOK REQUEST--------------------------");
+        //Update this job's status to successed
+
+
         return "Hello worldeeeee ---------------";
     }
 
