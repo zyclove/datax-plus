@@ -18,6 +18,7 @@ import com.alibaba.datax.common.util.Configuration;
 import com.alibaba.datax.core.Engine;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 
 
@@ -99,10 +100,10 @@ public class SimpleController {
 
 
     @RequestMapping(value = "/jobReport", method = RequestMethod.POST)
-    public String jobReport(@RequestBody Configuration jobConfiguration) {
+    public String jobReport( HttpServletRequest request) {
         LOG.info("HOOK REQUEST..........................");
-        JSONObject jsonObject = JSONObject.parseObject(jobConfiguration.toJSON());
-        LOG.info(jsonObject.getString("core"));
+//        JSONObject jsonObject = JSONObject.parseObject(jobConfiguration.toJSON());
+        LOG.info("jobResult: "+ request.getParameter("jobResult"));
         LOG.info("HOOK REQUEST--------------------------");
         return "Hello worldeeeee ---------------" ;
     }
