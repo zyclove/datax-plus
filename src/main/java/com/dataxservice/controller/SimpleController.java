@@ -1,5 +1,6 @@
 package com.dataxservice.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dataxservice.core.Worker;
 import com.dataxservice.models.DataJob;
 import com.dataxservice.service.DataJobService;
@@ -9,10 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import com.alibaba.datax.common.util.Configuration;
+
 
 import com.alibaba.datax.core.Engine;
 
@@ -98,29 +99,23 @@ public class SimpleController {
 
 
     @RequestMapping(value = "/jobReport", method = RequestMethod.POST)
-    public String jobReport() {
-        System.out.println("-----------------------------------------------");
-        LOG.info("REQUEST ..........................");
+    public String jobReport(@RequestBody Configuration jobConfiguration) {
+        LOG.info("HOOK REQUEST..........................");
+        JSONObject jsonObject = JSONObject.parseObject(jobConfiguration.toJSON());
+        LOG.info(jsonObject.getString("core"));
+        LOG.info("HOOK REQUEST--------------------------");
         return "Hello worldeeeee ---------------" ;
     }
 
 
     @RequestMapping(value = "/jobSubmit", method = RequestMethod.GET)
     public String jobSubmit() {
-//        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
-////        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "-1"};
-//        String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\mysql2mysql.json", "-mode", "standalone", "-jobid", "998877"};
 
         String tempDir = System.getProperty("tempfile.dir");
         long startTime = System.currentTimeMillis();
-//        try {
-//            Engine.entry(datxArgs);   //从这里启动
-//        } catch (Throwable e) {
-//            e.printStackTrace();
-//        }
 
         //Generate Job record
-        //    Job job =  new Job();
+        //Job job =  new Job();
         DataJob dataJob = new DataJob();
         dataJob.setDataJobName("");
         dataJobService.addDataJob(dataJob);
@@ -134,10 +129,8 @@ public class SimpleController {
         thread1.start();
 
         long endTime = System.currentTimeMillis();
-
         float seconds = (endTime - startTime) / 1000F;
-
-        return "Hello worldeeeee ---------------" + seconds;
+        return "Job submitted : " + seconds;
     }
 
     public static void main(String args[]) {
