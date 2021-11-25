@@ -5,6 +5,8 @@ import com.dataxservice.models.DataJob;
 import com.dataxservice.service.DataJobService;
 import com.dataxservice.service.DataJobLogService;
 import com.dataxservice.util.RedisUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,8 @@ import java.util.LinkedHashMap;
 @RestController
 public class SimpleController {
 
+    Logger LOG = LoggerFactory.getLogger(SimpleController.class);
+
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -33,6 +37,7 @@ public class SimpleController {
     @Autowired
     private DataJobService dataJobService;
 
+
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
         java.util.LinkedHashMap object = (LinkedHashMap) redisUtil.lPopData("loging-test");
@@ -44,7 +49,7 @@ public class SimpleController {
     public String testReadLog(@PathVariable String logId) {
         String loginfo;
         do {
-            loginfo = redisUtil.lPopData("["+logId+"]").toString();
+            loginfo = redisUtil.lPopData("[" + logId + "]").toString();
             System.out.println(loginfo);
         } while (loginfo == null);
         System.out.println("read");
@@ -92,6 +97,13 @@ public class SimpleController {
     }
 
 
+    @RequestMapping(value = "/jobReport", method = RequestMethod.POST)
+    public String jobReport() {
+        System.out.println("-----------------------------------------------");
+        LOG.info("REQUEST ..........................");
+        return "Hello worldeeeee ---------------" ;
+    }
+
 
     @RequestMapping(value = "/jobSubmit", method = RequestMethod.GET)
     public String jobSubmit() {
@@ -108,11 +120,11 @@ public class SimpleController {
 //        }
 
         //Generate Job record
-    //    Job job =  new Job();
+        //    Job job =  new Job();
         DataJob dataJob = new DataJob();
         dataJob.setDataJobName("");
         dataJobService.addDataJob(dataJob);
-       // jobService
+        // jobService
 
         Worker worker = new Worker();
         worker.setJsonFileName("mysql2mysql.json");
