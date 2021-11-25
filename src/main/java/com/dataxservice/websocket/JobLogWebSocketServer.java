@@ -67,7 +67,6 @@ public class JobLogWebSocketServer {
     public void onMessage(String message, Session session) {
         log.info("来自客户端的消息：{}", message);
         SendMessage(session, "收到消息，消息内容：" + message);
-
     }
 
     /**
