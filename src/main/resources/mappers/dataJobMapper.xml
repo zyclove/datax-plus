@@ -14,4 +14,14 @@
             #{dataJob.dataJobName}
 		)
 	</insert>
+
+    <update id="updateDataJobStatus" parameterType="com.dataxservice.model.DataJob">
+		UPDATE
+			tb_data_job
+		SET
+			status = #{dataJob.status}
+		WHERE
+			data_job_id = #{dataJob.dataJobId}
+	</update>
+
 </mapper>

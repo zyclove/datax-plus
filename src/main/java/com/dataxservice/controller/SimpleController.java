@@ -1,11 +1,13 @@
 package com.dataxservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dataxservice.constant.DataJobStatus;
 import com.dataxservice.core.Worker;
 import com.dataxservice.model.DataJob;
 import com.dataxservice.service.DataJobService;
 import com.dataxservice.service.DataJobLogService;
 import com.dataxservice.util.RedisUtil;
+import javafx.print.PrinterJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,6 +133,7 @@ public class SimpleController {
         //Job job =  new Job();
         DataJob dataJob = new DataJob();
         dataJob.setDataJobName("");
+        dataJob.setStatus(DataJobStatus.PROCESSING);
         dataJobService.addDataJob(dataJob);
         // jobService
 

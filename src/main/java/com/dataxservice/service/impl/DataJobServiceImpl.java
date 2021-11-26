@@ -17,4 +17,9 @@ public class DataJobServiceImpl implements DataJobService {
     public int addDataJob(DataJob dataJob) {
         return dataJobDao.addDataJob(dataJob);
     }
+
+    @Override
+    public int updateDataJobStatus(DataJob datajob) {
+        return dataJobDao.updateDataJobStatus(datajob);
+    }
 }
