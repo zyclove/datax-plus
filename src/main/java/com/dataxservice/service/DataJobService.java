@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 public interface DataJobService {
     int addDataJob(DataJob datajob);
 
-    int updateDataJobStatus( DataJob datajob);
+    int updateDataJobStatus(DataJob datajob);
+
+    DataJob retrieveDataJobById(DataJob datajob);
 
 }

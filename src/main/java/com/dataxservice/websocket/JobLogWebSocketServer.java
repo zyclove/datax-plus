@@ -1,8 +1,10 @@
 package com.dataxservice.websocket;
 
+import com.dataxservice.constant.DataJobStatus;
 import com.dataxservice.model.DataJob;
 import com.dataxservice.model.DataJobLog;
 import com.dataxservice.service.DataJobLogService;
+import com.dataxservice.service.DataJobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,13 @@ public class JobLogWebSocketServer {
         JobLogWebSocketServer.dataJobLogService = dataJobLogService;
     }
 
+    private static DataJobService dataJobService;
+
+    @Autowired
+    public void setDataJobService(DataJobService dataJobService) {
+        JobLogWebSocketServer.dataJobService = dataJobService;
+    }
+
     @PostConstruct
     public void init() {
         // System.out.println("websocket 加载");
@@ -54,8 +63,6 @@ public class JobLogWebSocketServer {
 
         int currentLogId = 0;
 
-        // 获取对应的job信息
-        
 
         // 获取对应的job日志
         DataJobLog searchBean = new DataJobLog();
@@ -67,11 +74,54 @@ public class JobLogWebSocketServer {
 
         if (!CollectionUtils.isEmpty(logs)) {
             Iterator<DataJobLog> iterator = logs.iterator();
-            while (iterator.hasNext()){
-                SendMessage(session, iterator.next().getLogBody());
+            while (iterator.hasNext()) {
+                DataJobLog dataJobLog = iterator.next();
+                SendMessage(session, dataJobLog.getLogBody());
+                currentLogId = dataJobLog.getLogId();
             }
         }
 
+        // 获取对应的job信息
+        datajob = dataJobService.retrieveDataJobById(datajob);
+
+        int status = datajob.getStatus();
+
+        int sleepSeconds = 1;
+
+        while ((status != DataJobStatus.ERROR || status != DataJobStatus.SUCCESS) && sleepSeconds < 100) {
+            //继续等待
+            searchBean.setLogId(currentLogId);
+            List<DataJobLog> logs2 = dataJobLogService.retrieveLogsBiggerThanSpecifiedLogId(searchBean);
+            if (!CollectionUtils.isEmpty(logs2)) {
+                Iterator<DataJobLog> iterator2 = logs2.iterator();
+                while (iterator2.hasNext()) {
+                    DataJobLog dataJobLog2 = iterator2.next();
+                    SendMessage(session, dataJobLog2.getLogBody());
+                    currentLogId = dataJobLog2.getLogId();
+                }
+
+                sleepSeconds = 1;
+
+            } else {
+                try {
+                    Thread.sleep(sleepSeconds * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                sleepSeconds = sleepSeconds * 2;
+            }
+
+            // log.info("没有查询到日志，等待：" + sleepSeconds + "秒");
+        }
+
+        log.info("等待结束");
+        try {
+            session.close();
+            this.onClose(session);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

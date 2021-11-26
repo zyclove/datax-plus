@@ -22,4 +22,9 @@ public class DataJobServiceImpl implements DataJobService {
     public int updateDataJobStatus(DataJob datajob) {
         return dataJobDao.updateDataJobStatus(datajob);
     }
+
+    @Override
+    public DataJob retrieveDataJobById(DataJob datajob) {
+        return dataJobDao.retrieveDataJobById(datajob);
+    }
 }
