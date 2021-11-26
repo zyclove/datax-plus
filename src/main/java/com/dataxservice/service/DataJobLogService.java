@@ -1,8 +1,7 @@
 package com.dataxservice.service;
 
 
-import com.dataxservice.models.DataJobLog;
-import org.apache.ibatis.annotations.Param;
+import com.dataxservice.model.DataJobLog;
 
 import java.util.List;
 

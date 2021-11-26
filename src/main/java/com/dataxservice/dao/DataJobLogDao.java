@@ -1,6 +1,6 @@
 package com.dataxservice.dao;
 
-import com.dataxservice.models.DataJobLog;
+import com.dataxservice.model.DataJobLog;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

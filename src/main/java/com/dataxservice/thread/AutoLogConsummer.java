@@ -1,7 +1,7 @@
 package com.dataxservice.thread;
 
-import com.dataxservice.models.DataJob;
-import com.dataxservice.models.DataJobLog;
+import com.dataxservice.model.DataJob;
+import com.dataxservice.model.DataJobLog;
 import com.dataxservice.service.DataJobLogService;
 import com.dataxservice.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;

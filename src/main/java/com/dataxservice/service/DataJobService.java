@@ -1,6 +1,6 @@
 package com.dataxservice.service;
 
-import com.dataxservice.models.DataJob;
+import com.dataxservice.model.DataJob;
 
 
 public interface DataJobService {

@@ -36,14 +36,7 @@ public class JobLogWebSocketServer {
         int cnt = OnlineCount.incrementAndGet(); // 在线数加1
         log.info("有连接加入，当前连接数为：{}", cnt);
         SendMessage(session, "your reqeust id is: " + jobId);
-        SendMessage(session, "eeeeeeeeeeeeeeeeeeee");
-        SendMessage(session, "eeeeeeeeeee11111eeeeeeeee");
-        SendMessage(session, "eeeeeeeeeeeeeeee22222eeee");
-        SendMessage(session, "eeeeeeee33333eeeeeeeeeeee");
-        SendMessage(session, "eeeeeeeeeeeee44444eeeeeee");
-        SendMessage(session, "eeeeeeeeeeeee55555eeeeeee");
-        SendMessage(session, "eeeeeeeeeeeeee6666eeeeee");
-        SendMessage(session, "eeeeeeeeeeee7777eeeeeeee");
+
         SendMessage(session, "连接成功");
     }
 

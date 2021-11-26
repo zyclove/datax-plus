@@ -1,7 +1,7 @@
 package com.dataxservice.service.impl;
 
 import com.dataxservice.dao.DataJobLogDao;
-import com.dataxservice.models.DataJobLog;
+import com.dataxservice.model.DataJobLog;
 import com.dataxservice.service.DataJobLogService;
 import org.springframework.stereotype.Service;
 

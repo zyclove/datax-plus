@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dataxservice.dao.DataJobLogDao">
 
-    <resultMap id="dataJobLog" type="com.dataxservice.models.DataJobLog">
+    <resultMap id="dataJobLog" type="com.dataxservice.model.DataJobLog">
         <id column="log_row_id" property="logRowId"/>
         <result column="data_job_id" property="dataJob.dataJobId"/>
         <result column="log_id" property="logId"/>
@@ -10,7 +10,7 @@
     </resultMap>
 
     <select id="retrieveLogsBiggerThanSpecifiedLogId" resultMap="dataJobLog"
-            parameterType="com.dataxservice.models.DataJobLog">
+            parameterType="com.dataxservice.model.DataJobLog">
         SELECT
         a.log_row_id as log_row_id,
         a.data_job_id as data_job_id,
@@ -26,7 +26,7 @@
         SELECT COUNT(*) FROM tb_data_job_log a
     </select>
 
-    <insert id="addDataJobLog" parameterType="com.dataxservice.models.DataJobLog" useGeneratedKeys="true"
+    <insert id="addDataJobLog" parameterType="com.dataxservice.model.DataJobLog" useGeneratedKeys="true"
             keyProperty="dataJobLog.logRowId">
 		INSERT INTO
 		tb_data_job_log (

@@ -2,7 +2,7 @@ package com.dataxservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dataxservice.core.Worker;
-import com.dataxservice.models.DataJob;
+import com.dataxservice.model.DataJob;
 import com.dataxservice.service.DataJobService;
 import com.dataxservice.service.DataJobLogService;
 import com.dataxservice.util.RedisUtil;
@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import com.alibaba.datax.common.util.Configuration;
 
 
 import com.alibaba.datax.core.Engine;

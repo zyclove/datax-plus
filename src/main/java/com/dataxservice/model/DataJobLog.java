@@ -1,4 +1,4 @@
-package com.dataxservice.models;
+package com.dataxservice.model;
 
 public class DataJobLog {
     private int logRowId;
