@@ -18,8 +18,9 @@
         a.log_body as log_body
         FROM tb_data_job_log a
         <where>
-            AND log_id > #{dataJobLog.logId}
+             a.log_id > #{dataJobLog.logId} AND a.data_job_id = #{dataJobLog.dataJob.dataJobId}
         </where>
+        ORDER BY log_id ASC
     </select>
 
     <select id="testCount" resultType="java.lang.Integer">

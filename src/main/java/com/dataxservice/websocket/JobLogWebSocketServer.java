@@ -1,20 +1,35 @@
 package com.dataxservice.websocket;
 
+import com.dataxservice.model.DataJob;
+import com.dataxservice.model.DataJobLog;
+import com.dataxservice.service.DataJobLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ServerEndpoint(value = "/websocket/{jobId}")
 @Component
 public class JobLogWebSocketServer {
+
+    private static DataJobLogService dataJobLogService;
+
+    @Autowired
+    public void setDataJobLogService(DataJobLogService dataJobLogService) {
+        JobLogWebSocketServer.dataJobLogService = dataJobLogService;
+    }
+
     @PostConstruct
     public void init() {
         // System.out.println("websocket 加载");
@@ -35,9 +50,28 @@ public class JobLogWebSocketServer {
         SessionSet.add(session);
         int cnt = OnlineCount.incrementAndGet(); // 在线数加1
         log.info("有连接加入，当前连接数为：{}", cnt);
-        SendMessage(session, "your reqeust id is: " + jobId);
+        log.info("用户请求的任务ID是: " + jobId);
 
-        SendMessage(session, "连接成功");
+        int currentLogId = 0;
+
+        // 获取对应的job信息
+        
+
+        // 获取对应的job日志
+        DataJobLog searchBean = new DataJobLog();
+        DataJob datajob = new DataJob();
+        datajob.setDataJobId(Integer.parseInt(jobId));
+        searchBean.setDataJob(datajob);
+        searchBean.setLogId(currentLogId);
+        List<DataJobLog> logs = dataJobLogService.retrieveLogsBiggerThanSpecifiedLogId(searchBean);
+
+        if (!CollectionUtils.isEmpty(logs)) {
+            Iterator<DataJobLog> iterator = logs.iterator();
+            while (iterator.hasNext()){
+                SendMessage(session, iterator.next().getLogBody());
+            }
+        }
+
     }
 
     /**

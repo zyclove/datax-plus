@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Param;
 public interface DataJobDao {
     int addDataJob(@Param("dataJob") DataJob datajob);
     int updateDataJobStatus(@Param("dataJob") DataJob datajob);
+
 }
