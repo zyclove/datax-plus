@@ -10,9 +10,9 @@ logging:
 spring:
   redis:
     # Redis服务器地址
-    host: 192.168.16.80
+    host: ${REDIS_HOST}192.168.16.80
     # Redis服务器连接端口
-    port: 6379
+    port: ${REDIS_PORT}6379
     # Redis服务器连接密码（默认为空）
     password: 123456
   datasource:
