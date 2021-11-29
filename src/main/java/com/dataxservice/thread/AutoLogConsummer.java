@@ -62,7 +62,6 @@ public class AutoLogConsummer implements CommandLineRunner {
         } else {
             return "";
         }
-
     }
 
     public static void main(String[] args) {
