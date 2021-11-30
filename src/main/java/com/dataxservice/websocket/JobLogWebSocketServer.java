@@ -41,7 +41,6 @@ public class JobLogWebSocketServer {
 
     @PostConstruct
     public void init() {
-        // System.out.println("websocket 加载");
         log.info("websocket 服务启动");
     }
 
@@ -112,7 +111,6 @@ public class JobLogWebSocketServer {
                 sleepSeconds = sleepSeconds * 2;
             }
 
-            // log.info("没有查询到日志，等待：" + sleepSeconds + "秒");
         }
 
         log.info("等待结束");
