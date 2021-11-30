@@ -10,3 +10,4 @@ docker run -d \
 
 
 # https://www.elastic.co/guide/en/beats/filebeat/current/using-environ-vars.html
+# docker run -it  -e REDIS_IP=172.16.56.64 -e REDIS_PASSWORD=dev@2019 -e REDIS_LOG_KEY=sadf  newbeat:0.4 /bin/bash
