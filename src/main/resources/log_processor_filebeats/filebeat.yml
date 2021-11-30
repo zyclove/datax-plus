@@ -12,3 +12,5 @@ output.redis:
   key: ${REDIS_LOG_KEY}
   db: 0
   timeout: 5
+
+

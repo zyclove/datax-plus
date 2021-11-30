@@ -6,3 +6,7 @@ docker run -d \
   -v $(pwd)/data:/usr/share/filebeat/data \
   --volume="$(pwd)/filebeats.yml:/usr/share/filebeat/filebeat.yml:ro" \
   docker.elastic.co/beats/filebeat:7.15.2 filebeat -e
+
+
+
+# https://www.elastic.co/guide/en/beats/filebeat/current/using-environ-vars.html
