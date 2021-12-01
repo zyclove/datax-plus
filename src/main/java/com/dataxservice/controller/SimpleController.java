@@ -63,8 +63,6 @@ public class SimpleController {
     @RequestMapping(value = "/simple", method = RequestMethod.GET)
     public String hello() {
 
-
-//        System.setProperty("datax.home", "D:\\dev\\workspaces\\DataX\\target\\datax\\datax");
         String tempDir = System.getProperty("tempfile.dir");
         String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\stream2stream.json", "-mode", "standalone", "-jobid", "-1"};
 //
@@ -90,8 +88,6 @@ public class SimpleController {
         Thread thread1 = new Thread(worker);
 
         thread1.start();
-
-        System.out.println("---???????>>>>");
 
         long endTime = System.currentTimeMillis();
 
