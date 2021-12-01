@@ -7,7 +7,7 @@ filebeat.inputs:
     paths:
       - /opt/local/logs/*.log
 output.redis:
-  hosts: '${REDIS_IP}'
+  hosts: ['${REDIS_IP}']
   password: '${REDIS_PASSWORD}'
   key: '${REDIS_LOG_KEY}'
   db: 0
