@@ -24,3 +24,12 @@ GRANT CONNECT, CREATE TABLE, CREATE TRIGGER, CREATE PROCEDURE, CREATE VIEW, CREA
 -- grant dba to USER1;
 
 -- grant select TO USER1;
+
+
+
+CREATE TABLE table_t (
+	c1 number,
+    c2 VARCHAR(100),
+    c3 VARCHAR(100),
+    c4 VARCHAR(100)
+)
