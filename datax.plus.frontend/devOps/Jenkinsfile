@@ -1,0 +1,66 @@
+env.BUILD_VERSION      = null
+env.CURRENT_STAGE      = null
+env.FAILED_REASON      = null
+env.CURRENT_BRANCH     = null
+
+
+//94.191.74.113
+//182.254.152.185
+
+node {
+    //拉取代码
+    stage ('Check out'){
+        print "Current branch is ${env.CURRENT_BRANCH}"
+
+        try{
+            git  url: "https://gitee.com/nox/system01_frontend.git", credentialsId: "nox-gitee", branch: "master"
+        }catch(e){
+            env.CURRENT_STAGE = '拉取GIT代码'
+            env.FAILED_REASON = e
+            failedNotification()
+            throw e
+        }
+    }
+
+    //构建程序
+    stage ('Build'){
+        try{
+                docker.image('ccr.ccs.tencentyun.com/nox600/node:14.15').inside('-v /opt/local/node_modules_for_jenkins:/usr/local/lib/node_modules" --entrypoint "" ') {
+                    sh 'npm config set registry https://registry.npm.taobao.org/'
+                    sh 'npm install vue -g'
+                    sh 'npm install vue-cli -g'
+                    sh 'npm install'
+                    sh 'npm run build:prod '
+                    sh 'rm -rf html'
+                    sh 'mv dist html'
+                    sh 'cp devOps/nginx.conf .'
+                }
+        } catch(e){
+            env.CURRENT_STAGE = '编译代码'
+            env.FAILED_REASON = e
+            failedNotification()
+            throw e
+        }
+    }
+
+    //构建前端程序
+    stage ('Build docker image and push to registry'){
+        def dockerImageCore = null
+        try{
+            sh 'cp ./devOps/Dockerfile ./Dockerfile'
+            sh 'cp /usr/share/zoneinfo/Asia/Shanghai .'
+            dockerImageCore = docker.build("ccr.ccs.tencentyun.com/nox600/system01-frontend")
+            docker.withRegistry("https://ccr.ccs.tencentyun.com","nox_tencent_reg") {
+                            dockerImageCore.push('0.0.1')
+            }
+        }catch(e){
+            env.CURRENT_STAGE = '打包镜像 & 推送到仓库'
+            env.FAILED_REASON = e
+            failedNotification()
+            throw e
+        }
+    }
+
+
+}
+
