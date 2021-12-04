@@ -380,7 +380,7 @@ $light_gray:#eee;
   width: 100%;
   /*background-color: $bg;*/
   overflow: hidden;
-  background: url('../../assets/u1.png');
+  //background: url('../../assets/u1.png');
 
   .login-form {
     position: relative;
