@@ -45,7 +45,6 @@ public class SimpleController {
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
         java.util.LinkedHashMap object = (LinkedHashMap) redisUtil.lPopData("loging-test");
-
         return String.valueOf(jobLogsService.simpleCount());
     }
 
@@ -65,7 +64,6 @@ public class SimpleController {
 
         String tempDir = System.getProperty("tempfile.dir");
         String[] datxArgs = {"-job", "D:\\dev\\workspaces\\datax_java_without_python\\src\\main\\resources\\stream2stream.json", "-mode", "standalone", "-jobid", "-1"};
-//
         try {
             Engine.entry(datxArgs);   //从这里启动
         } catch (Throwable e) {
@@ -93,15 +91,12 @@ public class SimpleController {
 
         float seconds = (endTime - startTime) / 1000F;
 
-        return "Hello worldeeeee ---------------" + seconds;
+        return "Job used: " + seconds;
     }
 
 
     @RequestMapping(value = "/jobReport", method = RequestMethod.POST)
     public String jobReport(HttpServletRequest request) {
-        LOG.info("HOOK REQUEST..........................");
-//        JSONObject jsonObject = JSONObject.parseObject(jobConfiguration.toJSON());
-//        LOG.info("jobResult: "+ request.getParameter("jobResult"));
         JSONObject jsonObject = JSONObject.parseObject(request.getParameter("jobResult"));
 
         Map<String, Object> jobResult = (Map<String, Object>) jsonObject;//    //json对象转Map
@@ -110,15 +105,13 @@ public class SimpleController {
         Map<String, Object> job = (Map<String, Object>)container.get("job");
         String id = job.get("id").toString();
 
-        LOG.info("The hook result ID is : "+id);
+        LOG.debug("The hook result ID is : "+id);
 
+        //Update this job's status to successed
         DataJob dataJob = new DataJob();
         dataJob.setDataJobId(Integer.parseInt(id));
         dataJob.setStatus(DataJobStatus.SUCCESS);
         dataJobService.updateDataJobStatus(dataJob);
-
-        LOG.info("HOOK REQUEST--------------------------");
-        //Update this job's status to successed
 
         return "done";
     }
