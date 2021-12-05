@@ -30,6 +30,9 @@ public class UserController {
         Map<String, String > payload = new HashMap<String, String>();
         String token = JwtUtil.signJwt(user, payload);
         req.setToken(token);
+        User repUserObj = new User();
+        repUserObj.setCode(100);
+        req.setData(repUserObj);
         return req;
     }
 }

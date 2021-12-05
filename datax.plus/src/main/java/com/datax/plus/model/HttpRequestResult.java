@@ -4,7 +4,7 @@ public class HttpRequestResult {
     private int code;
     private String msg;
     private String token;
-    private Object data;
+    private BaseVO data;
 
     public int getCode() {
         return code;
@@ -30,11 +30,11 @@ public class HttpRequestResult {
         this.token = token;
     }
 
-    public Object getData() {
+    public BaseVO getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(BaseVO data) {
         this.data = data;
     }
 }

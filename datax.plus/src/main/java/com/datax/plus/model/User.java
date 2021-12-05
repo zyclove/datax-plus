@@ -1,6 +1,6 @@
 package com.datax.plus.model;
 
-public class User {
+public class User extends BaseVO{
     private String username;
     private String password;
 
