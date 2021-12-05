@@ -1,11 +1,26 @@
 package com.datax.plus.model;
 
+import java.util.List;
+
 public class User extends BaseVO{
     private int accountId;
     private String username;
     private String password;
     private int status;
     private int userType;
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    private List<String> roles;
+
+
+
 
     public int getAccountId() {
         return accountId;
