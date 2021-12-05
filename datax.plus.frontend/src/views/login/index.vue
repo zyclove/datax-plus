@@ -206,6 +206,7 @@ export default {
               .then(res => {
                 if (res.data.code === 100) {
                   const parsedToken = jwt.decode(res.token)
+                  console.log('parsedToken:', parsedToken)
                   const parsedJson = JSON.parse(parsedToken.sub)
                   // 进行判断，如果用户状态为0(未激活状态)，则要求用户重新登录。
                   if (parsedJson.userStatus === 0) {
