@@ -24,7 +24,7 @@ export function logout() {
 
 export function checkLogin(data) {
   return request({
-    url: '/checkLogin',
+    url: '/user/checkLogin',
     method: 'post',
     data: {
       username: data.username,

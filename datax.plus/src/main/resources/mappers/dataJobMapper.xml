@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dataxservice.dao.DataJobDao">
-	<resultMap id="dataJob" type="com.dataxservice.model.DataJob">
+<mapper namespace="com.datax.plus.dao.DataJobDao">
+	<resultMap id="dataJob" type="com.datax.plus.model.DataJob">
 		<id column="data_job_id" property="dataJobId"/>
 		<result column="data_job_name" property="dataJobName"/>
 		<result column="status" property="status"/>
 	</resultMap>
 
 	<select id="retrieveDataJobById" resultMap="dataJob"
-			parameterType="com.dataxservice.model.DataJob">
+			parameterType="com.datax.plus.model.DataJob">
 		SELECT
 		a.data_job_id as data_job_id,
 		a.data_job_name as data_job_name,
@@ -24,7 +24,7 @@
         SELECT COUNT(*) FROM tb_job_log a
     </select>
 
-    <insert id="addDataJob" parameterType="com.dataxservice.model.DataJob" useGeneratedKeys="true" keyProperty="dataJob.dataJobId">
+    <insert id="addDataJob" parameterType="com.datax.plus.model.DataJob" useGeneratedKeys="true" keyProperty="dataJob.dataJobId">
 		INSERT INTO
 		tb_data_job (
             data_job_name
@@ -34,7 +34,7 @@
 		)
 	</insert>
 
-    <update id="updateDataJobStatus" parameterType="com.dataxservice.model.DataJob">
+    <update id="updateDataJobStatus" parameterType="com.datax.plus.model.DataJob">
 		UPDATE
 			tb_data_job
 		SET

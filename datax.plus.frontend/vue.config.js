@@ -31,11 +31,11 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     proxy: {
-      '/dev-api': {
+      '/dataxplus': {
         target: 'http://127.0.0.1:8080',
         changeOrigin: true,
         pathRewrite: {
-          '^/dev-api': '/simple-api'
+          '^/dataxplus': '/dataxplus'
         }
       }
     },
