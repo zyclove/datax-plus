@@ -11,7 +11,7 @@ import componentsRouter from './modules/components'
 // import chartsRouter from './modules/charts'
 // import tableRouter from './modules/table'
 // import nestedRouter from './modules/nested'
-import mydatasRouter from './modules/mydata'
+// import mydatasRouter from './modules/mydata'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -179,161 +179,161 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'Permission',
-    meta: {
-      accessCode: 1000,
-      title: '系统管理',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'users',
-        component: () => import('@/views/permission/users'),
-        name: 'UsersManage',
-        meta: {
-          accessCode: 1001,
-          title: '用户管理',
-          roles: ['admin']
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
-        meta: {
-          accessCode: 1002,
-          title: '角色管理',
-          roles: ['admin']
-        }
-      },
-      {
-        path: 'functions',
-        component: () => import('@/views/permission/functions'),
-        name: 'functions',
-        meta: {
-          accessCode: 1003,
-          title: '功能点管理',
-          roles: ['admin']
-        }
-      }
-    ]
-  },
-
-  {
-    path: '/icon',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/permission',
+  //   component: Layout,
+  //   redirect: '/permission/page',
+  //   alwaysShow: true, // will always show the root menu
+  //   name: 'Permission',
+  //   meta: {
+  //     accessCode: 1000,
+  //     title: '系统管理',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'] // you can set roles in root nav
+  //   },
+  //   children: [
+  //     {
+  //       path: 'users',
+  //       component: () => import('@/views/permission/users'),
+  //       name: 'UsersManage',
+  //       meta: {
+  //         accessCode: 1001,
+  //         title: '用户管理',
+  //         roles: ['admin']
+  //       }
+  //     },
+  //     {
+  //       path: 'role',
+  //       component: () => import('@/views/permission/role'),
+  //       name: 'RolePermission',
+  //       meta: {
+  //         accessCode: 1002,
+  //         title: '角色管理',
+  //         roles: ['admin']
+  //       }
+  //     },
+  //     {
+  //       path: 'functions',
+  //       component: () => import('@/views/permission/functions'),
+  //       name: 'functions',
+  //       meta: {
+  //         accessCode: 1003,
+  //         title: '功能点管理',
+  //         roles: ['admin']
+  //       }
+  //     }
+  //   ]
+  // },
+  //
+  // {
+  //   path: '/icon',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/icons/index'),
+  //       name: 'Icons',
+  //       meta: { title: 'Icons', icon: 'icon', noCache: true }
+  //     }
+  //   ]
+  // },
 
   /** when your routing map is too long, you can split it into small modules **/
   componentsRouter,
   // chartsRouter,
   // tableRouter,
-  mydatasRouter,
+  // mydatasRouter,
 
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/list',
-    name: 'Example',
-    meta: {
-      title: '旅客管理',
-      icon: 'el-icon-s-help'
-    },
-    children: [
-      {
-        path: 'create',
-        component: () => import('@/views/example/list'),
-        name: 'CreateArticle',
-        meta: { title: '机票预定'}
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/list'),
-        name: 'EditArticle',
-        meta: { title: '旅客订单',  noCache: true, activeMenu: '/example/list' }
-      }
-    ]
-  },
+  // {
+  //   path: '/example',
+  //   component: Layout,
+  //   redirect: '/example/list',
+  //   name: 'Example',
+  //   meta: {
+  //     title: '旅客管理',
+  //     icon: 'el-icon-s-help'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'create',
+  //       component: () => import('@/views/example/list'),
+  //       name: 'CreateArticle',
+  //       meta: { title: '机票预定'}
+  //     },
+  //     {
+  //       path: 'edit/:id(\\d+)',
+  //       component: () => import('@/views/example/list'),
+  //       name: 'EditArticle',
+  //       meta: { title: '旅客订单',  noCache: true, activeMenu: '/example/list' }
+  //     }
+  //   ]
+  // },
+  //
+  // {
+  //   path: '/error',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: 'ErrorPages',
+  //   meta: {
+  //     title: '航司管理',
+  //     icon: 'excel'
+  //   },
+  //   children: [
+  //     {
+  //       path: '401',
+  //       component: () => import('@/views/error-page/401'),
+  //       name: 'Page401',
+  //       meta: { title: '飞行计划', noCache: true }
+  //     },
+  //     {
+  //       path: '404',
+  //       component: () => import('@/views/error-page/404'),
+  //       name: 'Page404',
+  //       meta: { title: '数据统计', noCache: true }
+  //     }
+  //   ]
+  // },
 
-  {
-    path: '/error',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'ErrorPages',
-    meta: {
-      title: '航司管理',
-      icon: 'excel'
-    },
-    children: [
-      {
-        path: '401',
-        component: () => import('@/views/error-page/401'),
-        name: 'Page401',
-        meta: { title: '飞行计划', noCache: true }
-      },
-      {
-        path: '404',
-        component: () => import('@/views/error-page/404'),
-        name: 'Page404',
-        meta: { title: '数据统计', noCache: true }
-      }
-    ]
-  },
+  //
+  // {
+  //   path: '/theme',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/theme/index'),
+  //       name: 'Theme',
+  //       meta: { title: 'Theme', icon: 'theme' }
+  //     }
+  //   ]
+  // },
 
-
-  {
-    path: '/theme',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/theme/index'),
-        name: 'Theme',
-        meta: { title: 'Theme', icon: 'theme' }
-      }
-    ]
-  },
-
-  {
-    path: '/clipboard',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/clipboard/index'),
-        name: 'ClipboardDemo',
-        meta: { title: 'Clipboard', icon: 'clipboard' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://github.com/PanJiaChen/vue-element-admin',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // {
+  //   path: '/clipboard',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/clipboard/index'),
+  //       name: 'ClipboardDemo',
+  //       meta: { title: 'Clipboard', icon: 'clipboard' }
+  //     }
+  //   ]
+  // },
+  //
+  // {
+  //   path: 'external-link',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'https://github.com/PanJiaChen/vue-element-admin',
+  //       meta: { title: 'External Link', icon: 'link' }
+  //     }
+  //   ]
+  // },
+  //
+  // // 404 page must be placed at the end !!!
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
