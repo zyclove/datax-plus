@@ -1,10 +1,13 @@
 package com.datax.plus.controller;
 
+import com.datax.plus.model.DataJob;
 import com.datax.plus.model.HttpRequestResult;
 import com.datax.plus.model.User;
+import com.datax.plus.model.view.DataJobList;
 import com.datax.plus.util.JwtUtil;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,18 +18,28 @@ import java.util.Map;
 public class JobController {
 
 
-    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     public @ResponseBody
-    HttpRequestResult userInfo() {
+    HttpRequestResult list() {
         HttpRequestResult req = new HttpRequestResult();
         req.setCode(20000);
         req.setMsg("");
-        User repUserObj = new User();
-        repUserObj.setCode(100);
-        List<String> roles = new ArrayList<String>();
-        roles.add("admin");
-        repUserObj.setRoles(roles);
-        req.setData(repUserObj);
+
+        DataJobList dataJobListObj = new DataJobList();
+        ArrayList<DataJob> dataJobList = new ArrayList<DataJob>();
+
+        DataJob temp = new DataJob();
+        temp.setDataJobName("JOB1");
+
+        DataJob temp2 = new DataJob();
+        temp2.setDataJobName("JOB2");
+
+        dataJobList.add(temp);
+        dataJobList.add(temp2);
+
+        dataJobListObj.setList(dataJobList);
+
+        req.setData(dataJobListObj);
         return req;
     }
 
