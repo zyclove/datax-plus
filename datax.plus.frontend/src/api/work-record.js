@@ -9,7 +9,7 @@ export function getInfo() {
 
 export function listWorkRecordData(query) {
   return request({
-    url: '/listWorkRecordData',
+    url: '/job/list',
     method: 'post',
     data: query
   })

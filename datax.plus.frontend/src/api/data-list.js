@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getSampleData(query) {
   return request({
-    url: '/listSampleData',
+    url: '/job/list',
     method: 'post',
     data: query
   })
