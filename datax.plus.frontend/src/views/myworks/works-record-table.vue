@@ -40,29 +40,29 @@
           <span>{{ row.itemId }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Date" width="150px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.createTime | parseTime('{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="工作标题" min-width="150px">
-        <template slot-scope="{row}">
-          <span>{{ row.itemTitle }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="类型" width="110px" align="center" :formatter="formatType">
+<!--      <el-table-column label="Date" width="150px" align="center">-->
+<!--        <template slot-scope="{row}">-->
+<!--          <span>{{ row.createTime | parseTime('{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="工作标题" min-width="150px">-->
+<!--        <template slot-scope="{row}">-->
+<!--          <span>{{ row.itemTitle }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="类型" width="110px" align="center" :formatter="formatType">-->
 
-      </el-table-column>
+<!--      </el-table-column>-->
 
-      <el-table-column label="星级" align="center" width="95">
-        <template slot-scope="scope" >
-          <!-- <el-rate v-model="scope.row.evaValue" :allow-half="true"  disabled show-score text-color="#ff9900" score-template="{value}"></el-rate> -->
-          <el-rate v-model="scope.row.itemStar" :allow-half="true"  disabled text-color="#ff9900"></el-rate>
-        </template>
-      </el-table-column>
-      <el-table-column label="状态" class-name="status-col" width="100" :formatter="statusType">
+<!--      <el-table-column label="星级" align="center" width="95">-->
+<!--        <template slot-scope="scope" >-->
+<!--          &lt;!&ndash; <el-rate v-model="scope.row.evaValue" :allow-half="true"  disabled show-score text-color="#ff9900" score-template="{value}"></el-rate> &ndash;&gt;-->
+<!--          <el-rate v-model="scope.row.itemStar" :allow-half="true"  disabled text-color="#ff9900"></el-rate>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="状态" class-name="status-col" width="100" :formatter="statusType">-->
 
-      </el-table-column>
+<!--      </el-table-column>-->
 <!--      <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">-->
 <!--        <template slot-scope="{row,$index}">-->
 <!--          <el-button v-if="row.itemStatus=='0'" type="primary" size="mini" @click="handleUpdate(row)">-->
@@ -84,33 +84,33 @@
 <!--      :visible.sync="dialogVisible"-->
 <!--      @close="handleClose"-->
 <!--    >-->
-      <el-form
-        v-if="dialogVisible"
-        ref="userForm"
-        :model="userForm"
-        :modal-append-to-body="true"
-        label-width="100px"
-        label-position="left"
-      >
-        <el-form-item label="工作名" prop="userName">
-          <el-input
-            v-model="userForm.userName"
-            placeholder="用户名"
-          />
-        </el-form-item>
-        <el-form-item label="工作描述" prop="realName">
-          <el-input
-            v-model="userForm.realName"
-            placeholder="用户姓名"
-          />
-        </el-form-item>
+<!--      <el-form-->
+<!--        v-if="dialogVisible"-->
+<!--        ref="userForm"-->
+<!--        :model="userForm"-->
+<!--        :modal-append-to-body="true"-->
+<!--        label-width="100px"-->
+<!--        label-position="left"-->
+<!--      >-->
+<!--        <el-form-item label="工作名" prop="userName">-->
+<!--          <el-input-->
+<!--            v-model="userForm.userName"-->
+<!--            placeholder="用户名"-->
+<!--          />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="工作描述" prop="realName">-->
+<!--          <el-input-->
+<!--            v-model="userForm.realName"-->
+<!--            placeholder="用户姓名"-->
+<!--          />-->
+<!--        </el-form-item>-->
 
-      </el-form>
-      <div style="text-align:right;">
-        <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>
-        <el-button type="primary" @click="confirmAddOrUpdateUser">确认</el-button>
-      </div>
-    </el-dialog>
+<!--      </el-form>-->
+<!--      <div style="text-align:right;">-->
+<!--        <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>-->
+<!--        <el-button type="primary" @click="confirmAddOrUpdateUser">确认</el-button>-->
+<!--      </div>-->
+<!--    </el-dialog>-->
   </div>
 </template>
 
