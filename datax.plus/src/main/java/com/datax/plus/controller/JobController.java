@@ -7,16 +7,13 @@ import com.datax.plus.model.view.DataJobList;
 import com.datax.plus.util.JwtUtil;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/job")
 public class JobController {
-
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public @ResponseBody
