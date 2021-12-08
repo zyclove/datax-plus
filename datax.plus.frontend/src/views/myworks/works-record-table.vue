@@ -1,28 +1,28 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in typeValuesArray" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
-      </el-select>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-      </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        搜索
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleAdd">
-          新建
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        导出
-      </el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        审批
-      </el-checkbox>
+<!--      <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />-->
+<!--      <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">-->
+<!--        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />-->
+<!--      </el-select>-->
+<!--      <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">-->
+<!--        <el-option v-for="item in typeValuesArray" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />-->
+<!--      </el-select>-->
+<!--      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">-->
+<!--        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />-->
+<!--      </el-select>-->
+<!--      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">-->
+<!--        搜索-->
+<!--      </el-button>-->
+<!--      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleAdd">-->
+<!--          新建-->
+<!--      </el-button>-->
+<!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
+<!--        导出-->
+<!--      </el-button>-->
+<!--      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">-->
+<!--        审批-->
+<!--      </el-checkbox>-->
     </div>
 
     <el-table
@@ -40,77 +40,77 @@
           <span>{{ row.itemId }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Date" width="150px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.createTime | parseTime('{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="工作标题" min-width="150px">
-        <template slot-scope="{row}">
-          <span>{{ row.itemTitle }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="类型" width="110px" align="center" :formatter="formatType">
+<!--      <el-table-column label="Date" width="150px" align="center">-->
+<!--        <template slot-scope="{row}">-->
+<!--          <span>{{ row.createTime | parseTime('{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="工作标题" min-width="150px">-->
+<!--        <template slot-scope="{row}">-->
+<!--          <span>{{ row.itemTitle }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="类型" width="110px" align="center" :formatter="formatType">-->
 
-      </el-table-column>
+<!--      </el-table-column>-->
 
-      <el-table-column label="星级" align="center" width="95">
-        <template slot-scope="scope" >
-          <!-- <el-rate v-model="scope.row.evaValue" :allow-half="true"  disabled show-score text-color="#ff9900" score-template="{value}"></el-rate> -->
-          <el-rate v-model="scope.row.itemStar" :allow-half="true"  disabled text-color="#ff9900"></el-rate>
-        </template>
-      </el-table-column>
-      <el-table-column label="状态" class-name="status-col" width="100" :formatter="statusType">
+<!--      <el-table-column label="星级" align="center" width="95">-->
+<!--        <template slot-scope="scope" >-->
+<!--          &lt;!&ndash; <el-rate v-model="scope.row.evaValue" :allow-half="true"  disabled show-score text-color="#ff9900" score-template="{value}"></el-rate> &ndash;&gt;-->
+<!--          <el-rate v-model="scope.row.itemStar" :allow-half="true"  disabled text-color="#ff9900"></el-rate>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="状态" class-name="status-col" width="100" :formatter="statusType">-->
 
-      </el-table-column>
-      <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button v-if="row.itemStatus=='0'" type="primary" size="mini" @click="handleUpdate(row)">
-            编辑
-          </el-button>
-          <el-button v-if="row.itemStatus=='0'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-            申请审核
-          </el-button>
-          <el-button v-if="row.itemStatus=='0'" size="mini" type="danger" @click="handleDeleteConfirm(row,$index)">
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
+<!--      </el-table-column>-->
+<!--      <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">-->
+<!--        <template slot-scope="{row,$index}">-->
+<!--          <el-button v-if="row.itemStatus=='0'" type="primary" size="mini" @click="handleUpdate(row)">-->
+<!--            编辑-->
+<!--          </el-button>-->
+<!--          <el-button v-if="row.itemStatus=='0'" size="mini" type="success" @click="handleModifyStatus(row,'published')">-->
+<!--            申请审核-->
+<!--          </el-button>-->
+<!--          <el-button v-if="row.itemStatus=='0'" size="mini" type="danger" @click="handleDeleteConfirm(row,$index)">-->
+<!--            删除-->
+<!--          </el-button>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
-    <el-dialog
-      :title="dialogType==='edit'?'Edit Role':'New Role'"
-      :visible.sync="dialogVisible"
-      @close="handleClose"
-    >
-      <el-form
-        v-if="dialogVisible"
-        ref="userForm"
-        :model="userForm"
-        :modal-append-to-body="true"
-        label-width="100px"
-        label-position="left"
-      >
-        <el-form-item label="工作名" prop="userName">
-          <el-input
-            v-model="userForm.userName"
-            placeholder="用户名"
-          />
-        </el-form-item>
-        <el-form-item label="工作描述" prop="realName">
-          <el-input
-            v-model="userForm.realName"
-            placeholder="用户姓名"
-          />
-        </el-form-item>
+<!--    <el-dialog-->
+<!--      :title="dialogType==='edit'?'Edit Role':'New Role'"-->
+<!--      :visible.sync="dialogVisible"-->
+<!--      @close="handleClose"-->
+<!--    >-->
+<!--      <el-form-->
+<!--        v-if="dialogVisible"-->
+<!--        ref="userForm"-->
+<!--        :model="userForm"-->
+<!--        :modal-append-to-body="true"-->
+<!--        label-width="100px"-->
+<!--        label-position="left"-->
+<!--      >-->
+<!--        <el-form-item label="工作名" prop="userName">-->
+<!--          <el-input-->
+<!--            v-model="userForm.userName"-->
+<!--            placeholder="用户名"-->
+<!--          />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="工作描述" prop="realName">-->
+<!--          <el-input-->
+<!--            v-model="userForm.realName"-->
+<!--            placeholder="用户姓名"-->
+<!--          />-->
+<!--        </el-form-item>-->
 
-      </el-form>
-      <div style="text-align:right;">
-        <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>
-        <el-button type="primary" @click="confirmAddOrUpdateUser">确认</el-button>
-      </div>
-    </el-dialog>
+<!--      </el-form>-->
+<!--      <div style="text-align:right;">-->
+<!--        <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>-->
+<!--        <el-button type="primary" @click="confirmAddOrUpdateUser">确认</el-button>-->
+<!--      </div>-->
+<!--    </el-dialog>-->
   </div>
 </template>
 
