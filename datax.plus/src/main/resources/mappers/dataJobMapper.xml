@@ -19,6 +19,26 @@
 		</where>
 	</select>
 
+	<select id="pageRetrieveDataJob" resultMap="dataJob">
+		SELECT
+		a.data_job_id as data_job_id,
+		a.data_job_name as data_job_name,
+		a.status as status
+		FROM tb_data_job a
+		<where>
+			a.data_job_id = #{dataJob.dataJobId}
+		</where>
+		LIMIT #{page.start},#{page.offset}
+	</select>
+
+	<select id="pageRetrieveDataJobCount" resultType="java.lang.Long" resultMap="dataJob">
+		SELECT
+		COUNT(1) as total
+		FROM tb_data_job a
+		<where>
+			a.data_job_id = #{dataJob.dataJobId}
+		</where>
+	</select>
 
 	<select id="testCount" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM tb_job_log a

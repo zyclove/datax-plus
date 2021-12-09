@@ -7,11 +7,10 @@ export function getInfo() {
   })
 }
 
-export function listWorkRecordData(query) {
+export function listWorkRecordData(pageNum, limit, dataJobId) {
   return request({
-    url: '/job/list',
-    method: 'post',
-    data: query
+    url: `/job/list/${pageNum}/${limit}/${dataJobId}`,
+    method: 'get'
   })
 }
 

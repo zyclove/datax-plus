@@ -151,7 +151,7 @@ export default {
       total: 0,
       listLoading: false,
       listQuery: {
-        page: 1,
+        pageNum: 1,
         limit: 20,
         importance: undefined,
         title: undefined,
@@ -164,7 +164,7 @@ export default {
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       showReviewer: false,
       workRecordForm: {
-        recordId: -1,
+        dataJobId: 0,
         recordName: '',
         RecordBody: '',
         RecordAddress: '',
@@ -192,7 +192,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      listWorkRecordData(this.listQuery).then(response => {
+      listWorkRecordData(this.listQuery.pageNum, this.listQuery.limit, this.workRecordForm.dataJobId).then(response => {
         this.list = response.data.list
         this.total = response.data.total
         console.log(this.list)

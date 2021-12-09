@@ -2,13 +2,13 @@ package com.datax.plus.model.view;
 
 public class ResultBaseVO {
     private int code;
-    private int total;
+    private long total;
 
-    public int getTotal() {
+    public long getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(long total) {
         this.total = total;
     }
 

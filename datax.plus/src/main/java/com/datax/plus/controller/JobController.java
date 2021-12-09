@@ -1,10 +1,8 @@
 package com.datax.plus.controller;
 
-import com.datax.plus.model.view.ResultBaseVO;
+import com.datax.plus.model.view.*;
 import com.datax.plus.model.DataJob;
-import com.datax.plus.model.view.HttpRequestResult;
 import com.datax.plus.model.User;
-import com.datax.plus.model.view.DataJobList;
 import com.datax.plus.service.DataJobService;
 import com.datax.plus.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,29 +20,26 @@ public class JobController {
     @Autowired
     private DataJobService dataJobService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/list/{pageNum}/{limit}/{dataJobId}", method = RequestMethod.GET)
     public @ResponseBody
-    HttpRequestResult list() {
+    HttpRequestResult list(@PathVariable int pageNum,
+                           @PathVariable int limit,
+                           @PathVariable int dataJobId) {
         HttpRequestResult req = new HttpRequestResult();
         req.setCode(20000);
         req.setMsg("");
 
+        Page page = new Page(pageNum, limit);
+
+        DataJob searchBean = new DataJob();
+        searchBean.setDataJobId(dataJobId);
+        Long total = dataJobService.pageRetrieveDataJobCount(searchBean);
+        List<DataJob> results = dataJobService.pageRetrieveDataJob(searchBean, page);
+
         DataJobList dataJobListObj = new DataJobList();
-        ArrayList<DataJob> dataJobList = new ArrayList<DataJob>();
 
-        DataJob temp = new DataJob();
-        temp.setDataJobId(1);
-        temp.setDataJobName("JOB1");
-
-        DataJob temp2 = new DataJob();
-        temp.setDataJobId(2);
-        temp2.setDataJobName("JOB2");
-
-        dataJobList.add(temp);
-        dataJobList.add(temp2);
-
-        dataJobListObj.setList(dataJobList);
-        dataJobListObj.setTotal(dataJobList.size());
+        dataJobListObj.setList(results);
+        dataJobListObj.setTotal(total);
 
         req.setData(dataJobListObj);
         return req;

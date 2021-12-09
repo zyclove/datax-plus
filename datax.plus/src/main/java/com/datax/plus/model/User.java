@@ -22,8 +22,6 @@ public class User extends ResultBaseVO {
     private List<String> roles;
 
 
-
-
     public int getAccountId() {
         return accountId;
     }
