@@ -26,15 +26,18 @@ public class JobController {
         ArrayList<DataJob> dataJobList = new ArrayList<DataJob>();
 
         DataJob temp = new DataJob();
+        temp.setDataJobId(1);
         temp.setDataJobName("JOB1");
 
         DataJob temp2 = new DataJob();
+        temp.setDataJobId(2);
         temp2.setDataJobName("JOB2");
 
         dataJobList.add(temp);
         dataJobList.add(temp2);
 
         dataJobListObj.setList(dataJobList);
+        dataJobListObj.setTotal(dataJobList.size());
 
         req.setData(dataJobListObj);
         return req;

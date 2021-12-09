@@ -2,14 +2,14 @@ package com.datax.plus.model;
 
 public class BaseVO {
     private int code;
-    private int totalCounts;
+    private int total;
 
-    public int getTotalCounts() {
-        return totalCounts;
+    public int getTotal() {
+        return total;
     }
 
-    public void setTotalCounts(int totalCounts) {
-        this.totalCounts = totalCounts;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public int getCode() {
