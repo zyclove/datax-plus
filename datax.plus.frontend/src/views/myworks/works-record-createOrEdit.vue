@@ -1,11 +1,11 @@
 <template>
   <div class="createPost-container">
-    <el-form ref="itemForm" :model="itemForm" :rules="rules" class="form-container">
+    <el-form ref="dataJobForm" :model="dataJobForm" :rules="rules" class="form-container">
       <div class="createPost-main-container">
         <el-row>
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="itemTitle">
-              <MDinput v-model="itemForm.itemTitle" :maxlength="100" name="name" required>
+              <MDinput v-model="dataJobForm.dataJobName" :maxlength="100" name="name" required>
                 工作名称
               </MDinput>
             </el-form-item>
@@ -15,7 +15,7 @@
         <el-row :gutter="100">
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">
-              <el-select v-model="itemForm.itemType" placeholder="Type" class="filter-item" style="width: 130px">
+              <el-select v-model="dataJobForm.dataJobType" placeholder="Type" class="filter-item" style="width: 130px">
                 <el-option v-for="item in typeValuesArray" :key="item.typeValue" :label="item.typeName" :value="item.typeValue" />
               </el-select>
             </el-form-item>
@@ -88,7 +88,8 @@ export default {
     return {
       dataJobForm: {
         dataJobId: -1,
-        dataJobName: ''
+        dataJobName: '',
+        dataJobType: 0
       },
       disableSubmit: false,
       typeValuesArray,
@@ -105,23 +106,23 @@ export default {
   },
   computed: {
     contentShortLength() {
-      return this.itemForm.content_short.length
+      return this.dataJobForm.content_short.length
     },
     displayTime: {
       get() {
-        return (+new Date(this.itemForm.display_time))
+        return (+new Date(this.dataJobForm.display_time))
       },
       set(val) {
-        this.itemForm.display_time = new Date(val)
+        this.dataJobForm.display_time = new Date(val)
       }
     }
   },
   created() {
-    let itemId = this.$route.params.itemId
-    // 如果itemId == -1 代表是新增，反之则是更新
-    if (itemId > -1) {
-      this.itemForm.itemId = itemId
-      this.fetchData(itemId)
+    const dataJobId = this.$route.params.dataJobId
+    // 如果dataJobId == -1 代表是新增，反之则是更新
+    if (dataJobId > -1) {
+      this.dataJobForm.dataJobId = dataJobId
+      this.fetchData(dataJobId)
     }
     // Why need to make a copy of this.$route here?
     // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
@@ -129,20 +130,20 @@ export default {
   },
   methods: {
     fetchData(j) {
-      getJob(itemId).then(response => {
-        this.itemForm = response.data
+      getJob(this.dataJobForm.dataJobId).then(response => {
+        this.dataJobForm = response.data
       }).catch(err => {
         console.log(err)
       })
     },
     setTagsViewTitle() {
       const title = 'Edit Article'
-      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.itemForm.id}` })
+      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.dataJobForm.id}` })
       this.$store.dispatch('tagsView/updateVisitedView', route)
     },
     setPageTitle() {
       const title = 'Edit Article'
-      document.title = `${title} - ${this.itemForm.id}`
+      document.title = `${title} - ${this.dataJobForm.id}`
     },
     addOrUpdateData() {
       this.$refs['dataJobForm'].validate((valid) => {
@@ -161,8 +162,8 @@ export default {
       })
     },
     submitForm() {
-      console.log(this.itemForm)
-      this.$refs.itemForm.validate(valid => {
+      console.log(this.dataJobForm)
+      this.$refs.dataJobForm.validate(valid => {
         if (valid) {
           this.loading = true
           this.$notify({
@@ -171,7 +172,7 @@ export default {
             type: 'success',
             duration: 2000
           })
-          this.itemForm.status = 'published'
+          this.dataJobForm.status = 'published'
           this.loading = false
         } else {
           console.log('error submit!!')
@@ -180,7 +181,7 @@ export default {
       })
     },
     draftForm() {
-      if (this.itemForm.content.length === 0 || this.itemForm.title.length === 0) {
+      if (this.dataJobForm.content.length === 0 || this.dataJobForm.title.length === 0) {
         this.$message({
           message: '请填写必要的标题和内容',
           type: 'warning'
@@ -193,7 +194,7 @@ export default {
         showClose: true,
         duration: 1000
       })
-      this.itemForm.status = 'draft'
+      this.dataJobForm.status = 'draft'
     },
     getRemoteUserList(query) {
       searchUser(query).then(response => {

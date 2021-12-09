@@ -14,9 +14,9 @@ export function listWorkRecordData(pageNum, limit, dataJobId) {
   })
 }
 
-export function getJob(id) {
+export function getJob(dataJobId) {
   return request({
-    url: `/job/${id}`,
+    url: `/job/list/1/1/${dataJobId}`,
     method: 'get'
   })
 }

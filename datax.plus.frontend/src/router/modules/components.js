@@ -19,7 +19,7 @@ const componentsRouter = {
       meta: { title: '工作记录' }
     }, {
       // path: 'create/:id(\\d+)',
-      path: 'works-record-createOrEdit/:itemId(\\d+)',
+      path: 'works-record-createOrEdit/:dataJobId(\\d+)',
       component: () => import('@/views/myworks/works-record-createOrEdit'),
       name: 'CreateSample',
       meta: { title: 'Create Data' },
