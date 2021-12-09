@@ -26,12 +26,14 @@
 		a.status as status
 		FROM tb_data_job a
 		<where>
-			a.data_job_id = #{dataJob.dataJobId}
+			<if test=" dataJob.dataJobId > 0 ">
+				a.data_job_id = #{dataJob.dataJobId}
+			</if>
 		</where>
-		LIMIT #{page.start},#{page.offset}
+		LIMIT #{page.start},#{page.limit}
 	</select>
 
-	<select id="pageRetrieveDataJobCount" resultType="java.lang.Long" resultMap="dataJob">
+	<select id="pageRetrieveDataJobCount" resultType="java.lang.Long">
 		SELECT
 		COUNT(1) as total
 		FROM tb_data_job a

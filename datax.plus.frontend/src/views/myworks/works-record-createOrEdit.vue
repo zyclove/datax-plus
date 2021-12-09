@@ -3,11 +3,17 @@
     <el-form ref="dataJobForm" :model="dataJobForm" :rules="rules" class="form-container">
       <div class="createPost-main-container">
         <el-row>
-          <el-col :span="24">
-            <el-form-item style="margin-bottom: 40px;" prop="itemTitle">
-              <MDinput v-model="dataJobForm.dataJobName" :maxlength="100" name="name" required>
-                工作名称
-              </MDinput>
+          <el-col :span="10">
+<!--            <el-form-item style="margin-bottom: 40px;" prop="itemTitle">-->
+<!--              <MDinput v-model="dataJobForm.dataJobName" :maxlength="100" name="name" required>-->
+<!--                工作名称-->
+<!--              </MDinput>-->
+<!--            </el-form-item>-->
+            <el-form-item label="工作名称" prop="dataJobName">
+              <el-input
+                v-model="dataJobForm.dataJobName"
+                placeholder="工作名称"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -23,7 +29,7 @@
         </el-row>
 
         <el-row>
-          <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
+          <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
             取消
           </el-button>
           <el-button v-loading="loading" type="warning" @click="addOrUpdateData" :disabled="disableSubmit">
@@ -98,8 +104,7 @@ export default {
       rules: {
         dataJobName: [
           { required: true, message: 'please input', trigger: 'blur' }
-        ],
-        image_uri: [{ validator: validateRequire }]
+        ]
       },
       tempRoute: {}
     }
@@ -136,16 +141,17 @@ export default {
         console.log(err)
       })
     },
-    setTagsViewTitle() {
-      const title = 'Edit Article'
-      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.dataJobForm.id}` })
-      this.$store.dispatch('tagsView/updateVisitedView', route)
-    },
-    setPageTitle() {
-      const title = 'Edit Article'
-      document.title = `${title} - ${this.dataJobForm.id}`
-    },
+    // setTagsViewTitle() {
+    //   const title = 'Edit Article'
+    //   const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.dataJobForm.id}` })
+    //   this.$store.dispatch('tagsView/updateVisitedView', route)
+    // },
+    // setPageTitle() {
+    //   const title = 'Edit Article'
+    //   document.title = `${title} - ${this.dataJobForm.id}`
+    // },
     addOrUpdateData() {
+      console.log('eeeeeeeeeeeeeeeeeeee : ', this.$refs['dataJobForm'].validate())
       this.$refs['dataJobForm'].validate((valid) => {
         if (valid) {
           this.disableSubmit = true
@@ -161,47 +167,49 @@ export default {
         }
       })
     },
-    submitForm() {
-      console.log(this.dataJobForm)
-      this.$refs.dataJobForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$notify({
-            title: '成功',
-            message: '发布文章成功',
-            type: 'success',
-            duration: 2000
-          })
-          this.dataJobForm.status = 'published'
-          this.loading = false
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
-    draftForm() {
-      if (this.dataJobForm.content.length === 0 || this.dataJobForm.title.length === 0) {
-        this.$message({
-          message: '请填写必要的标题和内容',
-          type: 'warning'
-        })
-        return
-      }
-      this.$message({
-        message: '保存成功',
-        type: 'success',
-        showClose: true,
-        duration: 1000
-      })
-      this.dataJobForm.status = 'draft'
-    },
-    getRemoteUserList(query) {
-      searchUser(query).then(response => {
-        if (!response.data.items) return
-        this.userListOptions = response.data.items.map(v => v.name)
-      })
+    cancelButton() {
+      this.$router.push({ path: '/components/works-record-table' })
     }
+    // submitForm() {
+    //   this.$refs.dataJobForm.validate(valid => {
+    //     if (valid) {
+    //       this.loading = true
+    //       this.$notify({
+    //         title: '成功',
+    //         message: '发布文章成功',
+    //         type: 'success',
+    //         duration: 2000
+    //       })
+    //       this.dataJobForm.status = 'published'
+    //       this.loading = false
+    //     } else {
+    //       console.log('error submit!!')
+    //       return false
+    //     }
+    //   })
+    // },
+    // draftForm() {
+    //   if (this.dataJobForm.content.length === 0 || this.dataJobForm.title.length === 0) {
+    //     this.$message({
+    //       message: '请填写必要的标题和内容',
+    //       type: 'warning'
+    //     })
+    //     return
+    //   }
+    //   this.$message({
+    //     message: '保存成功',
+    //     type: 'success',
+    //     showClose: true,
+    //     duration: 1000
+    //   })
+    //   this.dataJobForm.status = 'draft'
+    // },
+    // getRemoteUserList(query) {
+    //   searchUser(query).then(response => {
+    //     if (!response.data.items) return
+    //     this.userListOptions = response.data.items.map(v => v.name)
+    //   })
+    // }
   }
 }
 </script>

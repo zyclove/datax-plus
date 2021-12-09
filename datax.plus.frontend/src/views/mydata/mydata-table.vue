@@ -194,7 +194,7 @@ export default {
         itemType: 0,
         itemStatus: 'published',
         itemStar: 0,
-        itemContent: '',
+        itemContent: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
