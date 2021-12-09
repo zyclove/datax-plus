@@ -15,9 +15,16 @@ export function listWorkRecordData(query) {
   })
 }
 
-export function addOrUpdateWorkRecord(data) {
+export function getJob(id) {
   return request({
-    url: '/addOrUpdateWorkRecord',
+    url: `/job/${id}`,
+    method: 'get'
+  })
+}
+
+export function addOrUpdate(data) {
+  return request({
+    url: '/job/addOrUpdate',
     method: 'post',
     data: data
   })

@@ -1,9 +1,6 @@
 package com.datax.plus.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.datax.plus.model.HttpRequestResult;
+import com.datax.plus.model.view.HttpRequestResult;
 import com.datax.plus.model.User;
 import com.datax.plus.util.JwtUtil;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +13,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
-
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public @ResponseBody

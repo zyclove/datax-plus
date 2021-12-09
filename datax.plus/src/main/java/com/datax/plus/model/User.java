@@ -1,8 +1,10 @@
 package com.datax.plus.model;
 
+import com.datax.plus.model.view.ResultBaseVO;
+
 import java.util.List;
 
-public class User extends BaseVO{
+public class User extends ResultBaseVO {
     private int accountId;
     private String username;
     private String password;

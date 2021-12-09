@@ -14,9 +14,9 @@
 <!--      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">-->
 <!--        搜索-->
 <!--      </el-button>-->
-<!--      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleAdd">-->
-<!--          新建-->
-<!--      </el-button>-->
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleAdd">
+          新建
+      </el-button>
 <!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
 <!--        导出-->
 <!--      </el-button>-->
@@ -221,6 +221,10 @@ export default {
           this.$refs['userForm'].resetFields()
         })
       }
+    },
+    handleAdd() {
+      const editUrl = '/components/works-record-createOrEdit/0'
+      this.$router.push({ path: editUrl })
     },
     handleAddOrEditWorkRecord(row) {
       this.listLoading = true

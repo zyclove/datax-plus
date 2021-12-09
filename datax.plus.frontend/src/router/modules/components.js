@@ -17,8 +17,14 @@ const componentsRouter = {
       component: () => import('@/views/myworks/works-record-table'),
       name: 'works-record-table',
       meta: { title: '工作记录' }
-    },
-    {
+    }, {
+      // path: 'create/:id(\\d+)',
+      path: 'works-record-createOrEdit/:itemId(\\d+)',
+      component: () => import('@/views/myworks/works-record-createOrEdit'),
+      name: 'CreateSample',
+      meta: { title: 'Create Data' },
+      hidden: true
+    }, {
       path: 'markdown',
       component: () => import('@/views/mydata/mydata-table'),
       name: 'MarkdownDemo',

@@ -34,7 +34,7 @@ const mydatasRouter = {
       name: 'CreateSample',
       meta: { title: 'Create Data' },
       hidden: true
-    },
+    }
   ]
 }
 

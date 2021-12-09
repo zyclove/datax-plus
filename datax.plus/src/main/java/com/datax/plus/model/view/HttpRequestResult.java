@@ -1,10 +1,10 @@
-package com.datax.plus.model;
+package com.datax.plus.model.view;
 
 public class HttpRequestResult {
     private int code;
     private String msg;
     private String token;
-    private BaseVO data;
+    private ResultBaseVO data;
 
     public int getCode() {
         return code;
@@ -30,11 +30,11 @@ public class HttpRequestResult {
         this.token = token;
     }
 
-    public BaseVO getData() {
+    public ResultBaseVO getData() {
         return data;
     }
 
-    public void setData(BaseVO data) {
+    public void setData(ResultBaseVO data) {
         this.data = data;
     }
 }
