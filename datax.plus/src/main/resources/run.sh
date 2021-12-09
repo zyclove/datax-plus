@@ -25,7 +25,9 @@ docker run --name datax-plus -d -p 8888:8080 -u root \
 
 # hook
 
-https://blog.csdn.net/qq_39684784/article/details/119180398
-https://my.oschina.net/mchange/blog/5072563
+# https://blog.csdn.net/qq_39684784/article/details/119180398
+# https://my.oschina.net/mchange/blog/5072563
 
 mvn archetype:generate -DgroupId=com.dataxplus.hook.utils -DartifactId=dataplus-hook  -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+# https://www.jdoodle.com/execute-sql-online/

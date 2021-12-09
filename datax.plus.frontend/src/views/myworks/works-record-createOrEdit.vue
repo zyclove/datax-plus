@@ -28,6 +28,22 @@
           </el-col>
         </el-row>
 
+        <el-row :gutter="100">
+          <el-col :span="10">
+            <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">
+              <b-ace-editor
+                v-model="dataJobForm.dataJobName"
+                lang="sql"
+                width="100%"
+                height="300"
+                fontSize='20'
+                theme="chrome"
+              >
+              </b-ace-editor>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
         <el-row>
           <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
             取消
@@ -46,7 +62,7 @@
 import MDinput from '@/components/MDinput'
 // import { validURL } from '@/utils/validate'
 // import { fetchArticle } from '@/api/article'
-import { searchUser } from '@/api/remote-search'
+// import { searchUser } from '@/api/remote-search'
 import { addOrUpdate, getJob } from '@/api/work-record'
 
 const typeValuesArray = [
