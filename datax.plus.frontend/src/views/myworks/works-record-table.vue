@@ -37,7 +37,7 @@
     >
       <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
         <template slot-scope="{row}">
-          <span>{{ row.itemId }}</span>
+          <span>{{ row.dataJobId }}</span>
         </template>
       </el-table-column>
 <!--      <el-table-column label="Date" width="150px" align="center">-->
@@ -45,11 +45,11 @@
 <!--          <span>{{ row.createTime | parseTime('{y}-{m}-{d}') }}</span>-->
 <!--        </template>-->
 <!--      </el-table-column>-->
-<!--      <el-table-column label="工作标题" min-width="150px">-->
-<!--        <template slot-scope="{row}">-->
-<!--          <span>{{ row.itemTitle }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
+      <el-table-column label="工作标题" min-width="150px">
+        <template slot-scope="{row}">
+          <span>{{ row.dataJobName }}</span>
+        </template>
+      </el-table-column>
 <!--      <el-table-column label="类型" width="110px" align="center" :formatter="formatType">-->
 
 <!--      </el-table-column>-->
@@ -115,9 +115,9 @@
 </template>
 
 <script>
-import { addOrUpdateWorkRecord, listWorkRecordData, deleteWorkRecord } from '@/api/work-record'
+import { listWorkRecordData, deleteWorkRecord } from '@/api/work-record'
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
+// import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
 import { listUserData } from '@/api/user'
 
@@ -193,8 +193,8 @@ export default {
     getList() {
       this.listLoading = true
       listWorkRecordData(this.listQuery).then(response => {
-        this.list = response.data.dataLists
-        this.total = response.data.totalCounts
+        this.list = response.data.list
+        this.total = response.data.total
         console.log(this.list)
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -254,6 +254,20 @@ export default {
           })
         })
         .catch(_ => {})
+    },
+    sortChange(data) {
+      const { prop, order } = data
+      if (prop === 'id') {
+        this.sortByID(order)
+      }
+    },
+    sortByID(order) {
+      if (order === 'ascending') {
+        this.listQuery.sort = '+id'
+      } else {
+        this.listQuery.sort = '-id'
+      }
+      this.handleFilter()
     },
     getSortClass: function(key) {
       const sort = this.listQuery.sort
