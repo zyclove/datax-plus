@@ -31,15 +31,15 @@
         <el-row :gutter="100">
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">
-              <b-ace-editor
-                v-model="dataJobForm.dataJobName"
+              <editor
+                v-model="dataJobForm.dataJobSql"
+                @init="editorInit"
                 lang="sql"
-                width="100%"
-                height="300"
-                fontSize='20'
+                :options= editorOptions
                 theme="chrome"
-              >
-              </b-ace-editor>
+                width="100%"
+                height="200">
+              </editor>
             </el-form-item>
           </el-col>
         </el-row>
@@ -59,11 +59,12 @@
 </template>
 
 <script>
-import MDinput from '@/components/MDinput'
+// import MDinput from '@/components/MDinput'
 // import { validURL } from '@/utils/validate'
 // import { fetchArticle } from '@/api/article'
 // import { searchUser } from '@/api/remote-search'
 import { addOrUpdate, getJob } from '@/api/work-record'
+import Editor from 'vue2-ace-editor'
 
 const typeValuesArray = [
   { typeValue: 0, typeName: '小说' },
@@ -88,7 +89,11 @@ const typeValuesArray = [
 
 export default {
   name: 'CreateJob',
-  components: { MDinput },
+  // components: { MDinput },
+  components: {
+    // eslint-disable-next-line vue/no-unused-components
+    Editor
+  },
   props: {
     isEdit: {
       type: Boolean,
@@ -96,22 +101,23 @@ export default {
     }
   },
   data() {
-    const validateRequire = (rule, value, callback) => {
-      if (value === '') {
-        this.$message({
-          message: rule.field + '为必传项',
-          type: 'error'
-        })
-        callback(new Error(rule.field + '为必传项'))
-      } else {
-        callback()
-      }
-    }
+    // const validateRequire = (rule, value, callback) => {
+    //   if (value === '') {
+    //     this.$message({
+    //       message: rule.field + '为必传项',
+    //       type: 'error'
+    //     })
+    //     callback(new Error(rule.field + '为必传项'))
+    //   } else {
+    //     callback()
+    //   }
+    // }
     return {
       dataJobForm: {
         dataJobId: -1,
         dataJobName: '',
-        dataJobType: 0
+        dataJobType: 0,
+        dataJobSql: ''
       },
       disableSubmit: false,
       typeValuesArray,
@@ -122,7 +128,15 @@ export default {
           { required: true, message: 'please input', trigger: 'blur' }
         ]
       },
-      tempRoute: {}
+      tempRoute: {},
+      editorOptions: {
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true,
+        tabSize: 2,
+        fontSize: 20,
+        showPrintMargin: false
+      }
     }
   },
   computed: {
@@ -150,6 +164,14 @@ export default {
     // https://github.com/PanJiaChen/vue-element-admin/issues/1221
   },
   methods: {
+    editorInit: function() {
+      require('brace/theme/chrome')
+      require('brace/ext/language_tools')
+      // require('brace/mode/yaml')
+      require('brace/mode/sql')
+      // require('brace/mode/less')
+      require('brace/snippets/sql')
+    },
     fetchData(j) {
       getJob(this.dataJobForm.dataJobId).then(response => {
         this.dataJobForm = response.data
@@ -167,7 +189,6 @@ export default {
     //   document.title = `${title} - ${this.dataJobForm.id}`
     // },
     addOrUpdateData() {
-      console.log('eeeeeeeeeeeeeeeeeeee : ', this.$refs['dataJobForm'].validate())
       this.$refs['dataJobForm'].validate((valid) => {
         if (valid) {
           this.disableSubmit = true
