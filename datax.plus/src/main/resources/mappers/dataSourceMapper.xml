@@ -2,15 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.datax.plus.dao.DataSourceDao">
     <resultMap id="dataSource" type="com.datax.plus.model.DataSource">
-        <id column="data_job_id" property="dataJobId"/>
-        <result column="data_job_name" property="dataJobName"/>
+        <id column="data_source_id" property="dataSourceId"/>
+        <result column="data_source_type" property="dataSourceType"/>
+        <result column="data_source_name" property="dataSourceName"/>
+        <result column="db_host_url" property="dbHostUrl"/>
+        <result column="db_username" property="dbUsername"/>
+        <result column="db_password" property="dbPassword"/>
         <result column="status" property="status"/>
     </resultMap>
 
-    <select id="pageRetrieveDataJob" resultMap="dataJob">
+    <select id="pageRetrieveDataSource" resultMap="dataJob">
         SELECT
-        a.data_job_id as data_job_id,
-        a.data_job_name as data_job_name,
+        a.data_source_id as data_source_id,
+        a.data_source_type as data_source_type,
+        a.data_source_name as data_source_name,
+        a.db_host_url as db_host_url,
+        a.db_username as db_username,
+        a.db_password as db_password,
         a.status as status
         FROM tb_data_job a
         <where>
