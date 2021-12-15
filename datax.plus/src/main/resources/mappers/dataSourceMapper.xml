@@ -20,45 +20,53 @@
         a.db_username as db_username,
         a.db_password as db_password,
         a.status as status
-        FROM tb_data_job a
+        FROM tb_data_source a
         <where>
-            <if test=" dataJob.dataJobId > 0 ">
-                a.data_job_id = #{dataJob.dataJobId}
-            </if>
+            <include refid="pageRetrieveDataSourceIfBlock"/>
         </where>
         LIMIT #{page.start},#{page.limit}
     </select>
 
-    <select id="pageRetrieveDataJobCount" resultType="java.lang.Long">
-        SELECT
-        COUNT(1) as total
-        FROM tb_data_job a
-        <where>
+    <sql id="pageRetrieveDataSourceIfBlock">
+        <if test=" dataJob.dataJobId > 0 ">
             a.data_job_id = #{dataJob.dataJobId}
+        </if>
+    </sql>
+
+    <select id="pageRetrieveDataSourceCount" resultType="java.lang.Long">
+        SELECT
+            COUNT(1) as total
+        FROM tb_data_source a
+        <where>
+            <include refid="pageRetrieveDataSourceIfBlock"/>
         </where>
     </select>
 
-    <select id="testCount" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM tb_job_log a
-    </select>
+    <insert id="addDataSource" parameterType="com.datax.plus.model.DataSource" useGeneratedKeys="true"
+            keyProperty="dataSource.dataSourceId">
+        INSERT INTO tb_data_source (
+            data_source_type,
+            data_source_name,
+            db_host_url,
+            db_username,
+            db_password,
+            status
+        )
+        VALUES (
+            #{dataSource.dataSourceType},
+            #{dataSource.dataSourceName},
+            #{dataSource.dbHostUrl},
+            #{dataSource.dbUsername},
+            #{dataSource.dbPassword},
+            #{dataSource.status}
+        )
+    </insert>
 
-    <insert id="addDataJob" parameterType="com.datax.plus.model.DataJob" useGeneratedKeys="true" keyProperty="dataJob.dataJobId">
-		INSERT INTO
-		tb_data_job (
-            data_job_name
-		)
-		VALUES (
-            #{dataJob.dataJobName}
-		)
-	</insert>
-
-    <update id="updateDataJobStatus" parameterType="com.datax.plus.model.DataJob">
-		UPDATE
-			tb_data_job
-		SET
-			status = #{dataJob.status}
-		WHERE
-			data_job_id = #{dataJob.dataJobId}
-	</update>
+    <update id="updateDataSource" parameterType="com.datax.plus.model.DataSource">
+        UPDATE
+            tb_data_job
+        SET status = #{dataJob.status}
+        WHERE data_source_id = #{dataSource.dataSourceId}
+    </update>
 
 </mapper>
