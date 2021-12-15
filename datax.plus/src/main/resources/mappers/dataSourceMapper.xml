@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.datax.plus.dao.DataSourceDao">
+    <resultMap id="dataSource" type="com.datax.plus.model.DataSource">
+        <id column="data_job_id" property="dataJobId"/>
+        <result column="data_job_name" property="dataJobName"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <select id="pageRetrieveDataJob" resultMap="dataJob">
+        SELECT
+        a.data_job_id as data_job_id,
+        a.data_job_name as data_job_name,
+        a.status as status
+        FROM tb_data_job a
+        <where>
+            <if test=" dataJob.dataJobId > 0 ">
+                a.data_job_id = #{dataJob.dataJobId}
+            </if>
+        </where>
+        LIMIT #{page.start},#{page.limit}
+    </select>
+
+    <select id="pageRetrieveDataJobCount" resultType="java.lang.Long">
+        SELECT
+        COUNT(1) as total
+        FROM tb_data_job a
+        <where>
+            a.data_job_id = #{dataJob.dataJobId}
+        </where>
+    </select>
+
+    <select id="testCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tb_job_log a
+    </select>
+
+    <insert id="addDataJob" parameterType="com.datax.plus.model.DataJob" useGeneratedKeys="true" keyProperty="dataJob.dataJobId">
+		INSERT INTO
+		tb_data_job (
+            data_job_name
+		)
+		VALUES (
+            #{dataJob.dataJobName}
+		)
+	</insert>
+
+    <update id="updateDataJobStatus" parameterType="com.datax.plus.model.DataJob">
+		UPDATE
+			tb_data_job
+		SET
+			status = #{dataJob.status}
+		WHERE
+			data_job_id = #{dataJob.dataJobId}
+	</update>
+
+</mapper>

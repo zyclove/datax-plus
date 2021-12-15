@@ -12,7 +12,11 @@ const componentsRouter = {
     icon: 'component'
   },
   children: [
-    {
+    { path: 'markdown',
+      component: () => import('@/views/data-source/data-source-table'),
+      name: 'data-source',
+      meta: { title: '数据源' }
+    }, {
       path: 'works-record-table',
       component: () => import('@/views/myworks/works-record-table'),
       name: 'works-record-table',

@@ -12,6 +12,10 @@ import java.util.Map;
 
 public class DbAccessUtil {
 
+    public static final int SHOW_DBS = 1;
+    public static final int SHOW_TABLES = 2;
+    public static final int DESC_TABLE = 3;
+
     private Connection connection;
 
     public DbAccessUtil(String url, String userName, String password, int dbType) {
@@ -23,10 +27,16 @@ public class DbAccessUtil {
 
     private QueryRunner qryRun = null;
 
-    public List<Map<String, Object>> queryDbs() {
+    public List<Map<String, Object>> simpleQuery(int queryType, String value) {
         StringBuffer sql0 = new StringBuffer();
 
-        sql0.append(" SHOW DATABASES ");
+        if (queryType == SHOW_DBS) {
+            sql0.append(" SHOW DATABASES ");
+        } else if (queryType == SHOW_TABLES) {
+            sql0.append(" SHOW TABLES ");
+        } else if (queryType == DESC_TABLE) {
+            sql0.append(" DESC ").append(value);
+        }
 
         List resultList = new ArrayList();
 
