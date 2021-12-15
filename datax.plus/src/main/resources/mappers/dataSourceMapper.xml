@@ -29,7 +29,7 @@
 
     <sql id="pageRetrieveDataSourceIfBlock">
         <if test=" dataJob.dataJobId > 0 ">
-            a.data_job_id = #{dataJob.dataJobId}
+            a.data_source_id = #{dataSource.dataSourceId}
         </if>
     </sql>
 
