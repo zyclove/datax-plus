@@ -11,7 +11,7 @@
         <result column="status" property="status"/>
     </resultMap>
 
-    <select id="pageRetrieveDataSource" resultMap="dataJob">
+    <select id="pageRetrieveDataSource" resultMap="dataSource">
         SELECT
         a.data_source_id as data_source_id,
         a.data_source_type as data_source_type,
@@ -28,7 +28,7 @@
     </select>
 
     <sql id="pageRetrieveDataSourceIfBlock">
-        <if test=" dataJob.dataJobId > 0 ">
+        <if test=" dataSource.dataSourceId > 0 ">
             a.data_source_id = #{dataSource.dataSourceId}
         </if>
     </sql>

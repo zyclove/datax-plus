@@ -15,7 +15,7 @@ CREATE TABLE tb_data_source (
     `db_password` VARCHAR(100) DEFAULT '',
     `status` TINYINT,
     `create_time` datetime NOT NULL DEFAULT NOW(),
-    PRIMARY KEY(`data_job_id`)
+    PRIMARY KEY(`data_source_id`)
 )DEFAULT CHARSET=utf8;
 
 

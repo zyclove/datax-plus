@@ -15,7 +15,7 @@
 <!--        搜索-->
 <!--      </el-button>-->
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleAdd">
-          新建
+          新建连接
       </el-button>
 <!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
 <!--        导出-->
@@ -37,7 +37,7 @@
     >
       <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
         <template slot-scope="{row}">
-          <span>{{ row.dataJobId }}</span>
+          <span>{{ row.dataSourceId }}</span>
         </template>
       </el-table-column>
 <!--      <el-table-column label="Date" width="150px" align="center">-->
@@ -45,9 +45,9 @@
 <!--          <span>{{ row.createTime | parseTime('{y}-{m}-{d}') }}</span>-->
 <!--        </template>-->
 <!--      </el-table-column>-->
-      <el-table-column label="工作标题" min-width="150px">
+      <el-table-column label="连接名称" min-width="150px">
         <template slot-scope="{row}">
-          <span>{{ row.dataJobName }}</span>
+          <span>{{ row.dataSourceName }}</span>
         </template>
       </el-table-column>
 <!--      <el-table-column label="类型" width="110px" align="center" :formatter="formatType">-->
@@ -115,11 +115,10 @@
 </template>
 
 <script>
-import { listWorkRecordData, deleteWorkRecord } from '@/api/work-record'
+import { listDataSource } from '@/api/data-source'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
-import { listUserData } from '@/api/user'
 
 const typeValuesArray = [
   { typeValue: 0, typeName: '数据' },
@@ -163,12 +162,8 @@ export default {
       statusOptions,
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       showReviewer: false,
-      workRecordForm: {
-        dataJobId: 0,
-        recordName: '',
-        RecordBody: '',
-        RecordAddress: '',
-        roleIds: []
+      dataSourceForm: {
+        dataSourceId: 0
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -192,7 +187,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      listWorkRecordData(this.listQuery.pageNum, this.listQuery.limit, this.workRecordForm.dataJobId).then(response => {
+      listDataSource(this.listQuery.pageNum, this.listQuery.limit).then(response => {
         this.list = response.data.list
         this.total = response.data.total
         console.log(this.list)
@@ -201,26 +196,6 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
-    },
-    initFormData() {
-      if (this.forEdit === 1) { // 编辑数据
-        listUserData({ 'page': 1, 'limit': 1, 'accountId': this.userForm.accountId }).then(response => {
-          setTimeout(() => {
-            this.dialogVisible = true
-            this.$nextTick(() => {
-              this.$refs['userForm'].resetFields()
-              this.userForm = response.data.dataLists[0]
-              this.defaultSelectedNode = response.data.functions
-              this.listLoading = false
-            })
-          }, 1000)
-        })
-      } else {
-        this.dialogVisible = true
-        this.$nextTick(() => {
-          this.$refs['userForm'].resetFields()
-        })
-      }
     },
     handleAdd() {
       const editUrl = '/components/works-record-createOrEdit/0'
@@ -241,24 +216,24 @@ export default {
         this.initFormData()
       })
     },
-    handleDeleteConfirm(row) {
-      this.$confirm('确认删除？')
-        .then(_ => {
-          console.log('点击了确认')
-          console.log(row['itemId'])
-          deleteWorkRecord(row['itemId']).then(() => {
-            this.dialogFormVisible = false
-            this.$notify({
-              title: 'Success',
-              message: '删除数据成功！',
-              type: 'success',
-              duration: 2000
-            })
-            this.getList()
-          })
-        })
-        .catch(_ => {})
-    },
+    // handleDeleteConfirm(row) {
+    //   this.$confirm('确认删除？')
+    //     .then(_ => {
+    //       console.log('点击了确认')
+    //       console.log(row['itemId'])
+    //       deleteWorkRecord(row['itemId']).then(() => {
+    //         this.dialogFormVisible = false
+    //         this.$notify({
+    //           title: 'Success',
+    //           message: '删除数据成功！',
+    //           type: 'success',
+    //           duration: 2000
+    //         })
+    //         this.getList()
+    //       })
+    //     })
+    //     .catch(_ => {})
+    // },
     sortChange(data) {
       const { prop, order } = data
       if (prop === 'id') {
