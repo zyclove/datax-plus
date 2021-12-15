@@ -64,8 +64,14 @@
 
     <update id="updateDataSource" parameterType="com.datax.plus.model.DataSource">
         UPDATE
-            tb_data_job
-        SET status = #{dataJob.status}
+            tb_data_source
+        SET
+            data_source_type = #{dataSource.dataSourceType},
+            data_source_name = #{dataSource.dataSourceName},
+            db_host_url = #{dataSource.dbHostUrl},
+            db_username = #{dataSource.dbUsername},
+            db_password = #{dataSource.dbPassword},
+            status = #{dataSource.status}
         WHERE data_source_id = #{dataSource.dataSourceId}
     </update>
 
