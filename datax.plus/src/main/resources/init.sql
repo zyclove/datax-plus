@@ -4,7 +4,6 @@ CREATE database datax_plus;
 
 USE datax_plus;
 
-
 DROP TABLE IF EXISTS tb_data_source;
 CREATE TABLE tb_data_source (
     `data_source_id` INT NOT NULL AUTO_INCREMENT,
