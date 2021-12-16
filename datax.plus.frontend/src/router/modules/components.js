@@ -12,13 +12,13 @@ const componentsRouter = {
     icon: 'component'
   },
   children: [
-    { path: 'markdown',
+    { path: 'dataSource/list',
       component: () => import('@/views/data-source/data-source-table'),
       name: 'data-source',
       meta: { title: '数据源' }
     }, {
       // path: 'create/:id(\\d+)',
-      path: 'data-source-create-or-edit/:dataSourceId(\\d+)',
+      path: 'dataSource/createOrEdit/:dataSourceId(\\d+)',
       component: () => import('@/views/data-source/data-source-create-or-edit'),
       name: 'CreateSample',
       meta: { title: 'Create data source' },

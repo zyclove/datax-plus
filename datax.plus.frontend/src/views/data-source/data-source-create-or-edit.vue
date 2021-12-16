@@ -1,6 +1,11 @@
 <template>
   <div class="createPost-container">
-    <el-form ref="dataSourceForm" :model="dataSourceForm" :rules="rules" class="form-container">
+    <el-form
+             ref="dataSourceForm"
+             v-loading="formLoading"
+             :model="dataSourceForm"
+             :rules="rules"
+             class="form-container">
       <div class="createPost-main-container">
         <el-row>
           <el-col :span="10">
@@ -129,12 +134,13 @@ export default {
       dataSourceForm: {
         dataSourceId: 0,
         dataSourceName: '',
-        dataSourceType: 0,
+        dataSourceType: 1,
         dbHostUrl: '',
         dbUsername: '',
         dbPassword: '',
         connected: 0
       },
+      formLoading: false,
       disableSubmit: false,
       typeValuesArray,
       loading: false,
@@ -223,20 +229,27 @@ export default {
     checkConnection() {
       this.$refs['dataSourceForm'].validate((valid) => {
         if (valid) {
-          this.disableSubmit = true
+          this.formLoading = true
           checkConnection(this.dataSourceForm).then(response => {
-            if (response.data.code === 1) {
-
-            } else {
-
-            }
-            // this.$notify({
-            //   title: 'Success',
-            //   message: '操作成功',
-            //   type: 'success',
-            //   duration: 2000
-            // })
-            // this.$router.push({ path: '/components/works-record-table' })
+            setTimeout(() => {
+              if (response.data.code === 1) {
+                this.dataSourceForm.connected = 1
+                this.$notify({
+                  title: 'Success',
+                  message: '测试连接数据源成功',
+                  type: 'success',
+                  duration: 2000
+                })
+              } else {
+                this.dataSourceForm.connected = 0
+                this.$notify.error({
+                  title: 'Failed',
+                  message: '测试连接数据源失败',
+                  duration: 2000
+                })
+              }
+              this.formLoading = false
+            }, 1000)
           })
         }
       })
