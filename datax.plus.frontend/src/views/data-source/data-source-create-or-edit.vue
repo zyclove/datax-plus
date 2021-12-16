@@ -101,6 +101,7 @@
 
 <script>
 import { addOrUpdate, getJob, checkConnection } from '@/api/data-source'
+import { deleteFunction } from '@/api/role'
 
 const typeValuesArray = [
   { typeValue: 1, typeName: 'MYSQL' },
@@ -213,16 +214,22 @@ export default {
     addOrUpdateData() {
       this.$refs['dataSourceForm'].validate((valid) => {
         if (valid) {
-          this.disableSubmit = true
-          addOrUpdate(this.dataSourceForm).then(() => {
-            this.$notify({
-              title: 'Success',
-              message: '操作成功',
-              type: 'success',
-              duration: 2000
-            })
-            this.$router.push({ path: '/components/works-record-table' })
-          })
+          if (this.dataSourceForm.connected === 0) {
+            this.$confirm('当前数据源尚未通过联通性测试，是否确认要提交？')
+              .then(_ => {
+                this.disableSubmit = true
+                addOrUpdate(this.dataSourceForm).then(() => {
+                  this.$notify({
+                    title: 'Success',
+                    message: '操作成功',
+                    type: 'success',
+                    duration: 2000
+                  })
+                  this.$router.push({ path: '/components/works-record-table' })
+                })
+                // done();
+              }).catch(_ => {})
+          }
         }
       })
     },
@@ -256,25 +263,25 @@ export default {
     },
     cancelButton() {
       this.$router.push({ path: '/components/works-record-table' })
-    },
-    submitForm() {
-      this.$refs.dataSourceForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$notify({
-            title: '成功',
-            message: '发布文章成功',
-            type: 'success',
-            duration: 2000
-          })
-          this.dataSourceForm.status = 'published'
-          this.loading = false
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
     }
+    // submitForm() {
+    //   this.$refs.dataSourceForm.validate(valid => {
+    //     if (valid) {
+    //       this.loading = true
+    //       this.$notify({
+    //         title: '成功',
+    //         message: '发布文章成功',
+    //         type: 'success',
+    //         duration: 2000
+    //       })
+    //       this.dataSourceForm.status = 'published'
+    //       this.loading = false
+    //     } else {
+    //       console.log('error submit!!')
+    //       return false
+    //     }
+    //   })
+    // }
     // draftForm() {
     //   if (this.dataSourceForm.content.length === 0 || this.dataSourceForm.title.length === 0) {
     //     this.$message({
