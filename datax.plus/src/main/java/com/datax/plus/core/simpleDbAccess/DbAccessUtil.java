@@ -1,6 +1,7 @@
 package com.datax.plus.core.simpleDbAccess;
 
 import com.datax.plus.constant.DbTypes;
+import com.datax.plus.model.DataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
@@ -18,10 +19,10 @@ public class DbAccessUtil {
 
     private Connection connection;
 
-    public DbAccessUtil(String url, String userName, String password, int dbType) {
+    public DbAccessUtil(DataSource dataSource) throws SQLException {
         qryRun = new QueryRunner();
-        if (dbType == DbTypes.MYSQL) {
-            this.connection = MysqlDbAccess.getConnection(url, userName, password);
+        if (dataSource.getDataSourceType() == DbTypes.MYSQL) {
+            this.connection = MysqlDbAccess.getConnection(dataSource.getDbHostUrl(), dataSource.getDbUsername(), dataSource.getDbPassword());
         }
     }
 

@@ -24,13 +24,9 @@ public class MysqlDbAccess {
         this.url = url;
     }
 
-    public static Connection getConnection(String url, String userName, String password) {
+    public static Connection getConnection(String url, String userName, String password) throws SQLException {
         Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url, userName, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        conn = DriverManager.getConnection(url, userName, password);
         return conn;
     }
 

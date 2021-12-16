@@ -22,6 +22,14 @@ export function addOrUpdate(data) {
   })
 }
 
+export function checkConnection(data) {
+  return request({
+    url: '/dataSource/checkConnection',
+    method: 'post',
+    data: data
+  })
+}
+
 export function deleteWorkRecord(id) {
   return request({
     url: `/deleteWorkRecord/${id}`,

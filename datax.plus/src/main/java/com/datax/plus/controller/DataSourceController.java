@@ -1,5 +1,6 @@
 package com.datax.plus.controller;
 
+import com.datax.plus.core.simpleDbAccess.DbAccessUtil;
 import com.datax.plus.model.DataSource;
 import com.datax.plus.model.User;
 import com.datax.plus.model.view.DataSourceList;
@@ -10,6 +11,7 @@ import com.datax.plus.service.DataSourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,12 +56,25 @@ public class DataSourceController {
         req.setCode(20000);
         req.setMsg("");
         ResultBaseVO resultData = new ResultBaseVO();
-        if (dataSource.getDataSourceId() == 0) {
-            dataSourceService.addDataSource(dataSource);
-            if (dataSource.getDataSourceId() > 0) {
-                resultData.setCode(1);
-            }
+//        if (dataSource.getDataSourceId() == 0) {
+//            dataSourceService.addDataSource(dataSource);
+//            if (dataSource.getDataSourceId() > 0) {
+//                resultData.setCode(1);
+//            }
+//        }
+
+        int checkResult = 0;
+
+        DbAccessUtil dbAccessUtil = null;
+        try {
+            dbAccessUtil = new DbAccessUtil(dataSource);
+            List<Map<String, Object>> list = dbAccessUtil.simpleQuery(DbAccessUtil.SHOW_TABLES, null);
+            checkResult = 1;
+        } catch (SQLException e) {
+            // e.printStackTrace();
         }
+
+        resultData.setCode(checkResult);
         req.setData(resultData);
         return req;
     }

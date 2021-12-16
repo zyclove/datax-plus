@@ -21,7 +21,7 @@
         <el-row :gutter="100">
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="数据库类别" prop="数据库类别">
-              <el-select v-model="dataSourceForm.dataJobType" placeholder="Type" class="filter-item" style="width: 130px">
+              <el-select v-model="dataSourceForm.dataSourceType" placeholder="Type" class="filter-item" style="width: 130px">
                 <el-option v-for="item in typeValuesArray" :key="item.typeValue" :label="item.typeName" :value="item.typeValue" />
               </el-select>
             </el-form-item>
@@ -64,7 +64,7 @@
 
         <el-row>
           <el-col :span="5">
-            <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
+            <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="checkConnection">
               连通性测试
             </el-button>
           </el-col>
@@ -92,12 +92,11 @@
 </template>
 
 <script>
-import { addOrUpdate, getJob } from '@/api/work-record'
+import { addOrUpdate, getJob, checkConnection } from '@/api/data-source'
 
 const typeValuesArray = [
-  { typeValue: 0, typeName: '小说' },
-  { typeValue: 1, typeName: '散文' },
-  { typeValue: 2, typeName: '科技论文' },
+  { typeValue: 1, typeName: 'MYSQL' },
+  { typeValue: 2, typeName: 'ORACLE' },
   { typeValue: 3, typeName: '其他' }
 ]
 
@@ -221,14 +220,14 @@ export default {
       this.$refs['dataSourceForm'].validate((valid) => {
         if (valid) {
           this.disableSubmit = true
-          addOrUpdate(this.dataSourceForm).then(() => {
+          checkConnection(this.dataSourceForm).then(() => {
             this.$notify({
               title: 'Success',
               message: '操作成功',
               type: 'success',
               duration: 2000
             })
-            this.$router.push({ path: '/components/works-record-table' })
+            // this.$router.push({ path: '/components/works-record-table' })
           })
         }
       })
