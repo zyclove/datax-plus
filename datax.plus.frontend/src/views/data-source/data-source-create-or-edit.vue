@@ -69,7 +69,10 @@
             </el-button>
           </el-col>
           <el-col :span="5">
-            asdfasdfasdf
+            <el-tag
+              type="success">
+              测试通过
+            </el-tag>
           </el-col>
         </el-row>
 
@@ -129,7 +132,8 @@ export default {
         dataSourceType: 0,
         dbHostUrl: '',
         dbUsername: '',
-        dbPassword: ''
+        dbPassword: '',
+        connected: 0
       },
       disableSubmit: false,
       typeValuesArray,
@@ -220,13 +224,18 @@ export default {
       this.$refs['dataSourceForm'].validate((valid) => {
         if (valid) {
           this.disableSubmit = true
-          checkConnection(this.dataSourceForm).then(() => {
-            this.$notify({
-              title: 'Success',
-              message: '操作成功',
-              type: 'success',
-              duration: 2000
-            })
+          checkConnection(this.dataSourceForm).then(response => {
+            if (response.data.code === 1) {
+
+            } else {
+
+            }
+            // this.$notify({
+            //   title: 'Success',
+            //   message: '操作成功',
+            //   type: 'success',
+            //   duration: 2000
+            // })
             // this.$router.push({ path: '/components/works-record-table' })
           })
         }

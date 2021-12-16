@@ -56,12 +56,6 @@ public class DataSourceController {
         req.setCode(20000);
         req.setMsg("");
         ResultBaseVO resultData = new ResultBaseVO();
-//        if (dataSource.getDataSourceId() == 0) {
-//            dataSourceService.addDataSource(dataSource);
-//            if (dataSource.getDataSourceId() > 0) {
-//                resultData.setCode(1);
-//            }
-//        }
 
         int checkResult = 0;
 
