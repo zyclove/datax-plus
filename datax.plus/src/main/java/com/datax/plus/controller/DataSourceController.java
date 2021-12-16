@@ -46,6 +46,24 @@ public class DataSourceController {
         return req;
     }
 
+
+    @RequestMapping(value = "/checkConnection", method = RequestMethod.POST)
+    public @ResponseBody
+    HttpRequestResult checkConnection(@RequestBody DataSource dataSource) {
+        HttpRequestResult req = new HttpRequestResult();
+        req.setCode(20000);
+        req.setMsg("");
+        ResultBaseVO resultData = new ResultBaseVO();
+        if (dataSource.getDataSourceId() == 0) {
+            dataSourceService.addDataSource(dataSource);
+            if (dataSource.getDataSourceId() > 0) {
+                resultData.setCode(1);
+            }
+        }
+        req.setData(resultData);
+        return req;
+    }
+
     @RequestMapping(value = "/addOrUpdate", method = RequestMethod.POST)
     public @ResponseBody
     HttpRequestResult addOrUpdate(@RequestBody DataSource dataSource) {

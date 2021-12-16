@@ -17,6 +17,13 @@ const componentsRouter = {
       name: 'data-source',
       meta: { title: '数据源' }
     }, {
+      // path: 'create/:id(\\d+)',
+      path: 'data-source-create-or-edit/:dataSourceId(\\d+)',
+      component: () => import('@/views/data-source/data-source-create-or-edit'),
+      name: 'CreateSample',
+      meta: { title: 'Create data source' },
+      hidden: true
+    }, {
       path: 'works-record-table',
       component: () => import('@/views/myworks/works-record-table'),
       name: 'works-record-table',

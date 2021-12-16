@@ -1,18 +1,18 @@
 <template>
   <div class="createPost-container">
-    <el-form ref="dataJobForm" :model="dataJobForm" :rules="rules" class="form-container">
+    <el-form ref="dataSourceForm" :model="dataSourceForm" :rules="rules" class="form-container">
       <div class="createPost-main-container">
         <el-row>
           <el-col :span="10">
 <!--            <el-form-item style="margin-bottom: 40px;" prop="itemTitle">-->
-<!--              <MDinput v-model="dataJobForm.dataJobName" :maxlength="100" name="name" required>-->
+<!--              <MDinput v-model="dataSourceForm.dataJobName" :maxlength="100" name="name" required>-->
 <!--                工作名称-->
 <!--              </MDinput>-->
 <!--            </el-form-item>-->
-            <el-form-item label="工作名称" prop="dataJobName">
+            <el-form-item label="连接名称" prop="dataJobName">
               <el-input
-                v-model="dataJobForm.dataJobName"
-                placeholder="工作名称"
+                v-model="dataSourceForm.dataJobName"
+                placeholder="连接名称"
               />
             </el-form-item>
           </el-col>
@@ -20,37 +20,70 @@
 
         <el-row :gutter="100">
           <el-col :span="10">
-            <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">
-              <el-select v-model="dataJobForm.dataJobType" placeholder="Type" class="filter-item" style="width: 130px">
+            <el-form-item style="margin-bottom: 40px;" label="数据库类别" prop="数据库类别">
+              <el-select v-model="dataSourceForm.dataJobType" placeholder="Type" class="filter-item" style="width: 130px">
                 <el-option v-for="item in typeValuesArray" :key="item.typeValue" :label="item.typeName" :value="item.typeValue" />
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :gutter="100">
+        <el-row>
           <el-col :span="10">
-            <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">
-              <editor
-                v-model="dataJobForm.dataJobSql"
-                @init="editorInit"
-                lang="sql"
-                :options= editorOptions
-                theme="chrome"
-                width="100%"
-                height="200">
-              </editor>
+            <el-form-item label="连接地址" prop="dbHostUrl">
+              <el-input
+                v-model="dataSourceForm.dbHostUrl"
+                placeholder="连接地址"
+              />
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row>
-          <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
-            取消
-          </el-button>
-          <el-button v-loading="loading" type="warning" @click="addOrUpdateData" :disabled="disableSubmit">
-            提交
-          </el-button>
+          <el-col :span="10">
+            <el-form-item label="账号" prop="dbHostUrl">
+              <el-input
+                v-model="dataSourceForm.dbUsername"
+                placeholder="username"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="10">
+            <el-form-item label="密码" prop="dbHostUrl">
+              <el-input
+                v-model="dataSourceForm.dbPassword"
+                placeholder="password"
+                type="password"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="5">
+            <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
+              连通性测试
+            </el-button>
+          </el-col>
+          <el-col :span="5">
+            asdfasdfasdf
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="5">
+            <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
+              取消
+            </el-button>
+          </el-col>
+          <el-col :span="5">
+            <el-button v-loading="loading" type="warning" @click="addOrUpdateData" :disabled="disableSubmit">
+              提交
+            </el-button>
+          </el-col>
         </el-row>
 
       </div>
@@ -59,12 +92,7 @@
 </template>
 
 <script>
-// import MDinput from '@/components/MDinput'
-// import { validURL } from '@/utils/validate'
-// import { fetchArticle } from '@/api/article'
-// import { searchUser } from '@/api/remote-search'
 import { addOrUpdate, getJob } from '@/api/work-record'
-import Editor from 'vue2-ace-editor'
 
 const typeValuesArray = [
   { typeValue: 0, typeName: '小说' },
@@ -73,26 +101,9 @@ const typeValuesArray = [
   { typeValue: 3, typeName: '其他' }
 ]
 
-// const defaultForm = {
-//   status: 'draft',
-//   title: '', // 文章题目
-//   content: '', // 文章内容
-//   content_short: '', // 文章摘要
-//   source_uri: '', // 文章外链
-//   image_uri: '', // 文章图片
-//   display_time: undefined, // 前台展示时间
-//   id: undefined,
-//   platforms: ['a-platform'],
-//   comment_disabled: false,
-//   importance: 0
-// }
-
 export default {
-  name: 'CreateJob',
-  // components: { MDinput },
+  name: 'CreateDataSource',
   components: {
-    // eslint-disable-next-line vue/no-unused-components
-    Editor
   },
   props: {
     isEdit: {
@@ -113,11 +124,13 @@ export default {
     //   }
     // }
     return {
-      dataJobForm: {
-        dataJobId: -1,
-        dataJobName: '',
-        dataJobType: 0,
-        dataJobSql: ''
+      dataSourceForm: {
+        dataSourceId: 0,
+        dataSourceName: '',
+        dataSourceType: 0,
+        dbHostUrl: '',
+        dbUsername: '',
+        dbPassword: ''
       },
       disableSubmit: false,
       typeValuesArray,
@@ -141,14 +154,14 @@ export default {
   },
   computed: {
     contentShortLength() {
-      return this.dataJobForm.content_short.length
+      return this.dataSourceForm.content_short.length
     },
     displayTime: {
       get() {
-        return (+new Date(this.dataJobForm.display_time))
+        return (+new Date(this.dataSourceForm.display_time))
       },
       set(val) {
-        this.dataJobForm.display_time = new Date(val)
+        this.dataSourceForm.display_time = new Date(val)
       }
     }
   },
@@ -156,7 +169,7 @@ export default {
     const dataJobId = this.$route.params.dataJobId
     // 如果dataJobId == -1 代表是新增，反之则是更新
     if (dataJobId > -1) {
-      this.dataJobForm.dataJobId = dataJobId
+      this.dataSourceForm.dataJobId = dataJobId
       this.fetchData(dataJobId)
     }
     // Why need to make a copy of this.$route here?
@@ -173,26 +186,42 @@ export default {
       require('brace/snippets/sql')
     },
     fetchData(j) {
-      getJob(this.dataJobForm.dataJobId).then(response => {
-        this.dataJobForm = response.data
+      getJob(this.dataSourceForm.dataJobId).then(response => {
+        this.dataSourceForm = response.data
       }).catch(err => {
         console.log(err)
       })
     },
     // setTagsViewTitle() {
     //   const title = 'Edit Article'
-    //   const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.dataJobForm.id}` })
+    //   const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.dataSourceForm.id}` })
     //   this.$store.dispatch('tagsView/updateVisitedView', route)
     // },
     // setPageTitle() {
     //   const title = 'Edit Article'
-    //   document.title = `${title} - ${this.dataJobForm.id}`
+    //   document.title = `${title} - ${this.dataSourceForm.id}`
     // },
     addOrUpdateData() {
-      this.$refs['dataJobForm'].validate((valid) => {
+      this.$refs['dataSourceForm'].validate((valid) => {
         if (valid) {
           this.disableSubmit = true
-          addOrUpdate(this.dataJobForm).then(() => {
+          addOrUpdate(this.dataSourceForm).then(() => {
+            this.$notify({
+              title: 'Success',
+              message: '操作成功',
+              type: 'success',
+              duration: 2000
+            })
+            this.$router.push({ path: '/components/works-record-table' })
+          })
+        }
+      })
+    },
+    checkConnection() {
+      this.$refs['dataSourceForm'].validate((valid) => {
+        if (valid) {
+          this.disableSubmit = true
+          addOrUpdate(this.dataSourceForm).then(() => {
             this.$notify({
               title: 'Success',
               message: '操作成功',
@@ -208,7 +237,7 @@ export default {
       this.$router.push({ path: '/components/works-record-table' })
     }
     // submitForm() {
-    //   this.$refs.dataJobForm.validate(valid => {
+    //   this.$refs.dataSourceForm.validate(valid => {
     //     if (valid) {
     //       this.loading = true
     //       this.$notify({
@@ -217,7 +246,7 @@ export default {
     //         type: 'success',
     //         duration: 2000
     //       })
-    //       this.dataJobForm.status = 'published'
+    //       this.dataSourceForm.status = 'published'
     //       this.loading = false
     //     } else {
     //       console.log('error submit!!')
@@ -226,7 +255,7 @@ export default {
     //   })
     // },
     // draftForm() {
-    //   if (this.dataJobForm.content.length === 0 || this.dataJobForm.title.length === 0) {
+    //   if (this.dataSourceForm.content.length === 0 || this.dataSourceForm.title.length === 0) {
     //     this.$message({
     //       message: '请填写必要的标题和内容',
     //       type: 'warning'
@@ -239,7 +268,7 @@ export default {
     //     showClose: true,
     //     duration: 1000
     //   })
-    //   this.dataJobForm.status = 'draft'
+    //   this.dataSourceForm.status = 'draft'
     // },
     // getRemoteUserList(query) {
     //   searchUser(query).then(response => {

@@ -198,7 +198,7 @@ export default {
       })
     },
     handleAdd() {
-      const editUrl = '/components/works-record-createOrEdit/0'
+      const editUrl = '/components/data-source-create-or-edit/0'
       this.$router.push({ path: editUrl })
     },
     handleAddOrEditWorkRecord(row) {
