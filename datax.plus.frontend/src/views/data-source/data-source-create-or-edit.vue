@@ -256,25 +256,25 @@ export default {
     },
     cancelButton() {
       this.$router.push({ path: '/components/works-record-table' })
+    },
+    submitForm() {
+      this.$refs.dataSourceForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          this.$notify({
+            title: '成功',
+            message: '发布文章成功',
+            type: 'success',
+            duration: 2000
+          })
+          this.dataSourceForm.status = 'published'
+          this.loading = false
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     }
-    // submitForm() {
-    //   this.$refs.dataSourceForm.validate(valid => {
-    //     if (valid) {
-    //       this.loading = true
-    //       this.$notify({
-    //         title: '成功',
-    //         message: '发布文章成功',
-    //         type: 'success',
-    //         duration: 2000
-    //       })
-    //       this.dataSourceForm.status = 'published'
-    //       this.loading = false
-    //     } else {
-    //       console.log('error submit!!')
-    //       return false
-    //     }
-    //   })
-    // },
     // draftForm() {
     //   if (this.dataSourceForm.content.length === 0 || this.dataSourceForm.title.length === 0) {
     //     this.$message({
