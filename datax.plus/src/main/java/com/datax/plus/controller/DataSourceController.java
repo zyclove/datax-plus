@@ -99,8 +99,8 @@ public class DataSourceController {
         DataSource dataSource = new DataSource();
         dataSource.setDataSourceId(id);
         ResultBaseVO resultData = new ResultBaseVO();
-        if (dataSource.getDataSourceId() == 0) {
-            int result = dataSourceService.deleteDataSource(dataSource);
+        int result = dataSourceService.deleteDataSource(dataSource);
+        if (result > 0) {
             resultData.setCode(1);
         }
         req.setData(resultData);
