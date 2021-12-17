@@ -30,9 +30,9 @@ export function checkConnection(data) {
   })
 }
 
-export function deleteWorkRecord(id) {
+export function deleteById(id) {
   return request({
-    url: `/deleteWorkRecord/${id}`,
+    url: `/dataSource/delete/${id}`,
     method: 'delete'
   })
 }

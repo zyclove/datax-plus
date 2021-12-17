@@ -101,7 +101,7 @@
 
 <script>
 import { addOrUpdate, getJob, checkConnection } from '@/api/data-source'
-import { deleteFunction } from '@/api/role'
+// import { deleteFunction } from '@/api/role'
 
 const typeValuesArray = [
   { typeValue: 1, typeName: 'MYSQL' },
@@ -225,7 +225,7 @@ export default {
                     type: 'success',
                     duration: 2000
                   })
-                  this.$router.push({ path: '/components/works-record-table' })
+                  this.$router.push({ path: '/components/dataSource/list' })
                 })
                 // done();
               }).catch(_ => {})

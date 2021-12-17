@@ -92,16 +92,16 @@ public class DataSourceController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public @ResponseBody
-    HttpRequestResult delete(@RequestBody DataSource dataSource) {
+    HttpRequestResult delete(@PathVariable int id) {
         HttpRequestResult req = new HttpRequestResult();
         req.setCode(20000);
         req.setMsg("");
+        DataSource dataSource = new DataSource();
+        dataSource.setDataSourceId(id);
         ResultBaseVO resultData = new ResultBaseVO();
         if (dataSource.getDataSourceId() == 0) {
-            dataSourceService.addDataSource(dataSource);
-            if (dataSource.getDataSourceId() > 0) {
-                resultData.setCode(1);
-            }
+            int result = dataSourceService.deleteDataSource(dataSource);
+            resultData.setCode(1);
         }
         req.setData(resultData);
         return req;

@@ -50,9 +50,13 @@
           <span>{{ row.dataSourceName }}</span>
         </template>
       </el-table-column>
-<!--      <el-table-column label="类型" width="110px" align="center" :formatter="formatType">-->
-
-<!--      </el-table-column>-->
+      <el-table-column label="连接类型" width="110px" align="center" >
+      </el-table-column>
+      <el-table-column label="连接地址" min-width="150px">
+        <template slot-scope="{row}">
+          <span>{{ row.dbHostUrl }}</span>
+        </template>
+      </el-table-column>
 
 <!--      <el-table-column label="星级" align="center" width="95">-->
 <!--        <template slot-scope="scope" >-->
@@ -63,19 +67,19 @@
 <!--      <el-table-column label="状态" class-name="status-col" width="100" :formatter="statusType">-->
 
 <!--      </el-table-column>-->
-<!--      <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">-->
-<!--        <template slot-scope="{row,$index}">-->
-<!--          <el-button v-if="row.itemStatus=='0'" type="primary" size="mini" @click="handleUpdate(row)">-->
-<!--            编辑-->
-<!--          </el-button>-->
+      <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
+        <template slot-scope="{row,$index}">
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">
+            编辑
+          </el-button>
 <!--          <el-button v-if="row.itemStatus=='0'" size="mini" type="success" @click="handleModifyStatus(row,'published')">-->
 <!--            申请审核-->
 <!--          </el-button>-->
-<!--          <el-button v-if="row.itemStatus=='0'" size="mini" type="danger" @click="handleDeleteConfirm(row,$index)">-->
-<!--            删除-->
-<!--          </el-button>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
+          <el-button size="mini" type="danger" @click="handleDeleteConfirm(row,$index)">
+            删除
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
@@ -115,7 +119,7 @@
 </template>
 
 <script>
-import { listDataSource } from '@/api/data-source'
+import { listDataSource, deleteById } from '@/api/data-source'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
@@ -216,24 +220,24 @@ export default {
         this.initFormData()
       })
     },
-    // handleDeleteConfirm(row) {
-    //   this.$confirm('确认删除？')
-    //     .then(_ => {
-    //       console.log('点击了确认')
-    //       console.log(row['itemId'])
-    //       deleteWorkRecord(row['itemId']).then(() => {
-    //         this.dialogFormVisible = false
-    //         this.$notify({
-    //           title: 'Success',
-    //           message: '删除数据成功！',
-    //           type: 'success',
-    //           duration: 2000
-    //         })
-    //         this.getList()
-    //       })
-    //     })
-    //     .catch(_ => {})
-    // },
+    handleDeleteConfirm(row) {
+      this.$confirm('确认删除？')
+        .then(_ => {
+          console.log('点击了确认')
+          console.log(row.dataSourceId)
+          deleteById(row.dataSourceId).then(() => {
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: '删除数据成功！',
+              type: 'success',
+              duration: 2000
+            })
+            this.getList()
+          })
+        })
+        .catch(_ => {})
+    },
     sortChange(data) {
       const { prop, order } = data
       if (prop === 'id') {
