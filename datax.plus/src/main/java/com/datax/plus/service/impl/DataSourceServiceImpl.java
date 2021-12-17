@@ -33,4 +33,9 @@ public class DataSourceServiceImpl implements DataSourceService {
     public Long pageRetrieveDataSourceCount(DataSource dataSource) {
         return dataSourceDao.pageRetrieveDataSourceCount(dataSource);
     }
+
+    @Override
+    public int deleteDataSource(DataSource dataSource) {
+        return dataSourceDao.deleteDataSource(dataSource);
+    }
 }

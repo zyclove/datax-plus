@@ -13,4 +13,5 @@ public interface DataSourceDao {
     int updateDataSource(@Param("dataSource") DataSource dataSource);
     List<DataSource> pageRetrieveDataSource(@Param("dataSource") DataSource dataSource, @Param("page") Page page);
     Long pageRetrieveDataSourceCount(@Param("dataSource") DataSource dataSource);
+    int deleteDataSource(@Param("dataSource") DataSource dataSource);
 }

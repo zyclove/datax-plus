@@ -75,4 +75,11 @@
         WHERE data_source_id = #{dataSource.dataSourceId}
     </update>
 
+
+    <delete id="deleteDataSource" parameterType="com.datax.plus.model.DataSource">
+        DELETE FROM
+            tb_data_source
+        WHERE data_source_id = #{dataSource.dataSourceId}
+    </delete>
+
 </mapper>
