@@ -247,7 +247,8 @@ export default {
       })
     },
     selectDataBaseType(value) {
-      console.log(value)
+      const hostUrlTemplate = this.dataSourceTypeArray.find(item => item.dataSourceTypeId === value);
+      console.log(hostUrlTemplate.dataSourceHostUrlTemplate)
     },
     checkConnection() {
       this.$refs['dataSourceForm'].validate((valid) => {
