@@ -26,7 +26,7 @@
         <el-row :gutter="100">
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="数据库类别" prop="数据库类别">
-              <el-select v-model="dataSourceForm.dataSourceType" placeholder="Type" class="filter-item" style="width: 130px">
+              <el-select @change="selectDataBaseType" v-model="dataSourceForm.dataSourceType" placeholder="Type" class="filter-item" style="width: 130px">
                 <el-option v-for="item in dataSourceTypeArray" :key="item.dataSourceTypeId" :label="item.dataSourceTypeName" :value="item.dataSourceTypeId" />
               </el-select>
             </el-form-item>
@@ -245,6 +245,9 @@ export default {
           }
         }
       })
+    },
+    selectDataBaseType(value) {
+      console.log(value)
     },
     checkConnection() {
       this.$refs['dataSourceForm'].validate((valid) => {
