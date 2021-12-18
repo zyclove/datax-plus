@@ -14,6 +14,12 @@ CREATE TABLE tb_data_source_type (
     PRIMARY KEY(`data_source_type_id`)
 )DEFAULT CHARSET=utf8;
 
+INSERT INTO tb_data_source_type (`data_source_type_id`, `data_source_type_name`, `data_source_host_url_template`, `status`)
+VALUES (1, 'MySQL', 'jdbc:mysql://HOST:PORT/DATABASE', 1);
+
+INSERT INTO tb_data_source_type (`data_source_type_id`, `data_source_type_name`, `data_source_host_url_template`, `status`)
+VALUES (2, 'Oracle', 'jdbc:oracle:thin:@HOST:PORT:DATABASE', 1);
+
 DROP TABLE IF EXISTS tb_data_source;
 CREATE TABLE tb_data_source (
     `data_source_id` INT NOT NULL AUTO_INCREMENT,

@@ -2,12 +2,11 @@ package com.datax.plus.controller;
 
 import com.datax.plus.core.simpleDbAccess.DbAccessUtil;
 import com.datax.plus.model.DataSource;
+import com.datax.plus.model.DataSourceType;
 import com.datax.plus.model.User;
-import com.datax.plus.model.view.DataSourceList;
-import com.datax.plus.model.view.HttpRequestResult;
-import com.datax.plus.model.view.Page;
-import com.datax.plus.model.view.ResultBaseVO;
+import com.datax.plus.model.view.*;
 import com.datax.plus.service.DataSourceService;
+import com.datax.plus.service.DataSourceTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +21,35 @@ public class DataSourceController {
 
     @Autowired
     private DataSourceService dataSourceService;
+
+    @Autowired
+    private DataSourceTypeService dataSourceTypeService;
+    
+    @RequestMapping(value = "/typelist/{pageNum}/{limit}/{dataSourceTypeId}", method = RequestMethod.GET)
+    public @ResponseBody
+    HttpRequestResult typelist(@PathVariable int pageNum,
+                           @PathVariable int limit,
+                           @PathVariable int dataSourceTypeId) {
+        HttpRequestResult req = new HttpRequestResult();
+        req.setCode(20000);
+        req.setMsg("");
+
+        Page page = new Page(pageNum, limit);
+
+        DataSourceType searchBean = new DataSourceType();
+        searchBean.setDataSourceTypeId(dataSourceTypeId);
+        Long total = dataSourceTypeService.pageRetrieveDataSourceTypeCount(searchBean);
+        List<DataSourceType> results = dataSourceTypeService.pageRetrieveDataSourceType(searchBean, page);
+
+        DataSourceTypeList dataSourceTypeListObj = new DataSourceTypeList();
+
+        dataSourceTypeListObj.setList(results);
+        dataSourceTypeListObj.setTotal(total);
+
+        req.setData(dataSourceTypeListObj);
+        return req;
+    }
+
 
     @RequestMapping(value = "/list/{pageNum}/{limit}/{dataSourceId}", method = RequestMethod.GET)
     public @ResponseBody
@@ -47,7 +75,6 @@ public class DataSourceController {
         req.setData(dataSourceListObj);
         return req;
     }
-
 
     @RequestMapping(value = "/checkConnection", method = RequestMethod.POST)
     public @ResponseBody
