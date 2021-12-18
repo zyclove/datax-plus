@@ -27,7 +27,7 @@
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="数据库类别" prop="数据库类别">
               <el-select v-model="dataSourceForm.dataSourceType" placeholder="Type" class="filter-item" style="width: 130px">
-                <el-option v-for="item in typeValuesArray" :key="item.typeValue" :label="item.typeName" :value="item.typeValue" />
+                <el-option v-for="item in dataSourceTypeArray" :key="item.dataSourceTypeId" :label="item.dataSourceTypeName" :value="item.dataSourceTypeId" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -109,10 +109,7 @@
 import { addOrUpdate, getDataSourceById, listDataSourceType, checkConnection } from '@/api/data-source'
 // import { deleteFunction } from '@/api/role'
 
-const typeValuesArray = [
-  { typeValue: 1, typeName: 'MYSQL' },
-  { typeValue: 2, typeName: 'ORACLE' },
-  { typeValue: 3, typeName: '其他' }
+const dataSourceTypeArray = [
 ]
 
 export default {
@@ -149,7 +146,7 @@ export default {
       },
       formLoading: false,
       disableSubmit: false,
-      typeValuesArray,
+      dataSourceTypeArray,
       loading: false,
       userListOptions: [],
       rules: {
@@ -213,7 +210,7 @@ export default {
     fetchDataSourceType() {
       listDataSourceType(1, 1000).then(response => {
         console.log(response.data)
-        // this.dataSourceForm = response.data
+        this.dataSourceTypeArray = response.data.list
       }).catch(err => {
         console.log(err)
       })
