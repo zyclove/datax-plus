@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.datax.plus.dao.DataSourceTypeDao">
+    <resultMap id="dataSourceType" type="com.datax.plus.model.DataSourceType">
+        <id column="data_source_type_id" property="dataSourceTypeId"/>
+        <result column="data_source_type_name" property="dataSourceTypeName"/>
+        <result column="data_source_host_url_template" property="dataSourceType"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <select id="pageRetrieveDataSourceType" resultMap="dataSourceType">
+        SELECT
+        a.data_source_type_id as data_source_type_id,
+        a.data_source_type_name as data_source_type_name,
+        a.data_source_host_url_template as data_source_host_url_template,
+        a.status as status
+        FROM tb_data_source_type a
+        <where>
+            <include refid="pageRetrieveDataSourceIfBlock"/>
+        </where>
+        LIMIT #{page.start},#{page.limit}
+    </select>
+
+    <sql id="pageRetrieveDataSourceTypeIfBlock">
+        <if test=" dataSource.dataSourceId > 0 ">
+            a.data_source_type_id = #{dataSourceType.dataSourceTypeId}
+        </if>
+    </sql>
+
+    <select id="pageRetrieveDataSourceTypeCount" resultType="java.lang.Long">
+        SELECT
+        COUNT(1) as total
+        FROM tb_data_source_type a
+        <where>
+            <include refid="pageRetrieveDataSourceTypeIfBlock"/>
+        </where>
+    </select>
+
+</mapper>

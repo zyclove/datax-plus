@@ -4,10 +4,20 @@ CREATE database datax_plus;
 
 USE datax_plus;
 
+DROP TABLE IF EXISTS tb_data_source_type;
+CREATE TABLE tb_data_source_type (
+    `data_source_type_id` INT NOT NULL,
+    `data_source_type_name` VARCHAR(200) DEFAULT '',
+    `data_source_host_url_template` VARCHAR(1000) DEFAULT '',
+    `status` TINYINT,
+    `create_time` datetime NOT NULL DEFAULT NOW(),
+    PRIMARY KEY(`data_source_type_id`)
+)DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS tb_data_source;
 CREATE TABLE tb_data_source (
     `data_source_id` INT NOT NULL AUTO_INCREMENT,
-    `data_source_type` INT NOT NULL,
+    `data_source_type_id` INT NOT NULL,
     `data_source_name` VARCHAR(100) DEFAULT '',
     `db_host_url` VARCHAR(500) DEFAULT '',
     `db_username` VARCHAR(100) DEFAULT '',
@@ -16,7 +26,6 @@ CREATE TABLE tb_data_source (
     `create_time` datetime NOT NULL DEFAULT NOW(),
     PRIMARY KEY(`data_source_id`)
 )DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS tb_data_job;
 CREATE TABLE tb_data_job (

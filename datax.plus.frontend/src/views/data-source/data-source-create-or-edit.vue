@@ -75,8 +75,14 @@
           </el-col>
           <el-col :span="5">
             <el-tag
+              v-if="this.dataSourceForm.connected === 1"
               type="success">
-              测试通过
+              连通性测试通过
+            </el-tag>
+            <el-tag
+              v-if="this.dataSourceForm.connected === 0"
+              type="danger">
+              尚未通过连通性测试
             </el-tag>
           </el-col>
         </el-row>
