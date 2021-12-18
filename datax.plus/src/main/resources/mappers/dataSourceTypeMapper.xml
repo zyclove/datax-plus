@@ -4,7 +4,7 @@
     <resultMap id="dataSourceType" type="com.datax.plus.model.DataSourceType">
         <id column="data_source_type_id" property="dataSourceTypeId"/>
         <result column="data_source_type_name" property="dataSourceTypeName"/>
-        <result column="data_source_host_url_template" property="dataSourceType"/>
+        <result column="data_source_host_url_template" property="dataSourceHostUrlTemplate"/>
         <result column="status" property="status"/>
     </resultMap>
 
@@ -16,13 +16,13 @@
         a.status as status
         FROM tb_data_source_type a
         <where>
-            <include refid="pageRetrieveDataSourceIfBlock"/>
+            <include refid="pageRetrieveDataSourceTypeIfBlock"/>
         </where>
         LIMIT #{page.start},#{page.limit}
     </select>
 
     <sql id="pageRetrieveDataSourceTypeIfBlock">
-        <if test=" dataSource.dataSourceId > 0 ">
+        <if test=" dataSourceType.dataSourceTypeId > 0 ">
             a.data_source_type_id = #{dataSourceType.dataSourceTypeId}
         </if>
     </sql>

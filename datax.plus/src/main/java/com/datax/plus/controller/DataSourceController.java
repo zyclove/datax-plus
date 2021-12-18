@@ -25,11 +25,11 @@ public class DataSourceController {
     @Autowired
     private DataSourceTypeService dataSourceTypeService;
     
-    @RequestMapping(value = "/typelist/{pageNum}/{limit}/{dataSourceTypeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/typeList/{pageNum}/{limit}/{dataSourceTypeId}", method = RequestMethod.GET)
     public @ResponseBody
-    HttpRequestResult typelist(@PathVariable int pageNum,
-                           @PathVariable int limit,
-                           @PathVariable int dataSourceTypeId) {
+    HttpRequestResult typeList(@PathVariable int pageNum,
+                               @PathVariable int limit,
+                               @PathVariable int dataSourceTypeId) {
         HttpRequestResult req = new HttpRequestResult();
         req.setCode(20000);
         req.setMsg("");

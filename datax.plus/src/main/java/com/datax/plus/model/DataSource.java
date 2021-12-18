@@ -2,7 +2,7 @@ package com.datax.plus.model;
 
 public class DataSource {
     private int dataSourceId;
-    private int dataSourceType;
+    private DataSourceType dataSourceType;
     private String dataSourceName;
     private String dbHostUrl;
     private String dbUsername;
@@ -18,11 +18,11 @@ public class DataSource {
         this.dataSourceId = dataSourceId;
     }
 
-    public int getDataSourceType() {
+    public DataSourceType getDataSourceType() {
         return dataSourceType;
     }
 
-    public void setDataSourceType(int dataSourceType) {
+    public void setDataSourceType(DataSourceType dataSourceType) {
         this.dataSourceType = dataSourceType;
     }
 

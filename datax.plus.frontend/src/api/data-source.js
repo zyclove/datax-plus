@@ -7,9 +7,16 @@ export function listDataSource(pageNum, limit) {
   })
 }
 
-export function getJob(dataJobId) {
+export function listDataSourceType(pageNum, limit) {
   return request({
-    url: `/dataSource/list/1/1/${dataJobId}`,
+    url: `/dataSource/typeList/${pageNum}/${limit}/0`,
+    method: 'get'
+  })
+}
+
+export function getDataSourceById(dataSourceId) {
+  return request({
+    url: `/dataSource/list/1/1/${dataSourceId}`,
     method: 'get'
   })
 }

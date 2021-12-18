@@ -21,7 +21,7 @@ public class DbAccessUtil {
 
     public DbAccessUtil(DataSource dataSource) throws SQLException {
         qryRun = new QueryRunner();
-        if (dataSource.getDataSourceType() == DbTypes.MYSQL) {
+        if (dataSource.getDataSourceType().getDataSourceTypeId() == DbTypes.MYSQL) {
             this.connection = MysqlDbAccess.getConnection(dataSource.getDbHostUrl(), dataSource.getDbUsername(), dataSource.getDbPassword());
         }
     }

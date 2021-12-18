@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import { addOrUpdate, getJob, checkConnection } from '@/api/data-source'
+import { addOrUpdate, getDataSourceById, listDataSourceType, checkConnection } from '@/api/data-source'
 // import { deleteFunction } from '@/api/role'
 
 const typeValuesArray = [
@@ -182,6 +182,8 @@ export default {
     }
   },
   created() {
+    // 获取数据库类型下拉列表
+    this.fetchDataSourceType()
     const dataJobId = this.$route.params.dataJobId
     // 如果dataJobId == -1 代表是新增，反之则是更新
     if (dataJobId > -1) {
@@ -202,8 +204,16 @@ export default {
       require('brace/snippets/sql')
     },
     fetchData(j) {
-      getJob(this.dataSourceForm.dataJobId).then(response => {
+      getDataSourceById(this.dataSourceForm.dataJobId).then(response => {
         this.dataSourceForm = response.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    fetchDataSourceType() {
+      listDataSourceType(1, 1000).then(response => {
+        console.log(response.data)
+        // this.dataSourceForm = response.data
       }).catch(err => {
         console.log(err)
       })

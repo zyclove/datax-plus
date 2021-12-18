@@ -3,7 +3,7 @@
 <mapper namespace="com.datax.plus.dao.DataSourceDao">
     <resultMap id="dataSource" type="com.datax.plus.model.DataSource">
         <id column="data_source_id" property="dataSourceId"/>
-        <result column="data_source_type" property="dataSourceType"/>
+        <result column="data_source_type_id" property="dataSourceType.dataSourceTypeId"/>
         <result column="data_source_name" property="dataSourceName"/>
         <result column="db_host_url" property="dbHostUrl"/>
         <result column="db_username" property="dbUsername"/>
@@ -14,7 +14,7 @@
     <select id="pageRetrieveDataSource" resultMap="dataSource">
         SELECT
         a.data_source_id as data_source_id,
-        a.data_source_type as data_source_type,
+        a.data_source_type_id as data_source_type_id,
         a.data_source_name as data_source_name,
         a.db_host_url as db_host_url,
         a.db_username as db_username,
@@ -45,7 +45,7 @@
     <insert id="addDataSource" parameterType="com.datax.plus.model.DataSource" useGeneratedKeys="true"
             keyProperty="dataSource.dataSourceId">
         INSERT INTO tb_data_source (
-            data_source_type,
+            data_source_type_id,
             data_source_name,
             db_host_url,
             db_username,
@@ -53,7 +53,7 @@
             status
         )
         VALUES (
-            #{dataSource.dataSourceType},
+            #{dataSource.dataSourceType.dataSourceTypeId},
             #{dataSource.dataSourceName},
             #{dataSource.dbHostUrl},
             #{dataSource.dbUsername},
@@ -66,7 +66,7 @@
         UPDATE
             tb_data_source
         SET
-            data_source_type = #{dataSource.dataSourceType},
+            data_source_type = #{dataSource.dataSourceType.dataSourceTypeId},
             data_source_name = #{dataSource.dataSourceName},
             db_host_url = #{dataSource.dbHostUrl},
             db_username = #{dataSource.dbUsername},
