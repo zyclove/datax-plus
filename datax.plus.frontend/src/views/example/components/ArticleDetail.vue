@@ -154,10 +154,6 @@ export default {
       return this.postForm.content_short.length
     },
     displayTime: {
-      // set and get is useful when the data
-      // returned by the back end api is different from the front end
-      // back end return => "2013-06-25 06:59:25"
-      // front end need timestamp => 1372114765000
       get() {
         return (+new Date(this.postForm.display_time))
       },
@@ -172,9 +168,6 @@ export default {
       this.fetchData(id)
     }
 
-    // Why need to make a copy of this.$route here?
-    // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
-    // https://github.com/PanJiaChen/vue-element-admin/issues/1221
     this.tempRoute = Object.assign({}, this.$route)
   },
   methods: {
