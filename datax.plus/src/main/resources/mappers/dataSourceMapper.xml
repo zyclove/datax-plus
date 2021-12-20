@@ -9,6 +9,7 @@
         <result column="db_host_url" property="dbHostUrl"/>
         <result column="db_username" property="dbUsername"/>
         <result column="db_password" property="dbPassword"/>
+        <result column="connection_test_passed" property="connectionTestPassed"/>
         <result column="status" property="status"/>
     </resultMap>
 
@@ -21,6 +22,7 @@
         a.db_username as db_username,
         a.db_password as db_password,
         a.status as status,
+        a.connection_test_passed as connection_test_passed,
         b.data_source_type_name as data_source_type_name
         FROM tb_data_source a
         LEFT JOIN tb_data_source_type b ON a.data_source_type_id = b.data_source_type_id
@@ -53,6 +55,7 @@
             db_host_url,
             db_username,
             db_password,
+            connection_test_passed,
             status
         )
         VALUES (
@@ -61,6 +64,7 @@
             #{dataSource.dbHostUrl},
             #{dataSource.dbUsername},
             #{dataSource.dbPassword},
+            #{dataSource.connectionTestPassed},
             #{dataSource.status}
         )
     </insert>
@@ -69,11 +73,12 @@
         UPDATE
             tb_data_source
         SET
-            data_source_type = #{dataSource.dataSourceType.dataSourceTypeId},
+            data_source_type_id = #{dataSource.dataSourceType.dataSourceTypeId},
             data_source_name = #{dataSource.dataSourceName},
             db_host_url = #{dataSource.dbHostUrl},
             db_username = #{dataSource.dbUsername},
             db_password = #{dataSource.dbPassword},
+            connection_test_passed = #{dataSource.connectionTestPassed},
             status = #{dataSource.status}
         WHERE data_source_id = #{dataSource.dataSourceId}
     </update>

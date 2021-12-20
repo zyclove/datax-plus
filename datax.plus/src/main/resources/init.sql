@@ -28,6 +28,7 @@ CREATE TABLE tb_data_source (
     `db_host_url` VARCHAR(500) DEFAULT '',
     `db_username` VARCHAR(100) DEFAULT '',
     `db_password` VARCHAR(100) DEFAULT '',
+    `connection_test_passed` INT NOT NULL,
     `status` TINYINT,
     `create_time` datetime NOT NULL DEFAULT NOW(),
     PRIMARY KEY(`data_source_id`)

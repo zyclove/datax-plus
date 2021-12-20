@@ -24,7 +24,7 @@ public class DataSourceController {
 
     @Autowired
     private DataSourceTypeService dataSourceTypeService;
-    
+
     @RequestMapping(value = "/typeList/{pageNum}/{limit}/{dataSourceTypeId}", method = RequestMethod.GET)
     public @ResponseBody
     HttpRequestResult typeList(@PathVariable int pageNum,
@@ -110,6 +110,11 @@ public class DataSourceController {
         if (dataSource.getDataSourceId() == 0) {
             dataSourceService.addDataSource(dataSource);
             if (dataSource.getDataSourceId() > 0) {
+                resultData.setCode(1);
+            }
+        } else {
+            int result = dataSourceService.updateDataSource(dataSource);
+            if (result > 0) {
                 resultData.setCode(1);
             }
         }

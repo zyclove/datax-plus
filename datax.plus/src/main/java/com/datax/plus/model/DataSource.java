@@ -9,6 +9,15 @@ public class DataSource {
     private String dbPassword;
     private int status;
     private String createTime;
+    private int connectionTestPassed;
+
+    public int getConnectionTestPassed() {
+        return connectionTestPassed;
+    }
+
+    public void setConnectionTestPassed(int connectionTestPassed) {
+        this.connectionTestPassed = connectionTestPassed;
+    }
 
     public int getDataSourceId() {
         return dataSourceId;
