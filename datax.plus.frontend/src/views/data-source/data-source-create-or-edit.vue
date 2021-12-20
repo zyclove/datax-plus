@@ -10,13 +10,13 @@
         <el-row>
           <el-col :span="10">
 <!--            <el-form-item style="margin-bottom: 40px;" prop="itemTitle">-->
-<!--              <MDinput v-model="dataSourceForm.dataJobName" :maxlength="100" name="name" required>-->
+<!--              <MDinput v-model="dataSourceForm.dataSourceName" :maxlength="100" name="name" required>-->
 <!--                工作名称-->
 <!--              </MDinput>-->
 <!--            </el-form-item>-->
-            <el-form-item label="连接名称" prop="dataJobName">
+            <el-form-item label="连接名称" prop="dataSourceName">
               <el-input
-                v-model="dataSourceForm.dataJobName"
+                v-model="dataSourceForm.dataSourceName"
                 placeholder="连接名称"
               />
             </el-form-item>
@@ -26,7 +26,7 @@
         <el-row :gutter="100">
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="数据库类别" prop="数据库类别">
-              <el-select @change="selectDataBaseType" v-model="dataSourceForm.dataSourceType" placeholder="Type" class="filter-item" style="width: 130px">
+              <el-select @change="selectDataBaseType" v-model="dataSourceForm.dataSourceType.dataSourceTypeId" placeholder="Type" class="filter-item" style="width: 130px">
                 <el-option v-for="item in dataSourceTypeArray" :key="item.dataSourceTypeId" :label="item.dataSourceTypeName" :value="item.dataSourceTypeId" />
               </el-select>
             </el-form-item>
@@ -138,7 +138,9 @@ export default {
       dataSourceForm: {
         dataSourceId: 0,
         dataSourceName: '',
-        dataSourceType: 1,
+        dataSourceType: {
+          dataSourceTypeId: 1
+        },
         dbHostUrl: '',
         dbUsername: '',
         dbPassword: '',
@@ -150,7 +152,7 @@ export default {
       loading: false,
       userListOptions: [],
       rules: {
-        dataJobName: [
+        dataSourceName: [
           { required: true, message: 'please input', trigger: 'blur' }
         ]
       },
@@ -181,11 +183,11 @@ export default {
   created() {
     // 获取数据库类型下拉列表
     this.fetchDataSourceType()
-    const dataJobId = this.$route.params.dataJobId
-    // 如果dataJobId == -1 代表是新增，反之则是更新
-    if (dataJobId > -1) {
-      this.dataSourceForm.dataJobId = dataJobId
-      this.fetchData(dataJobId)
+    const dataSourceId = this.$route.params.dataSourceId
+    // 如果dataSourceId == -1 代表是新增，反之则是更新
+    if (dataSourceId > -1) {
+      this.dataSourceForm.dataSourceId = dataSourceId
+      this.fetchData(dataSourceId)
     }
     // Why need to make a copy of this.$route here?
     // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
@@ -201,7 +203,7 @@ export default {
       require('brace/snippets/sql')
     },
     fetchData(j) {
-      getDataSourceById(this.dataSourceForm.dataJobId).then(response => {
+      getDataSourceById(this.dataSourceForm.dataSourceId).then(response => {
         this.dataSourceForm = response.data
       }).catch(err => {
         console.log(err)

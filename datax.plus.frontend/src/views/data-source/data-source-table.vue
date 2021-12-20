@@ -51,6 +51,9 @@
         </template>
       </el-table-column>
       <el-table-column label="连接类型" width="110px" align="center" >
+        <template slot-scope="{row}">
+          <span>{{ row.dataSourceType.dataSourceTypeName }}</span>
+        </template>
       </el-table-column>
       <el-table-column label="连接地址" min-width="150px">
         <template slot-scope="{row}">
