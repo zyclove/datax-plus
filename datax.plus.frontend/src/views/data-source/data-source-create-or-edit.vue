@@ -38,7 +38,6 @@
             <el-form-item label="连接地址" prop="dbHostUrl">
               <el-input
                 v-model="dataSourceForm.dbHostUrl"
-                placeholder="连接地址"
               />
             </el-form-item>
           </el-col>
@@ -139,7 +138,8 @@ export default {
         dataSourceId: 0,
         dataSourceName: '',
         dataSourceType: {
-          dataSourceTypeId: 1
+          dataSourceTypeId: 1,
+          dataSourceHostUrlTemplate: ''
         },
         dbHostUrl: '',
         dbUsername: '',
@@ -249,8 +249,9 @@ export default {
       })
     },
     selectDataBaseType(value) {
-      const hostUrlTemplate = this.dataSourceTypeArray.find(item => item.dataSourceTypeId === value);
-      console.log(hostUrlTemplate.dataSourceHostUrlTemplate)
+      const hostUrlTemplate = this.dataSourceTypeArray.find(item => item.dataSourceTypeId === value)
+      this.dataSourceForm.dbHostUrl = hostUrlTemplate.dataSourceHostUrlTemplate
+      // console.log(hostUrlTemplate.dataSourceHostUrlTemplate)
     },
     checkConnection() {
       this.$refs['dataSourceForm'].validate((valid) => {
