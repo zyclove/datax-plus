@@ -185,7 +185,7 @@ export default {
     this.fetchDataSourceType()
     const dataSourceId = this.$route.params.dataSourceId
     // 如果dataSourceId == -1 代表是新增，反之则是更新
-    if (dataSourceId > -1) {
+    if (dataSourceId > 0) {
       this.dataSourceForm.dataSourceId = dataSourceId
       this.fetchData(dataSourceId)
     }
