@@ -71,14 +71,14 @@
 
 <!--      </el-table-column>-->
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
+        <template slot-scope="{row}">
+          <el-button type="primary" size="mini" @click="handleAddOrEditWorkRecord(row)">
             编辑
           </el-button>
 <!--          <el-button v-if="row.itemStatus=='0'" size="mini" type="success" @click="handleModifyStatus(row,'published')">-->
 <!--            申请审核-->
 <!--          </el-button>-->
-          <el-button size="mini" type="danger" @click="handleDeleteConfirm(row,$index)">
+          <el-button size="mini" type="danger" @click="handleDeleteConfirm(row)">
             删除
           </el-button>
         </template>
@@ -209,19 +209,21 @@ export default {
       this.$router.push({ path: editUrl })
     },
     handleAddOrEditWorkRecord(row) {
-      this.listLoading = true
-      if (row.recordId === 0) { // 新增
-        console.log('新增数据')
-        this.dialogType = 'new'
-        this.forEdit = 0
-      } else { // 修改
-        console.log('修改数据')
-        this.forEdit = 1
-        this.workRecordForm.recordId = row.recordId
-      }
-      this.$nextTick(() => {
-        this.initFormData()
-      })
+      // this.listLoading = true
+      // if (row.dataSourceId === 0) { // 新增
+      //   console.log('新增数据')
+      //   this.dialogType = 'new'
+      //   this.forEdit = 0
+      // } else { // 修改
+      //   console.log('修改数据')
+      //   this.forEdit = 1
+      //   this.dataSourceForm.dataSourceId = row.dataSourceId
+      // }
+      // this.$nextTick(() => {
+      //   this.initFormData()
+      // })
+      const editUrl = '/components/dataSource/createOrEdit/'+row.dataSourceId
+      this.$router.push({ path: editUrl })
     },
     handleDeleteConfirm(row) {
       this.$confirm('确认删除？')
