@@ -75,12 +75,12 @@
           </el-col>
           <el-col :span="5">
             <el-tag
-              v-if="this.dataSourceForm.connected === 1"
+              v-if="this.dataSourceForm.connectionTestPassed === 1"
               type="success">
               连通性测试通过
             </el-tag>
             <el-tag
-              v-if="this.dataSourceForm.connected === 0"
+              v-if="this.dataSourceForm.connectionTestPassed === 0"
               type="danger">
               尚未通过连通性测试
             </el-tag>
@@ -144,7 +144,7 @@ export default {
         dbHostUrl: '',
         dbUsername: '',
         dbPassword: '',
-        connected: 0
+        connectionTestPassed: 0
       },
       formLoading: false,
       disableSubmit: false,
@@ -204,7 +204,7 @@ export default {
     },
     fetchData(j) {
       getDataSourceById(this.dataSourceForm.dataSourceId).then(response => {
-        this.dataSourceForm = response.data
+        this.dataSourceForm = response.data.list[0]
       }).catch(err => {
         console.log(err)
       })
@@ -229,7 +229,7 @@ export default {
     addOrUpdateData() {
       this.$refs['dataSourceForm'].validate((valid) => {
         if (valid) {
-          if (this.dataSourceForm.connected === 0) {
+          if (this.dataSourceForm.connectionTestPassed === 0) {
             this.$confirm('当前数据源尚未通过联通性测试，是否确认要提交？')
               .then(_ => {
                 this.disableSubmit = true
@@ -259,7 +259,7 @@ export default {
           checkConnection(this.dataSourceForm).then(response => {
             setTimeout(() => {
               if (response.data.code === 1) {
-                this.dataSourceForm.connected = 1
+                this.dataSourceForm.connectionTestPassed = 1
                 this.$notify({
                   title: 'Success',
                   message: '测试连接数据源成功',
@@ -267,7 +267,7 @@ export default {
                   duration: 2000
                 })
               } else {
-                this.dataSourceForm.connected = 0
+                this.dataSourceForm.connectionTestPassed = 0
                 this.$notify.error({
                   title: 'Failed',
                   message: '测试连接数据源失败',
