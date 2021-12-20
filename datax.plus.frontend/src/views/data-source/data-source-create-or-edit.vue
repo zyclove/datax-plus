@@ -245,6 +245,17 @@ export default {
                 })
                 // done();
               }).catch(_ => {})
+          } else {
+            this.disableSubmit = true
+            addOrUpdate(this.dataSourceForm).then(() => {
+              this.$notify({
+                title: 'Success',
+                message: '操作成功',
+                type: 'success',
+                duration: 2000
+              })
+              this.$router.push({ path: '/components/dataSource/list' })
+            })
           }
         }
       })

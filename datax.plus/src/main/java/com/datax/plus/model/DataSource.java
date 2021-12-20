@@ -10,6 +10,15 @@ public class DataSource {
     private int status;
     private String createTime;
     private int connectionTestPassed;
+    private String lastConnectionPassTime;
+
+    public String getLastConnectionPassTime() {
+        return lastConnectionPassTime;
+    }
+
+    public void setLastConnectionPassTime(String lastConnectionPassTime) {
+        this.lastConnectionPassTime = lastConnectionPassTime;
+    }
 
     public int getConnectionTestPassed() {
         return connectionTestPassed;

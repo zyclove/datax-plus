@@ -55,6 +55,11 @@
           <span>{{ row.dataSourceType.dataSourceTypeName }}</span>
         </template>
       </el-table-column>
+<!--      <el-table-column label="连接测试通过时间" width="140px" align="center" >-->
+<!--        <template slot-scope="{row}">-->
+<!--          <span>{{ row.dataSourceType.dataSourceTypeName }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="连接地址" min-width="150px">
         <template slot-scope="{row}">
           <span>{{ row.dbHostUrl }}</span>
@@ -85,7 +90,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.limit" @pagination="getList" />
 <!--    <el-dialog-->
 <!--      :title="dialogType==='edit'?'Edit Role':'New Role'"-->
 <!--      :visible.sync="dialogVisible"-->
@@ -194,6 +199,8 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
+      console.log('this.listQuery.pageNum', this.listQuery.pageNum)
+      console.log('this.listQuery.limit', this.listQuery.limit)
       listDataSource(this.listQuery.pageNum, this.listQuery.limit).then(response => {
         this.list = response.data.list
         this.total = response.data.total
