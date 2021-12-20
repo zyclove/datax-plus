@@ -4,6 +4,7 @@
     <resultMap id="dataSource" type="com.datax.plus.model.DataSource">
         <id column="data_source_id" property="dataSourceId"/>
         <result column="data_source_type_id" property="dataSourceType.dataSourceTypeId"/>
+        <result column="data_source_type_name" property="dataSourceType.dataSourceTypeName"/>
         <result column="data_source_name" property="dataSourceName"/>
         <result column="db_host_url" property="dbHostUrl"/>
         <result column="db_username" property="dbUsername"/>
@@ -19,8 +20,10 @@
         a.db_host_url as db_host_url,
         a.db_username as db_username,
         a.db_password as db_password,
-        a.status as status
+        a.status as status,
+        b.data_source_type_name as data_source_type_name
         FROM tb_data_source a
+        LEFT JOIN tb_data_source_type b ON a.data_source_type_id = b.data_source_type_id
         <where>
             <include refid="pageRetrieveDataSourceIfBlock"/>
         </where>
