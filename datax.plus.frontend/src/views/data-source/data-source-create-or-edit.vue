@@ -204,7 +204,7 @@ export default {
     fetchData(j) {
       getDataSourceById(this.dataSourceForm.dataSourceId).then(response => {
         this.dataSourceForm = response.data.list[0]
-        this.fetchDataSourceType()
+        // this.fetchDataSourceType()
       }).catch(err => {
         console.log(err)
       })
@@ -213,6 +213,7 @@ export default {
       listDataSourceType(1, 1000).then(response => {
         console.log(response.data)
         this.dataSourceTypeArray = response.data.list
+        this.dataSourceForm.dbHostUrl = this.dataSourceTypeArray[0].dataSourceHostUrlTemplate
       }).catch(err => {
         console.log(err)
       })
