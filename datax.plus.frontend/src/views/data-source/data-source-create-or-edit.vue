@@ -106,7 +106,6 @@
 
 <script>
 import { addOrUpdate, getDataSourceById, listDataSourceType, checkConnection } from '@/api/data-source'
-// import { deleteFunction } from '@/api/role'
 
 const dataSourceTypeArray = [
 ]
@@ -205,6 +204,7 @@ export default {
     fetchData(j) {
       getDataSourceById(this.dataSourceForm.dataSourceId).then(response => {
         this.dataSourceForm = response.data.list[0]
+        this.fetchDataSourceType()
       }).catch(err => {
         console.log(err)
       })
