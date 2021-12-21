@@ -39,6 +39,10 @@ DROP TABLE IF EXISTS tb_data_job;
 CREATE TABLE tb_data_job (
     `data_job_id` INT NOT NULL AUTO_INCREMENT,
     `data_job_name` VARCHAR(100) DEFAULT '',
+    `source_data_source_id` INT NOT NULL,
+    `target_data_source_id` INT NOT NULL,
+    `sql_body` MEDIUMTEXT,
+    `current_step` INT NOT NULL,
     `status` TINYINT,
     `create_time` datetime NOT NULL DEFAULT NOW(),
     PRIMARY KEY(`data_job_id`)

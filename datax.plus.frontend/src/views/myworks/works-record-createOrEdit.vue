@@ -3,16 +3,23 @@
     <el-form ref="dataJobForm" :model="dataJobForm" :rules="rules" class="form-container">
       <div class="createPost-main-container">
         <el-row>
+          <el-steps :active="1" finish-status="success" simple style="margin-top: 20px">
+            <el-step title="源库/目标库选择" ></el-step>
+<!--            <el-step title="步骤 2" ></el-step>-->
+<!--            <el-step title="步骤 3" ></el-step>-->
+          </el-steps>
+        </el-row>
+        <el-row>
           <el-col :span="10">
 <!--            <el-form-item style="margin-bottom: 40px;" prop="itemTitle">-->
 <!--              <MDinput v-model="dataJobForm.dataJobName" :maxlength="100" name="name" required>-->
 <!--                工作名称-->
 <!--              </MDinput>-->
 <!--            </el-form-item>-->
-            <el-form-item label="工作名称" prop="dataJobName">
+            <el-form-item label="任务名称" prop="dataJobName">
               <el-input
                 v-model="dataJobForm.dataJobName"
-                placeholder="工作名称"
+                placeholder="任务名称"
               />
             </el-form-item>
           </el-col>
@@ -20,9 +27,9 @@
 
         <el-row :gutter="100">
           <el-col :span="10">
-            <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">
-              <el-select v-model="dataJobForm.dataJobType" placeholder="Type" class="filter-item" style="width: 130px">
-                <el-option v-for="item in typeValuesArray" :key="item.typeValue" :label="item.typeName" :value="item.typeValue" />
+            <el-form-item style="margin-bottom: 40px;" label="源" prop="源">
+              <el-select v-model="dataJobForm.source.dataSourceId" placeholder="Type" class="filter-item" style="width: 130px">
+                <el-option v-for="item in this.dataJobForm.source" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -30,19 +37,29 @@
 
         <el-row :gutter="100">
           <el-col :span="10">
-            <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">
-              <editor
-                v-model="dataJobForm.dataJobSql"
-                @init="editorInit"
-                lang="sql"
-                :options= editorOptions
-                theme="chrome"
-                width="100%"
-                height="200">
-              </editor>
+            <el-form-item style="margin-bottom: 40px;" label="目标" prop="目标">
+              <el-select v-model="dataJobForm.target.dataSourceId" placeholder="Type" class="filter-item" style="width: 130px">
+                <el-option v-for="item in this.dataJobForm.target" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
+
+<!--        <el-row :gutter="100">-->
+<!--          <el-col :span="10">-->
+<!--            <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">-->
+<!--              <editor-->
+<!--                v-model="dataJobForm.dataJobSql"-->
+<!--                @init="editorInit"-->
+<!--                lang="sql"-->
+<!--                :options= editorOptions-->
+<!--                theme="chrome"-->
+<!--                width="100%"-->
+<!--                height="200">-->
+<!--              </editor>-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
 
         <el-row>
           <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
@@ -65,6 +82,8 @@
 // import { searchUser } from '@/api/remote-search'
 import { addOrUpdate, getJob } from '@/api/work-record'
 import Editor from 'vue2-ace-editor'
+import { listDataSource } from '@/api/data-source'
+
 
 const typeValuesArray = [
   { typeValue: 0, typeName: '小说' },
@@ -114,9 +133,14 @@ export default {
     // }
     return {
       dataJobForm: {
-        dataJobId: -1,
+        dataJobId: 0,
         dataJobName: '',
-        dataJobType: 0,
+        source: {
+          dataSourceId: 0
+        },
+        target: {
+          dataSourceId: 0
+        },
         dataJobSql: ''
       },
       disableSubmit: false,
@@ -155,7 +179,8 @@ export default {
   created() {
     const dataJobId = this.$route.params.dataJobId
     // 如果dataJobId == -1 代表是新增，反之则是更新
-    if (dataJobId > -1) {
+    this.fetchDataSource()
+    if (dataJobId > 0) {
       this.dataJobForm.dataJobId = dataJobId
       this.fetchData(dataJobId)
     }
@@ -171,6 +196,16 @@ export default {
       require('brace/mode/sql')
       // require('brace/mode/less')
       require('brace/snippets/sql')
+    },
+    fetchDataSource() {
+      listDataSource(1, 10000).then(response => {
+        this.list = response.data.list
+        // this.total = response.data.total
+        console.log(this.list)
+        // Just to simulate the time of the request
+        this.dataJobForm.target = this.list
+        this.dataJobForm.source = this.list
+      })
     },
     fetchData(j) {
       getJob(this.dataJobForm.dataJobId).then(response => {

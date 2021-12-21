@@ -4,6 +4,43 @@ public class DataJob {
     private int dataJobId;
     private String dataJobName;
     private int status;
+    private DataSource source;
+    private DataSource target;
+    private String sqlBody;
+    private int currentStep;
+
+
+    public DataSource getSource() {
+        return source;
+    }
+
+    public void setSource(DataSource source) {
+        this.source = source;
+    }
+
+    public DataSource getTarget() {
+        return target;
+    }
+
+    public void setTarget(DataSource target) {
+        this.target = target;
+    }
+
+    public String getSqlBody() {
+        return sqlBody;
+    }
+
+    public void setSqlBody(String sqlBody) {
+        this.sqlBody = sqlBody;
+    }
+
+    public int getCurrentStep() {
+        return currentStep;
+    }
+
+    public void setCurrentStep(int currentStep) {
+        this.currentStep = currentStep;
+    }
 
     public int getStatus() {
         return status;
