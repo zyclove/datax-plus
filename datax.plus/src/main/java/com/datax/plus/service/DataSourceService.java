@@ -12,4 +12,5 @@ public interface DataSourceService {
     List<DataSource> pageRetrieveDataSource(DataSource dataSource, Page page);
     Long pageRetrieveDataSourceCount(DataSource dataSource);
     int deleteDataSource(DataSource dataSource);
+    DataSource getDataSourceByDataSourceId(int dataSourceId);
 }

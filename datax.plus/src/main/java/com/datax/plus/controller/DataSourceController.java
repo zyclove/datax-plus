@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,17 +60,18 @@ public class DataSourceController {
         req.setCode(20000);
         req.setMsg("");
 
-        Page page = new Page(pageNum, limit);
-
-        DataJob searchBean = new DataJob();
-        searchBean.setDataJobId(dataJobId);
-        Long total = dataJobService.pageRetrieveDataJobCount(searchBean);
-        List<DataJob> results = dataJobService.pageRetrieveDataJob(searchBean, page);
+        DataSource dataSource = dataSourceService.getDataSourceByDataSourceId(dataSourceId);
+        List list = new ArrayList();
+        try {
+            DbAccessUtil dbAccessUtil = new DbAccessUtil(dataSource);
+            list = dbAccessUtil.simpleQuery(DbAccessUtil.SHOW_TABLES, "");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
         DataJobList dataJobListObj = new DataJobList();
 
-        dataJobListObj.setList(results);
-        dataJobListObj.setTotal(total);
+        dataJobListObj.setList(list);
 
         req.setData(dataJobListObj);
         return req;

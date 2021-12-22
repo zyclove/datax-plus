@@ -38,4 +38,13 @@ public class DataSourceServiceImpl implements DataSourceService {
     public int deleteDataSource(DataSource dataSource) {
         return dataSourceDao.deleteDataSource(dataSource);
     }
+
+    @Override
+    public DataSource getDataSourceByDataSourceId(int dataSourceId) {
+        Page page = new Page(1, 1);
+        DataSource dataSource = new DataSource();
+        dataSource.setDataSourceId(dataSourceId);
+        List<DataSource> dataSourceList = dataSourceDao.pageRetrieveDataSource(dataSource, page);
+        return dataSourceList.get(0);
+    }
 }
