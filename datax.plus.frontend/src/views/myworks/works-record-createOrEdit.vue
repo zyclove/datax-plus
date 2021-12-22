@@ -29,8 +29,50 @@
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="源" prop="源">
               <el-select v-model="dataJobForm.source.dataSourceId" placeholder="Type" class="filter-item" style="width: 130px">
-                <el-option v-for="item in this.dataJobForm.source" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
+                <el-option v-for="item in this.dataSourceArray" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
               </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="100">
+          <el-col :span="4">
+            <div>
+              <el-link :underline="false">无下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+              <el-link>有下划线</el-link>
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">
+              <editor
+                v-model="dataJobForm.dataJobSql"
+                @init="editorInit"
+                lang="sql"
+                :options= editorOptions
+                theme="chrome"
+                width="100%"
+                height="200">
+              </editor>
             </el-form-item>
           </el-col>
         </el-row>
@@ -39,27 +81,11 @@
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="目标" prop="目标">
               <el-select v-model="dataJobForm.target.dataSourceId" placeholder="Type" class="filter-item" style="width: 130px">
-                <el-option v-for="item in this.dataJobForm.target" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
+                <el-option v-for="item in this.dataTargetArray" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
-
-<!--        <el-row :gutter="100">-->
-<!--          <el-col :span="10">-->
-<!--            <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">-->
-<!--              <editor-->
-<!--                v-model="dataJobForm.dataJobSql"-->
-<!--                @init="editorInit"-->
-<!--                lang="sql"-->
-<!--                :options= editorOptions-->
-<!--                theme="chrome"-->
-<!--                width="100%"-->
-<!--                height="200">-->
-<!--              </editor>-->
-<!--            </el-form-item>-->
-<!--          </el-col>-->
-<!--        </el-row>-->
 
         <el-row>
           <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
@@ -83,14 +109,6 @@
 import { addOrUpdate, getJob } from '@/api/work-record'
 import Editor from 'vue2-ace-editor'
 import { listDataSource } from '@/api/data-source'
-
-
-const typeValuesArray = [
-  { typeValue: 0, typeName: '小说' },
-  { typeValue: 1, typeName: '散文' },
-  { typeValue: 2, typeName: '科技论文' },
-  { typeValue: 3, typeName: '其他' }
-]
 
 // const defaultForm = {
 //   status: 'draft',
@@ -136,15 +154,16 @@ export default {
         dataJobId: 0,
         dataJobName: '',
         source: {
-          dataSourceId: 0
+          dataSourceId: ''
         },
         target: {
-          dataSourceId: 0
+          dataSourceId: ''
         },
         dataJobSql: ''
       },
       disableSubmit: false,
-      typeValuesArray,
+      dataSourceArray: [],
+      dataTargetArray: [],
       loading: false,
       userListOptions: [],
       rules: {
@@ -203,8 +222,15 @@ export default {
         // this.total = response.data.total
         console.log(this.list)
         // Just to simulate the time of the request
-        this.dataJobForm.target = this.list
-        this.dataJobForm.source = this.list
+        this.dataSourceArray = this.list
+        this.dataTargetArray = this.list
+      })
+    },
+    fetchTable(j) {
+      getJob(this.dataJobForm.dataJobId).then(response => {
+        this.dataJobForm = response.data
+      }).catch(err => {
+        console.log(err)
       })
     },
     fetchData(j) {

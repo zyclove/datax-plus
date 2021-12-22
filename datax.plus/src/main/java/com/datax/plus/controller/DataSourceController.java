@@ -1,6 +1,7 @@
 package com.datax.plus.controller;
 
 import com.datax.plus.core.simpleDbAccess.DbAccessUtil;
+import com.datax.plus.model.DataJob;
 import com.datax.plus.model.DataSource;
 import com.datax.plus.model.DataSourceType;
 import com.datax.plus.model.User;
@@ -47,6 +48,30 @@ public class DataSourceController {
         dataSourceTypeListObj.setTotal(total);
 
         req.setData(dataSourceTypeListObj);
+        return req;
+    }
+
+
+    @RequestMapping(value = "/tables/{dataSourceId}", method = RequestMethod.GET)
+    public @ResponseBody
+    HttpRequestResult tables(@PathVariable int dataSourceId) {
+        HttpRequestResult req = new HttpRequestResult();
+        req.setCode(20000);
+        req.setMsg("");
+
+        Page page = new Page(pageNum, limit);
+
+        DataJob searchBean = new DataJob();
+        searchBean.setDataJobId(dataJobId);
+        Long total = dataJobService.pageRetrieveDataJobCount(searchBean);
+        List<DataJob> results = dataJobService.pageRetrieveDataJob(searchBean, page);
+
+        DataJobList dataJobListObj = new DataJobList();
+
+        dataJobListObj.setList(results);
+        dataJobListObj.setTotal(total);
+
+        req.setData(dataJobListObj);
         return req;
     }
 
