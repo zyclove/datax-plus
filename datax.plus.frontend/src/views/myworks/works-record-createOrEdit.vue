@@ -28,8 +28,28 @@
         <el-row :gutter="100">
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="源" prop="源">
-              <el-select v-model="dataJobForm.source.dataSourceId" placeholder="Type" class="filter-item" style="width: 130px">
+              <el-select
+                v-model="dataJobForm.source.dataSourceId"
+                @change="fetchTable"
+                placeholder="Type"
+                class="filter-item"
+                style="width: 130px">
                 <el-option v-for="item in this.dataSourceArray" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="100">
+          <el-col :span="10">
+            <el-form-item style="margin-bottom: 40px;" label="源表" prop="源表">
+              <el-select
+                v-model="dataJobForm.source.dataSourceId"
+                @change="fetchColumn"
+                placeholder="Type"
+                class="filter-item"
+                style="width: 130px">
+                <el-option v-for="item in this.dataSourceTableArray" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -39,8 +59,8 @@
           <el-col :span="4">
             <div>
               <el-link :underline="false">无下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
+              <el-link v-on:dblclick="getClickedValue()">有下划ee线</el-link>
+              <el-link @click.native="getClickedValue('aabbba')">有下划线</el-link>
               <el-link>有下划线</el-link>
               <el-link>有下划线</el-link>
               <el-link>有下划线</el-link>
@@ -67,6 +87,7 @@
               <editor
                 v-model="dataJobForm.dataJobSql"
                 @init="editorInit"
+                ref="sqlEditor"
                 lang="sql"
                 :options= editorOptions
                 theme="chrome"
@@ -108,7 +129,7 @@
 // import { searchUser } from '@/api/remote-search'
 import { addOrUpdate, getJob } from '@/api/work-record'
 import Editor from 'vue2-ace-editor'
-import { listDataSource } from '@/api/data-source'
+import { listDataSource, listTablesByDataSourceId } from '@/api/data-source'
 
 // const defaultForm = {
 //   status: 'draft',
@@ -163,6 +184,7 @@ export default {
       },
       disableSubmit: false,
       dataSourceArray: [],
+      dataSourceTableArray: [],
       dataTargetArray: [],
       loading: false,
       userListOptions: [],
@@ -226,12 +248,25 @@ export default {
         this.dataTargetArray = this.list
       })
     },
-    fetchTable(j) {
-      getJob(this.dataJobForm.dataJobId).then(response => {
+    fetchTable(dataSourceId) {
+      listTablesByDataSourceId(dataSourceId).then(response => {
+        this.dataSourceTableArray = response.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    fetchColumn(dataSourceId) {
+      console.log(dataSourceId)
+      listTablesByDataSourceId(dataSourceId).then(response => {
         this.dataJobForm = response.data
       }).catch(err => {
         console.log(err)
       })
+    },
+    getClickedValue(linkValue) {
+      console.log(linkValue)
+      this.$refs.sqlEditor.editor.insert(linkValue)
+      // Editor.insert(linkValue)
     },
     fetchData(j) {
       getJob(this.dataJobForm.dataJobId).then(response => {

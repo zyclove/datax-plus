@@ -7,6 +7,13 @@ export function listDataSource(pageNum, limit) {
   })
 }
 
+export function listTablesByDataSourceId(dataSourceId) {
+  return request({
+    url: `/dataSource/tables/${dataSourceId}`,
+    method: 'get'
+  })
+}
+
 export function listDataSourceType(pageNum, limit) {
   return request({
     url: `/dataSource/typeList/${pageNum}/${limit}/0`,
