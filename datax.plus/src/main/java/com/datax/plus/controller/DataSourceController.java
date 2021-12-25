@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/dataSource")
@@ -64,16 +61,24 @@ public class DataSourceController {
         List list = new ArrayList();
         try {
             DbAccessUtil dbAccessUtil = new DbAccessUtil(dataSource);
-            list = dbAccessUtil.simpleQuery(DbAccessUtil.SHOW_TABLES, "");
+            List tempList = new ArrayList();
+            tempList = dbAccessUtil.simpleQuery(DbAccessUtil.SHOW_TABLES, "");
+            Iterator iterator = tempList.iterator();
+            while (iterator.hasNext()){
+                Map tempMap = (Map) iterator.next();
+                Iterator iteratorTemp = tempMap.values().iterator();
+                while( iteratorTemp.hasNext() ){
+                    list.add(iteratorTemp.next().toString());
+                }
+            }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        StringList stringList = new StringList();
+        stringList.setList(list);
 
-        DataJobList dataJobListObj = new DataJobList();
-
-        dataJobListObj.setList(list);
-
-        req.setData(dataJobListObj);
+        req.setData(stringList);
         return req;
     }
 
@@ -93,12 +98,9 @@ public class DataSourceController {
         searchBean.setDataSourceId(dataSourceId);
         Long total = dataSourceService.pageRetrieveDataSourceCount(searchBean);
         List<DataSource> results = dataSourceService.pageRetrieveDataSource(searchBean, page);
-
         DataSourceList dataSourceListObj = new DataSourceList();
-
         dataSourceListObj.setList(results);
         dataSourceListObj.setTotal(total);
-
         req.setData(dataSourceListObj);
         return req;
     }
