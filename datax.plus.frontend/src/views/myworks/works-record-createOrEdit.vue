@@ -58,33 +58,11 @@
         <el-row :gutter="100">
           <el-col :span="4">
             <div>
-              <el-link v-for="item in this.dataSourceTableColumnArray" v-bind:key="item.fieldName">{{item.fieldName}}</el-link>
-<!--              <el-link :underline="false">无下划线</el-link>-->
-<!--              <el-link v-on:dblclick="getClickedValue()">有下划ee线</el-link>-->
-<!--              <el-link @click.native="getClickedValue('aabbba')">有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
-<!--              <el-link>有下划线</el-link>-->
+              <el-link v-for="item in this.dataSourceTableColumnArray" v-bind:key="item.fieldName" @click.native="getClickedValue(item.fieldName)">{{item.fieldName}}</el-link>
             </div>
           </el-col>
           <el-col :span="10">
-            <el-form-item style="margin-bottom: 40px;" label="工作类别" prop="工作类别">
+            <el-form-item style="margin-bottom: 40px;" label="查询脚本" prop="查询脚本">
               <editor
                 v-model="dataJobForm.dataJobSql"
                 @init="editorInit"
@@ -97,6 +75,12 @@
               </editor>
             </el-form-item>
           </el-col>
+        </el-row>
+
+        <el-row>
+          <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="applySql">
+            执行查询
+          </el-button>
         </el-row>
 
         <el-row :gutter="100">
@@ -305,6 +289,19 @@ export default {
           })
         }
       })
+    },
+    applySql() {
+      console.log(this.dataJobForm.dataJobSql)
+      // this.disableSubmit = true
+      // addOrUpdate(this.dataJobForm).then(() => {
+      //   this.$notify({
+      //     title: 'Success',
+      //     message: '操作成功',
+      //     type: 'success',
+      //     duration: 2000
+      //   })
+      //   this.$router.push({ path: '/components/works-record-table' })
+      // })
     },
     cancelButton() {
       this.$router.push({ path: '/components/works-record-table' })
