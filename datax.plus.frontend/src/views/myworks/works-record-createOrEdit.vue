@@ -44,12 +44,12 @@
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="源表" prop="源表">
               <el-select
-                v-model="dataJobForm.source.dataSourceId"
+                v-model="dataJobForm.source.datasourceTableName"
                 @change="fetchColumn"
                 placeholder="Type"
                 class="filter-item"
                 style="width: 130px">
-                <el-option v-for="item in this.dataSourceTableArray" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
+                <el-option v-for="item in this.dataSourceTableArray" :key="item" :label="item" :value="item" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -58,6 +58,7 @@
         <el-row :gutter="100">
           <el-col :span="4">
             <div>
+              <el-link v-for="item in this.dataSourceTableColumnArray">item</el-link>
               <el-link :underline="false">无下划线</el-link>
               <el-link v-on:dblclick="getClickedValue()">有下划ee线</el-link>
               <el-link @click.native="getClickedValue('aabbba')">有下划线</el-link>
@@ -175,7 +176,8 @@ export default {
         dataJobId: 0,
         dataJobName: '',
         source: {
-          dataSourceId: ''
+          dataSourceId: '',
+          datasourceTableName: ''
         },
         target: {
           dataSourceId: ''
@@ -185,6 +187,7 @@ export default {
       disableSubmit: false,
       dataSourceArray: [],
       dataSourceTableArray: [],
+      dataSourceTableColumnArray: [],
       dataTargetArray: [],
       loading: false,
       userListOptions: [],
@@ -250,7 +253,7 @@ export default {
     },
     fetchTable(dataSourceId) {
       listTablesByDataSourceId(dataSourceId).then(response => {
-        this.dataSourceTableArray = response.data
+        this.dataSourceTableArray = response.data.list
       }).catch(err => {
         console.log(err)
       })
@@ -258,7 +261,7 @@ export default {
     fetchColumn(dataSourceId) {
       console.log(dataSourceId)
       listTablesByDataSourceId(dataSourceId).then(response => {
-        this.dataJobForm = response.data
+        this.dataSourceTableColumnArray = response.data.list
       }).catch(err => {
         console.log(err)
       })
