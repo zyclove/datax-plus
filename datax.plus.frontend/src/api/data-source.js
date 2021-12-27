@@ -14,6 +14,13 @@ export function listTablesByDataSourceId(dataSourceId) {
   })
 }
 
+export function listColumnsByDataSourceIdAndTableName(dataSourceId, tableName) {
+  return request({
+    url: `/dataSource/columns/${dataSourceId}/${tableName}`,
+    method: 'get'
+  })
+}
+
 export function listDataSourceType(pageNum, limit) {
   return request({
     url: `/dataSource/typeList/${pageNum}/${limit}/0`,

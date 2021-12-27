@@ -58,29 +58,29 @@
         <el-row :gutter="100">
           <el-col :span="4">
             <div>
-              <el-link v-for="item in this.dataSourceTableColumnArray">item</el-link>
-              <el-link :underline="false">无下划线</el-link>
-              <el-link v-on:dblclick="getClickedValue()">有下划ee线</el-link>
-              <el-link @click.native="getClickedValue('aabbba')">有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
-              <el-link>有下划线</el-link>
+              <el-link v-for="item in this.dataSourceTableColumnArray" v-bind:key="item.fieldName">{{item.fieldName}}</el-link>
+<!--              <el-link :underline="false">无下划线</el-link>-->
+<!--              <el-link v-on:dblclick="getClickedValue()">有下划ee线</el-link>-->
+<!--              <el-link @click.native="getClickedValue('aabbba')">有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
+<!--              <el-link>有下划线</el-link>-->
             </div>
           </el-col>
           <el-col :span="10">
@@ -130,7 +130,7 @@
 // import { searchUser } from '@/api/remote-search'
 import { addOrUpdate, getJob } from '@/api/work-record'
 import Editor from 'vue2-ace-editor'
-import { listDataSource, listTablesByDataSourceId } from '@/api/data-source'
+import { listDataSource, listTablesByDataSourceId, listColumnsByDataSourceIdAndTableName } from '@/api/data-source'
 
 // const defaultForm = {
 //   status: 'draft',
@@ -252,15 +252,18 @@ export default {
       })
     },
     fetchTable(dataSourceId) {
+      this.dataJobForm.source.dataSourceId = dataSourceId
       listTablesByDataSourceId(dataSourceId).then(response => {
         this.dataSourceTableArray = response.data.list
       }).catch(err => {
         console.log(err)
       })
     },
-    fetchColumn(dataSourceId) {
-      console.log(dataSourceId)
-      listTablesByDataSourceId(dataSourceId).then(response => {
+    fetchColumn(tableName) {
+      console.log(this.dataJobForm.source.dataSourceId)
+      console.log('tableName: ', tableName)
+      listColumnsByDataSourceIdAndTableName(this.dataJobForm.source.dataSourceId, tableName).then(response => {
+        console.log(response.data)
         this.dataSourceTableColumnArray = response.data.list
       }).catch(err => {
         console.log(err)

@@ -83,6 +83,46 @@ public class DataSourceController {
     }
 
 
+    @RequestMapping(value = "/columns/{dataSourceId}/{tableName}", method = RequestMethod.GET)
+    public @ResponseBody
+    HttpRequestResult columns(@PathVariable int dataSourceId, @PathVariable String tableName) {
+        HttpRequestResult req = new HttpRequestResult();
+        req.setCode(20000);
+        req.setMsg("");
+
+        DataSource dataSource = dataSourceService.getDataSourceByDataSourceId(dataSourceId);
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        try {
+            DbAccessUtil dbAccessUtil = new DbAccessUtil(dataSource);
+            List tempList = new ArrayList();
+            tempList = dbAccessUtil.simpleQuery(DbAccessUtil.DESC_TABLE, tableName);
+            Iterator iterator = tempList.iterator();
+            while (iterator.hasNext()){
+                Map tempMap = (Map) iterator.next();
+                String fieldName = tempMap.get("Field").toString();
+                String columnType = tempMap.get("Type").toString();
+                Map newMap = new HashMap();
+                newMap.put("fieldName", fieldName);
+                newMap.put("columnType", columnType);
+                list.add(newMap);
+//                Iterator iteratorTemp = tempMap.values().iterator();
+//                while( iteratorTemp.hasNext() ){
+//                    list.add(iteratorTemp.next().toString());
+//                }
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        MapList mapList = new MapList();
+        mapList.setList(list);
+
+        req.setData(mapList);
+        return req;
+    }
+
+
+
     @RequestMapping(value = "/list/{pageNum}/{limit}/{dataSourceId}", method = RequestMethod.GET)
     public @ResponseBody
     HttpRequestResult list(@PathVariable int pageNum,
