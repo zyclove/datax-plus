@@ -64,7 +64,7 @@
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="查询脚本" prop="查询脚本">
               <editor
-                v-model="dataJobForm.dataJobSql"
+                v-model="dataJobForm.sqlBody"
                 @init="editorInit"
                 ref="sqlEditor"
                 lang="sql"
@@ -112,9 +112,9 @@
 // import { validURL } from '@/utils/validate'
 // import { fetchArticle } from '@/api/article'
 // import { searchUser } from '@/api/remote-search'
-import { addOrUpdate, getJob } from '@/api/work-record'
+import { addOrUpdate } from '@/api/work-record'
 import Editor from 'vue2-ace-editor'
-import { listDataSource, listTablesByDataSourceId, listColumnsByDataSourceIdAndTableName } from '@/api/data-source'
+import { listDataSource, listTablesByDataSourceId, listColumnsByDataSourceIdAndTableName, applySql } from '@/api/data-source'
 
 // const defaultForm = {
 //   status: 'draft',
@@ -166,7 +166,7 @@ export default {
         target: {
           dataSourceId: ''
         },
-        dataJobSql: ''
+        sqlBody: ''
       },
       disableSubmit: false,
       dataSourceArray: [],
@@ -258,13 +258,13 @@ export default {
       this.$refs.sqlEditor.editor.insert(linkValue)
       // Editor.insert(linkValue)
     },
-    fetchData(j) {
-      getJob(this.dataJobForm.dataJobId).then(response => {
-        this.dataJobForm = response.data
-      }).catch(err => {
-        console.log(err)
-      })
-    },
+    // fetchData(j) {
+    //   getJob(this.dataJobForm.dataJobId).then(response => {
+    //     this.dataJobForm = response.data
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
+    // },
     // setTagsViewTitle() {
     //   const title = 'Edit Article'
     //   const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.dataJobForm.id}` })
@@ -292,16 +292,12 @@ export default {
     },
     applySql() {
       console.log(this.dataJobForm.dataJobSql)
-      // this.disableSubmit = true
-      // addOrUpdate(this.dataJobForm).then(() => {
-      //   this.$notify({
-      //     title: 'Success',
-      //     message: '操作成功',
-      //     type: 'success',
-      //     duration: 2000
-      //   })
-      //   this.$router.push({ path: '/components/works-record-table' })
-      // })
+      this.disableSubmit = true
+      applySql(this.dataJobForm).then(response => {
+        console.log(response.data)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     cancelButton() {
       this.$router.push({ path: '/components/works-record-table' })

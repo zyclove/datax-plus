@@ -21,6 +21,15 @@ export function listColumnsByDataSourceIdAndTableName(dataSourceId, tableName) {
   })
 }
 
+
+export function applySql(data) {
+  return request({
+    url: '/dataSource/applySql',
+    method: 'post',
+    data: data
+  })
+}
+
 export function listDataSourceType(pageNum, limit) {
   return request({
     url: `/dataSource/typeList/${pageNum}/${limit}/0`,
