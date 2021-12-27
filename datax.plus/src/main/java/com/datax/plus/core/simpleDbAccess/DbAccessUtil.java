@@ -16,6 +16,7 @@ public class DbAccessUtil {
     public static final int SHOW_DBS = 1;
     public static final int SHOW_TABLES = 2;
     public static final int DESC_TABLE = 3;
+    public static final int SIMPLE_QUERY = 4;
 
     private Connection connection;
 
@@ -37,6 +38,8 @@ public class DbAccessUtil {
             sql0.append(" SHOW TABLES ");
         } else if (queryType == DESC_TABLE) {
             sql0.append(" DESC ").append(value);
+        } else if (queryType == SIMPLE_QUERY) {
+            sql0.append(value);
         }
 
         List resultList = new ArrayList();

@@ -123,34 +123,19 @@ public class DataSourceController {
 
 
 
-    @RequestMapping(value = "/applySql/{dataSourceId}/{tableName}/{selectAll}", method = RequestMethod.POST)
+    @RequestMapping(value = "/applySql", method = RequestMethod.POST)
     public @ResponseBody
-    HttpRequestResult applySql(@PathVariable int dataSourceId, @PathVariable String tableName, @PathVariable int selectAll,
-                               @RequestBody String sqlBody) {
+    HttpRequestResult applySql(@RequestBody DataJob dataJob) {
         HttpRequestResult req = new HttpRequestResult();
         req.setCode(20000);
         req.setMsg("");
 
-        DataSource dataSource = dataSourceService.getDataSourceByDataSourceId(dataSourceId);
+        DataSource dataSource = dataSourceService.getDataSourceByDataSourceId(dataJob.getSource().getDataSourceId());
+
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
             DbAccessUtil dbAccessUtil = new DbAccessUtil(dataSource);
-            List tempList = new ArrayList();
-            tempList = dbAccessUtil.simpleQuery(DbAccessUtil.DESC_TABLE, tableName);
-            Iterator iterator = tempList.iterator();
-            while (iterator.hasNext()){
-                Map tempMap = (Map) iterator.next();
-                String fieldName = tempMap.get("Field").toString();
-                String columnType = tempMap.get("Type").toString();
-                Map newMap = new HashMap();
-                newMap.put("fieldName", fieldName);
-                newMap.put("columnType", columnType);
-                list.add(newMap);
-//                Iterator iteratorTemp = tempMap.values().iterator();
-//                while( iteratorTemp.hasNext() ){
-//                    list.add(iteratorTemp.next().toString());
-//                }
-            }
+            list = dbAccessUtil.simpleQuery(DbAccessUtil.SIMPLE_QUERY, dataJob.getSqlBody());
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
