@@ -24,7 +24,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-
         <el-row :gutter="100">
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="源" prop="源">
@@ -39,7 +38,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-
         <el-row :gutter="100">
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="源表" prop="源表">
@@ -54,7 +52,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-
         <el-row :gutter="100">
           <el-col :span="4">
             <div>
@@ -76,16 +73,32 @@
             </el-form-item>
           </el-col>
         </el-row>
-
         <el-row>
           <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="applySql">
             执行查询
           </el-button>
         </el-row>
-
-
-
-
+        <el-row>
+          <el-table
+            :key="tableKey"
+            v-loading="listLoading"
+            :data="list"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%;"
+            @sort-change="sortChange">
+            <el-table-column
+              v-for="(item, index) in this.sqlData.columns"
+              :prop="item.prop"
+              :label="item.label"
+              :key="item.id"
+              sortable
+              show-overflow-tooltip
+            >
+            </el-table-column>
+          </el-table>
+        </el-row>
         <el-row :gutter="100">
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="目标" prop="目标">
@@ -95,11 +108,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-
-
-
-
-
         <el-row>
           <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
             取消
@@ -108,7 +116,6 @@
             提交
           </el-button>
         </el-row>
-
       </div>
     </el-form>
   </div>
@@ -175,6 +182,10 @@ export default {
         },
         sqlBody: ''
       },
+      sqlData: {
+        columns: [],
+        dataList: []
+      },
       disableSubmit: false,
       dataSourceArray: [],
       dataSourceTableArray: [],
@@ -214,6 +225,8 @@ export default {
   created() {
     const dataJobId = this.$route.params.dataJobId
     // 如果dataJobId == -1 代表是新增，反之则是更新
+    // this.sqlData.columns = []
+    // this.sqlData.dataList = []
     this.fetchDataSource()
     if (dataJobId > 0) {
       this.dataJobForm.dataJobId = dataJobId
@@ -302,6 +315,8 @@ export default {
       this.disableSubmit = true
       applySql(this.dataJobForm).then(response => {
         console.log(response.data)
+        this.sqlData.columns = response.data.columns
+        this.sqlData.dataList = response.data.dataList
       }).catch(err => {
         console.log(err)
       })
