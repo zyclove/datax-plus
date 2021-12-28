@@ -82,7 +82,7 @@
           <el-table
             :key="tableKey"
             v-loading="listLoading"
-            :data="list"
+            :data="this.sqlData.dataList"
             border
             fit
             highlight-current-row
@@ -90,10 +90,9 @@
             @sort-change="sortChange">
             <el-table-column
               v-for="(item, index) in this.sqlData.columns"
-              :prop="item.prop"
-              :label="item.label"
-              :key="item.id"
-              sortable
+              :prop="item"
+              :label="item"
+              :key="item"
               show-overflow-tooltip
             >
             </el-table-column>
