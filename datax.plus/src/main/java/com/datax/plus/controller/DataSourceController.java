@@ -8,6 +8,7 @@ import com.datax.plus.model.User;
 import com.datax.plus.model.view.*;
 import com.datax.plus.service.DataSourceService;
 import com.datax.plus.service.DataSourceTypeService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,10 +65,10 @@ public class DataSourceController {
             List tempList = new ArrayList();
             tempList = dbAccessUtil.simpleQuery(DbAccessUtil.SHOW_TABLES, "");
             Iterator iterator = tempList.iterator();
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 Map tempMap = (Map) iterator.next();
                 Iterator iteratorTemp = tempMap.values().iterator();
-                while( iteratorTemp.hasNext() ){
+                while (iteratorTemp.hasNext()) {
                     list.add(iteratorTemp.next().toString());
                 }
             }
@@ -97,7 +98,7 @@ public class DataSourceController {
             List tempList = new ArrayList();
             tempList = dbAccessUtil.simpleQuery(DbAccessUtil.DESC_TABLE, tableName);
             Iterator iterator = tempList.iterator();
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 Map tempMap = (Map) iterator.next();
                 String fieldName = tempMap.get("Field").toString();
                 String columnType = tempMap.get("Type").toString();
@@ -122,7 +123,6 @@ public class DataSourceController {
     }
 
 
-
     @RequestMapping(value = "/applySql", method = RequestMethod.POST)
     public @ResponseBody
     HttpRequestResult applySql(@RequestBody DataJob dataJob) {
@@ -132,18 +132,29 @@ public class DataSourceController {
 
         DataSource dataSource = dataSourceService.getDataSourceByDataSourceId(dataJob.getSource().getDataSourceId());
 
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        SimpleSqlResult sqlResult = new SimpleSqlResult();
+
+        List<String> columns = new ArrayList<String>();
+
+        List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
         try {
             DbAccessUtil dbAccessUtil = new DbAccessUtil(dataSource);
-            list = dbAccessUtil.simpleQuery(DbAccessUtil.SIMPLE_QUERY, dataJob.getSqlBody());
+            dataList = dbAccessUtil.simpleQuery(DbAccessUtil.SIMPLE_QUERY, dataJob.getSqlBody());
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        MapList mapList = new MapList();
-        mapList.setList(list);
 
-        req.setData(mapList);
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            Map<String, Object> mapTemp = dataList.get(0);
+            columns = new ArrayList<String>(mapTemp.keySet());
+        }
+        // MapList mapList = new MapList();
+        //mapList.setList(list);
+        sqlResult.setColumns(columns);
+        sqlResult.setDataList(dataList);
+
+        req.setData(sqlResult);
         return req;
     }
 
