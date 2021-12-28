@@ -134,7 +134,7 @@ public class DataSourceController {
 
         SimpleSqlResult sqlResult = new SimpleSqlResult();
 
-        List<String> columns = new ArrayList<String>();
+        List<DbColumn> columns = new ArrayList<DbColumn>();
 
         List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
         try {
@@ -147,7 +147,13 @@ public class DataSourceController {
 
         if (CollectionUtils.isNotEmpty(dataList)) {
             Map<String, Object> mapTemp = dataList.get(0);
-            columns = new ArrayList<String>(mapTemp.keySet());
+            List<String> columnsString = new ArrayList<String>(mapTemp.keySet());
+            Iterator<String> iterator = columnsString.iterator();
+            while (iterator.hasNext()){
+                DbColumn dbColumn = new DbColumn();
+                dbColumn.setColumnName(iterator.next());
+                columns.add(dbColumn);
+            }
         }
         // MapList mapList = new MapList();
         //mapList.setList(list);

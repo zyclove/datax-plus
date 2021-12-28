@@ -90,14 +90,41 @@
             @sort-change="sortChange">
             <el-table-column
               v-for="(item, index) in this.sqlData.columns"
-              :prop="item"
-              :label="item"
-              :key="item"
+              :prop="item.columnName"
+              :label="item.columnName"
+              :key="item.columnName"
               show-overflow-tooltip
             >
             </el-table-column>
           </el-table>
         </el-row>
+
+        <el-row>
+          <el-table
+            :key="tableKey"
+            v-loading="listLoading"
+            :data="this.sqlData.columns"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%;"
+            @sort-change="sortChange">
+<!--            <el-table-column-->
+<!--              v-for="(item, index) in this.sqlData.columns"-->
+<!--              :prop="item.columnName"-->
+<!--              :label="item.columnName"-->
+<!--              :key="item.columnName"-->
+<!--              show-overflow-tooltip-->
+<!--            >-->
+<!--            </el-table-column>-->
+            <el-table-column label="源表列" prop="id" align="center" >
+              <template slot-scope="{row}">
+                <span>{{ row.columnName }}</span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-row>
+
         <el-row :gutter="100">
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="目标" prop="目标">

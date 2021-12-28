@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 public class SimpleSqlResult extends ResultBaseVO {
-    private List<String> columns;
+    private List<DbColumn> columns;
     private List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
 
-    public List<String> getColumns() {
+    public List<DbColumn> getColumns() {
         return columns;
     }
 
-    public void setColumns(List<String> columns) {
+    public void setColumns(List<DbColumn> columns) {
         this.columns = columns;
     }
 
