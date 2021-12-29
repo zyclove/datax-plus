@@ -26,7 +26,7 @@
         </el-row>
         <el-row :gutter="100">
           <el-col :span="10">
-            <el-form-item style="margin-bottom: 40px;" label="源" prop="源">
+            <el-form-item style="margin-bottom: 40px;" label="源库" prop="源库">
               <el-select
                 v-model="dataJobForm.source.dataSourceId"
                 @change="fetchTable"
@@ -78,7 +78,7 @@
             执行查询
           </el-button>
         </el-row>
-        <el-row>
+        <el-row><!-- 查询结果预览 -->
           <el-table
             :key="tableKey"
             v-loading="listLoading"
@@ -98,15 +98,42 @@
             </el-table-column>
           </el-table>
         </el-row>
-
-        <el-row>
+        <el-row :gutter="100">
+          <el-col :span="10">
+            <el-form-item style="margin-bottom: 40px;" label="目标库" prop="目标库">
+              <el-select
+                v-model="dataJobForm.target.dataSourceId"
+                @change="fetchTargetTable"
+                placeholder="Type"
+                class="filter-item"
+                style="width: 130px">
+                <el-option v-for="item in this.dataTargetArray" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="100">
+          <el-col :span="10">
+            <el-form-item style="margin-bottom: 40px;" label="目标表" prop="目标表">
+              <el-select
+                v-model="dataJobForm.target.tableName"
+                @change="fetchTargetColumn"
+                placeholder="Type"
+                class="filter-item"
+                style="width: 130px">
+                <el-option v-for="item in this.dataTargetTableArray" :key="item" :label="item" :value="item" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row><!-- 源字段和目标字段对应选择器 -->
           <el-table
             :key="tableKey"
             v-loading="listLoading"
             :data="this.sqlData.columns"
             border
             fit
-            highlight-current-row
+            highlight-current-row7
             style="width: 100%;"
             @sort-change="sortChange">
 <!--            <el-table-column-->
@@ -122,17 +149,16 @@
                 <span>{{ row.columnName }}</span>
               </template>
             </el-table-column>
-          </el-table>
-        </el-row>
-
-        <el-row :gutter="100">
-          <el-col :span="10">
-            <el-form-item style="margin-bottom: 40px;" label="目标" prop="目标">
-              <el-select v-model="dataJobForm.target.dataSourceId" placeholder="Type" class="filter-item" style="width: 130px">
-                <el-option v-for="item in this.dataTargetArray" :key="item.dataSourceId" :label="item.dataSourceName" :value="item.dataSourceId" />
+            <el-table-column label="目标列" prop="target" align="center" >
+              <el-select
+                v-model="dataJobForm.source.datasourceTableName"
+                placeholder="Type"
+                class="filter-item"
+                style="width: 130px">
+                <el-option v-for="item in this.dataTargetTableColumnArray" :key="item" :label="item" :value="item" />
               </el-select>
-            </el-form-item>
-          </el-col>
+            </el-table-column>
+          </el-table>
         </el-row>
         <el-row>
           <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
@@ -204,7 +230,8 @@ export default {
           datasourceTableName: ''
         },
         target: {
-          dataSourceId: ''
+          dataSourceId: '',
+          datasourceTableName: ''
         },
         sqlBody: ''
       },
@@ -217,6 +244,8 @@ export default {
       dataSourceTableArray: [],
       dataSourceTableColumnArray: [],
       dataTargetArray: [],
+      dataTargetTableArray: [],
+      dataTargetTableColumnArray: [],
       loading: false,
       userListOptions: [],
       rules: {
@@ -295,6 +324,24 @@ export default {
       listColumnsByDataSourceIdAndTableName(this.dataJobForm.source.dataSourceId, tableName).then(response => {
         console.log(response.data)
         this.dataSourceTableColumnArray = response.data.list
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    fetchTargetTable(dataSourceId) {
+      this.dataJobForm.target.dataSourceId = dataSourceId
+      listTablesByDataSourceId(dataSourceId).then(response => {
+        this.dataTargetTableArray = response.data.list
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    fetchTargetColumn(tableName) {
+      console.log(this.dataJobForm.target.dataSourceId)
+      console.log('tableName: ', tableName)
+      listColumnsByDataSourceIdAndTableName(this.dataJobForm.target.dataSourceId, tableName).then(response => {
+        console.log(response.data)
+        this.dataTargetTableColumnArray = response.data.list
       }).catch(err => {
         console.log(err)
       })
