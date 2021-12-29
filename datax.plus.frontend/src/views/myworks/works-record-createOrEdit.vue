@@ -150,8 +150,7 @@
             <el-table-column label="目标列" prop="target" align="center" >
               <template slot-scope="scope">
                 <el-select
-                  v-model="sqlData.sourceColumns[scope.$index].targetTemp"
-                  @change="simpleTest"
+                  v-model="sqlData.sourceColumns[scope.$index].targetTempValue"
                   placeholder="目标列"
                   class="filter-item"
                   style="width: 130px">

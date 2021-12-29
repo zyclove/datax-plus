@@ -1,15 +1,27 @@
 package com.datax.plus.model.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DbColumn {
     private String columnName;
     private String columnType;
-    private String targetTemp = "";
+    private List targetTemp = new ArrayList();
+    private String targetTempValue = "";
 
-    public String getTargetTemp() {
+    public String getTargetTempValue() {
+        return targetTempValue;
+    }
+
+    public void setTargetTempValue(String targetTempValue) {
+        this.targetTempValue = targetTempValue;
+    }
+
+    public List getTargetTemp() {
         return targetTemp;
     }
 
-    public void setTargetTemp(String targetTemp) {
+    public void setTargetTemp(List targetTemp) {
         this.targetTemp = targetTemp;
     }
 
