@@ -88,7 +88,7 @@
             style="width: 100%;"
             >
             <el-table-column
-              v-for="(item, index) in this.sqlData.columns"
+              v-for="(item, index) in this.sqlData.sourceColumns"
               :prop="item.columnName"
               :label="item.columnName"
               :key="item.columnName"
@@ -128,7 +128,7 @@
         <el-row><!-- 源字段和目标字段对应选择器 -->
           <el-table
             :key="tableKey"
-            :data="this.sqlData.columns"
+            :data="this.sqlData.sourceColumns"
             border
             fit
             highlight-current-row7
@@ -150,12 +150,13 @@
             <el-table-column label="目标列" prop="target" align="center" >
               <template slot-scope="scope">
                 <el-select
-                  v-model="sqlData.columns[scope.$index].targetTemp"
+                  v-model="sqlData.sourceColumns[scope.$index].targetTemp"
                   @change="simpleTest"
                   placeholder="目标列"
                   class="filter-item"
                   style="width: 130px">
-                  <el-option v-for="item2 in testColumns" :key="item2.fieldName" :label="item2.fieldName" :value="item2.fieldName" />
+                  <!--                  <el-option v-for="item2 in dataTargetTableColumnArray" :key="item2.fieldName" :label="item2.fieldName" :value="item2.fieldName" />-->
+                  <el-option v-for="item2 in sqlData.sourceColumns[scope.$index].targetTemp" :key="item2.fieldName" :label="item2.fieldName" :value="item2.fieldName" />
                 </el-select>
               </template>
             </el-table-column>
@@ -244,8 +245,10 @@ export default {
         { 'fieldName': 'ccc', 'fieldType': 4 }
       ],
       sqlData: {
-        columns: [],
-        dataList: []
+        sourceColumns: [],
+        dataList: [],
+        targetColumns: [],
+        targetColumnsTemp: []
       },
       disableSubmit: false,
       dataSourceArray: [],
@@ -349,7 +352,12 @@ export default {
       console.log('tableName: ', tableName)
       listColumnsByDataSourceIdAndTableName(this.dataJobForm.target.dataSourceId, tableName).then(response => {
         console.log(response.data)
-        this.dataTargetTableColumnArray = response.data.list
+        // this.dataTargetTableColumnArray = response.data.list
+        this.sqlData.targetColumnsTemp = response.data.list
+        this.sqlData.sourceColumns.forEach(function(element) {
+          // console.log('element: 0-----', element)
+          element.targetTemp = response.data.list
+        })
       }).catch(err => {
         console.log(err)
       })
@@ -406,10 +414,8 @@ export default {
       // console.log('dataJobSql', this.dataJobForm.dataJobSql)
       this.disableSubmit = true
       applySql(this.dataJobForm).then(response => {
-        console.log('response.data', response.data)
-        this.sqlData.columns = response.data.columns
+        this.sqlData.sourceColumns = response.data.columns
         this.sqlData.dataList = response.data.dataList
-        console.log('this.sqlData.columns', this.sqlData.columns)
       }).catch(err => {
         console.log(err)
       })
