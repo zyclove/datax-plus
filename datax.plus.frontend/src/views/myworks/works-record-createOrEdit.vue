@@ -81,13 +81,12 @@
         <el-row><!-- 查询结果预览 -->
           <el-table
             :key="tableKey"
-            v-loading="listLoading"
             :data="this.sqlData.dataList"
             border
             fit
             highlight-current-row
             style="width: 100%;"
-            @sort-change="sortChange">
+            >
             <el-table-column
               v-for="(item, index) in this.sqlData.columns"
               :prop="item.columnName"
@@ -116,7 +115,7 @@
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="目标表" prop="目标表">
               <el-select
-                v-model="dataJobForm.target.tableName"
+                v-model="dataJobForm.target.datasourceTableName"
                 @change="fetchTargetColumn"
                 placeholder="Type"
                 class="filter-item"
@@ -129,13 +128,12 @@
         <el-row><!-- 源字段和目标字段对应选择器 -->
           <el-table
             :key="tableKey"
-            v-loading="listLoading"
             :data="this.sqlData.columns"
             border
             fit
             highlight-current-row7
             style="width: 100%;"
-            @sort-change="sortChange">
+            >
 <!--            <el-table-column-->
 <!--              v-for="(item, index) in this.sqlData.columns"-->
 <!--              :prop="item.columnName"-->
@@ -151,11 +149,12 @@
             </el-table-column>
             <el-table-column label="目标列" prop="target" align="center" >
               <el-select
-                v-model="dataJobForm.source.datasourceTableName"
-                placeholder="Type"
+                v-model="dataJobForm.target.dataxxx"
+                @change="simpleTest"
+                placeholder="目标列"
                 class="filter-item"
                 style="width: 130px">
-                <el-option v-for="item in this.dataTargetTableColumnArray" :key="item" :label="item" :value="item" />
+                <el-option v-for="item2 in this.testColumns" :key="item2.fieldName" :label="item2.fieldName" :value="item2.fieldName" />
               </el-select>
             </el-table-column>
           </el-table>
@@ -222,6 +221,7 @@ export default {
     //   }
     // }
     return {
+      tableKey: 0,
       dataJobForm: {
         dataJobId: 0,
         dataJobName: '',
@@ -231,10 +231,16 @@ export default {
         },
         target: {
           dataSourceId: '',
-          datasourceTableName: ''
+          datasourceTableName: '',
+          dataxxx: 'a'
         },
         sqlBody: ''
       },
+      testColumns: [
+        { 'fieldName': 'a', 'fieldType': 1 },
+        { 'fieldName': 'b', 'fieldType': 2 },
+        { 'fieldName': 'ccc', 'fieldType': 4 }
+      ],
       sqlData: {
         columns: [],
         dataList: []
@@ -346,6 +352,16 @@ export default {
         console.log(err)
       })
     },
+    simpleTest(testValue) {
+      // this.$forceUpdate()
+      // this.$forceUpdate()
+      console.log('aaa', testValue)
+      this.dataJobForm.target.dataxxx = testValue
+      console.log('this.dataJobForm.target', this.dataJobForm.target)
+      console.log('this.dataJobForm.target.dataxxx', this.dataJobForm.target.dataxxx)
+      this.$set(this.dataJobForm.target, 'dataxxx', testValue)
+      // this.$set(this.dataJobForm.target, 'dataxxx', testValue)
+    },
     getClickedValue(linkValue) {
       console.log(linkValue)
       this.$refs.sqlEditor.editor.insert(linkValue)
@@ -384,15 +400,17 @@ export default {
       })
     },
     applySql() {
-      console.log(this.dataJobForm.dataJobSql)
+      // console.log('dataJobSql', this.dataJobForm.dataJobSql)
       this.disableSubmit = true
       applySql(this.dataJobForm).then(response => {
-        console.log(response.data)
+        console.log('response.data', response.data)
         this.sqlData.columns = response.data.columns
         this.sqlData.dataList = response.data.dataList
+        this.$forceUpdate()
       }).catch(err => {
         console.log(err)
       })
+      this.$forceUpdate()
     },
     cancelButton() {
       this.$router.push({ path: '/components/works-record-table' })
