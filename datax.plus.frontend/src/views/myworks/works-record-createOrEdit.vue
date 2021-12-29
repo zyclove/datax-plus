@@ -148,14 +148,16 @@
               </template>
             </el-table-column>
             <el-table-column label="目标列" prop="target" align="center" >
-              <el-select
-                v-model="this.sqlData"
-                @change="simpleTest"
-                placeholder="目标列"
-                class="filter-item"
-                style="width: 130px">
-                <el-option v-for="item2 in this.testColumns" :key="item2.fieldName" :label="item2.fieldName" :value="item2.fieldName" />
-              </el-select>
+              <template slot-scope="scope">
+                <el-select
+                  v-model="sqlData.columns[scope.$index].targetTemp"
+                  @change="simpleTest"
+                  placeholder="目标列"
+                  class="filter-item"
+                  style="width: 130px">
+                  <el-option v-for="item2 in testColumns" :key="item2.fieldName" :label="item2.fieldName" :value="item2.fieldName" />
+                </el-select>
+              </template>
             </el-table-column>
           </el-table>
         </el-row>
