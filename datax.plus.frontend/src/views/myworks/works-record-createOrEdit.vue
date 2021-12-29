@@ -149,7 +149,7 @@
             </el-table-column>
             <el-table-column label="目标列" prop="target" align="center" >
               <el-select
-                v-model="dataJobForm.target.dataxxx"
+                v-model="this.sqlData"
                 @change="simpleTest"
                 placeholder="目标列"
                 class="filter-item"
@@ -355,11 +355,12 @@ export default {
     simpleTest(testValue) {
       // this.$forceUpdate()
       // this.$forceUpdate()
-      console.log('aaa', testValue)
-      this.dataJobForm.target.dataxxx = testValue
-      console.log('this.dataJobForm.target', this.dataJobForm.target)
       console.log('this.dataJobForm.target.dataxxx', this.dataJobForm.target.dataxxx)
-      this.$set(this.dataJobForm.target, 'dataxxx', testValue)
+      // console.log('aaa', testValue)
+      // this.dataJobForm.target.dataxxx = testValue
+      // console.log('this.dataJobForm.target', this.dataJobForm.target)
+      // console.log('this.dataJobForm.target.dataxxx', this.dataJobForm.target.dataxxx)
+      // this.$set('this.dataJobForm.target', 'dataxxx', testValue)
       // this.$set(this.dataJobForm.target, 'dataxxx', testValue)
     },
     getClickedValue(linkValue) {
@@ -406,7 +407,7 @@ export default {
         console.log('response.data', response.data)
         this.sqlData.columns = response.data.columns
         this.sqlData.dataList = response.data.dataList
-        this.$forceUpdate()
+        console.log('this.sqlData.columns', this.sqlData.columns)
       }).catch(err => {
         console.log(err)
       })
