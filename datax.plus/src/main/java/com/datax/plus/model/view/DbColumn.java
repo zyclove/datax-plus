@@ -6,23 +6,14 @@ import java.util.List;
 public class DbColumn {
     private String columnName;
     private String columnType;
-    private List targetTemp = new ArrayList();
-    private String targetTempValue = "";
+    private String targetColumnName = "";
 
-    public String getTargetTempValue() {
-        return targetTempValue;
+    public String getTargetColumnName() {
+        return targetColumnName;
     }
 
-    public void setTargetTempValue(String targetTempValue) {
-        this.targetTempValue = targetTempValue;
-    }
-
-    public List getTargetTemp() {
-        return targetTemp;
-    }
-
-    public void setTargetTemp(List targetTemp) {
-        this.targetTemp = targetTemp;
+    public void setTargetColumnName(String targetColumnName) {
+        this.targetColumnName = targetColumnName;
     }
 
     public String getColumnName() {

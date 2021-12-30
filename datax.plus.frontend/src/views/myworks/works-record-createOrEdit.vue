@@ -150,12 +150,11 @@
             <el-table-column label="目标列" prop="target" align="center" >
               <template slot-scope="scope">
                 <el-select
-                  v-model="sqlData.sourceColumns[scope.$index].targetTempValue"
+                  v-model="sqlData.sourceColumns[scope.$index].targetColumnName"
                   placeholder="目标列"
                   class="filter-item"
                   style="width: 130px">
-                  <!--                  <el-option v-for="item2 in dataTargetTableColumnArray" :key="item2.fieldName" :label="item2.fieldName" :value="item2.fieldName" />-->
-                  <el-option v-for="item2 in sqlData.sourceColumns[scope.$index].targetTemp" :key="item2.fieldName" :label="item2.fieldName" :value="item2.fieldName" />
+                  <el-option v-for="item2 in sqlData.targetColumnsTemp" :key="item2.fieldName" :label="item2.fieldName" :value="item2.fieldName" />
                 </el-select>
               </template>
             </el-table-column>
@@ -165,7 +164,7 @@
           <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="cancelButton">
             取消
           </el-button>
-          <el-button v-loading="loading" type="warning" @click="addOrUpdateData" :disabled="disableSubmit">
+          <el-button v-loading="loading" type="warning" @click="addOrUpdateData" >
             提交
           </el-button>
         </el-row>
@@ -234,15 +233,9 @@ export default {
         target: {
           dataSourceId: '',
           datasourceTableName: '',
-          dataxxx: 'a'
         },
         sqlBody: ''
       },
-      testColumns: [
-        { 'fieldName': 'a', 'fieldType': 1 },
-        { 'fieldName': 'b', 'fieldType': 2 },
-        { 'fieldName': 'ccc', 'fieldType': 4 }
-      ],
       sqlData: {
         sourceColumns: [],
         dataList: [],
@@ -361,17 +354,6 @@ export default {
         console.log(err)
       })
     },
-    simpleTest(testValue) {
-      // this.$forceUpdate()
-      // this.$forceUpdate()
-      console.log('this.dataJobForm.target.dataxxx', this.dataJobForm.target.dataxxx)
-      // console.log('aaa', testValue)
-      // this.dataJobForm.target.dataxxx = testValue
-      // console.log('this.dataJobForm.target', this.dataJobForm.target)
-      // console.log('this.dataJobForm.target.dataxxx', this.dataJobForm.target.dataxxx)
-      // this.$set('this.dataJobForm.target', 'dataxxx', testValue)
-      // this.$set(this.dataJobForm.target, 'dataxxx', testValue)
-    },
     getClickedValue(linkValue) {
       console.log(linkValue)
       this.$refs.sqlEditor.editor.insert(linkValue)
@@ -394,20 +376,21 @@ export default {
     //   document.title = `${title} - ${this.dataJobForm.id}`
     // },
     addOrUpdateData() {
-      this.$refs['dataJobForm'].validate((valid) => {
-        if (valid) {
-          this.disableSubmit = true
-          addOrUpdate(this.dataJobForm).then(() => {
-            this.$notify({
-              title: 'Success',
-              message: '操作成功',
-              type: 'success',
-              duration: 2000
-            })
-            this.$router.push({ path: '/components/works-record-table' })
-          })
-        }
-      })
+      console.log('this.sqlData.sourceColumns', this.sqlData.sourceColumns)
+      // this.$refs['dataJobForm'].validate((valid) => {
+      //   if (valid) {
+      //     this.disableSubmit = true
+      //     addOrUpdate(this.dataJobForm).then(() => {
+      //       this.$notify({
+      //         title: 'Success',
+      //         message: '操作成功',
+      //         type: 'success',
+      //         duration: 2000
+      //       })
+      //       this.$router.push({ path: '/components/works-record-table' })
+      //     })
+      //   }
+      // })
     },
     applySql() {
       // console.log('dataJobSql', this.dataJobForm.dataJobSql)
